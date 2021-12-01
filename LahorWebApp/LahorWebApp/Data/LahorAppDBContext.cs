@@ -9,7 +9,9 @@ namespace LahorWebApp.Data
 {
     public class LahorAppDBContext:DbContext
     {
-        public virtual DbSet<Test> tests { get; set; }
+        
+        public virtual DbSet<Spol> Spolovi { get; set; }
+        public virtual DbSet<BracniStatus> BracniStatusi { get; set; }
         public LahorAppDBContext(DbContextOptions options):base(options)
         {
 
