@@ -9,12 +9,13 @@ namespace LahorWebApp.Data
 {
     public class LahorAppDBContext:DbContext
     {
-        
-<<<<<<< HEAD
-=======
         public virtual DbSet<Spol> Spolovi { get; set; }
         public virtual DbSet<BracniStatus> BracniStatusi { get; set; }
->>>>>>> f242c777a5ca36266fe49af796a643fbf935cda5
+        public virtual DbSet<Uposlenik> Uposlenici { get; set; }
+        public virtual DbSet<UpravnoOsoblje> UpravnoOsoblje { get; set; }
+        public virtual DbSet<KlijentFizickoLice> KlijentiFizickoLice { get; set; }
+        public virtual DbSet<KlijentPravnoLice> KlijentiPravnoLice { get; set; }
+        public virtual DbSet<VoazckaDozvolaKategorija> VoazckaDozvolaKategorije { get; set; }
         public LahorAppDBContext(DbContextOptions options):base(options)
         {
 
