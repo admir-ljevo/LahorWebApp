@@ -9,18 +9,33 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LahorWebApp.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211129202327_MigracijaTest")]
-    partial class MigracijaTest
+    [Migration("20211201201334_DodaniSpoloviBracniStatusi")]
+    partial class DodaniSpoloviBracniStatusi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LahorWebApp.Models.Test", b =>
+            modelBuilder.Entity("LahorWebApp.Models.BracniStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BracniStatusi");
+                });
+
+            modelBuilder.Entity("LahorWebApp.Models.Spol", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +47,7 @@ namespace LahorWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tests");
+                    b.ToTable("Spolovi");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,7 +18,22 @@ namespace LahorWebApp.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LahorWebApp.Models.Test", b =>
+            modelBuilder.Entity("LahorWebApp.Models.BracniStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BracniStatusi");
+                });
+
+            modelBuilder.Entity("LahorWebApp.Models.Spol", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,7 +45,7 @@ namespace LahorWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tests");
+                    b.ToTable("Spolovi");
                 });
 #pragma warning restore 612, 618
         }

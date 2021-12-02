@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LahorWebApp.Models
 {
-    public class Test
+    [Table("BracniStatusi")]
+    public class BracniStatus
     {
         public int Id { get; set; }
-        public string naziv { get; set; }
+        public string Naziv { get; set; }
     }
 }
