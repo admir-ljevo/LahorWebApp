@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LahorWebApp.Models
 {
     [Table("KlijentiFizickoLice")]
-    public class KlijentFizickoLice
+    public class KlijentFizickoLice:Klijent
     {
         public int Id { get; set; }
         public string Ime { get; set; }
