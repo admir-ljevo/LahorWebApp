@@ -19,28 +19,28 @@ namespace LahorWebApp.Controllers
         {
             this.dBContext = dBContext;
         }
-        [HttpPost]
+        //[HttpPost]
 
-        public KlijentFizickoLice Add(KlijentFizickoLiceAddVM x)
-        {
-            var newKlijentFizickoLice = new KlijentFizickoLice
-            {
-                Ime = x.Ime,
-                Prezime = x.Prezime,
-                DatumRodjenja = x.DatumRodjenja,
-                Spol = x.Spol,
-                BrojTelefona = x.BrojTelefona,
-                Email = x.Email,
-                Aktivan = x.Aktivan,
-                ClanskaKartica = x.ClanskaKartica,
-                DatumDodavanja = x.DatumDodavanja,
-                Adresa = x.Adresa,
-                Lozinka = x.Lozinka,
-                KorisnickoIme = x.KorisnickoIme
-            };
-            dBContext.Add(newKlijentFizickoLice);
-            dBContext.SaveChanges();
-            return newKlijentFizickoLice;
-        }
+        //public KlijentFizickoLice Add(KlijentFizickoLiceAddVM x)
+        //{
+        //    var newKlijentFizickoLice = new KlijentFizickoLice
+        //    {
+        //        Ime = x.Ime,
+        //        Prezime = x.Prezime,
+        //        DatumRodjenja = x.DatumRodjenja,
+        //        Spol = x.Spol,
+        //        BrojTelefona = x.
+        //        Email = x.Email,
+        //        Aktivan = x.Aktivan,
+        //        ClanskaKartica = x.ClanskaKartica,
+        //        DatumDodavanja = x.DatumDodavanja,
+        //        Adresa = x.Adresa,
+        //        Lozinka = x.Lozinka,
+        //        KorisnickoIme = x.KorisnickoIme
+        //    };
+        //    dBContext.Add(newKlijentFizickoLice);
+        //    dBContext.SaveChanges();
+        //    return newKlijentFizickoLice;
+        //}
     }
 }

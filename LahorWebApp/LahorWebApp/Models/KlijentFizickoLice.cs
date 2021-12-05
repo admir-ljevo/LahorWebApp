@@ -13,6 +13,10 @@ namespace LahorWebApp.Models
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string DatumRodjenja { get; set; }
-        public virtual Spol  Spol { get; set; }
+        public Spol  Spol { get; set; }
+        public int SpolID { get; set; }
+
+        public Korisnik Korisnik { get; set; }
+        public string KorisnikID { get; set; }
     }
 }

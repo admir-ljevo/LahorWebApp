@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 namespace LahorWebApp.Models
 {
     [Table("Uposlenici")]
-    public class Uposlenik:Korisnik
+    public class Uposlenik:Radnik
     {
         public int Id { get; set; }
         public string Zanimanje { get; set; }
-        public string Pozicija { get; set; }
+
+        public Korisnik Korisnik { get; set; }
+        public string KorisnikID { get; set; }
     }
 }

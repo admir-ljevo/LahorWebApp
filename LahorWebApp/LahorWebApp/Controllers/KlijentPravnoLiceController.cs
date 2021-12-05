@@ -19,27 +19,27 @@ namespace LahorWebApp.Controllers
         {
             this.dBContext = dBContext;
         }
-        [HttpPost]
+        //[HttpPost]
 
-        public KlijentPravnoLice Add(KlijentPravnoLiceAddVM x)
-        {
-            var newKlijentPravnoLice = new KlijentPravnoLice
-            {
-                NazivKlijenta = x.NazivKlijenta,
-                IdBrojFirme = x.IdBrojFirme,
-                BrojTelefona = x.BrojTelefona,
-                Email = x.Email,
-                Aktivan = x.Aktivan,
-                ClanskaKartica = x.ClanskaKartica,
-                DatumDodavanja = x.DatumDodavanja,
-                Adresa = x.Adresa,
-                Lozinka = x.Lozinka,
-                KorisnickoIme = x.KorisnickoIme
-            };
-            dBContext.Add(newKlijentPravnoLice);
-            dBContext.SaveChanges();
-            return newKlijentPravnoLice;
-        }
+        //public KlijentPravnoLice Add(KlijentPravnoLiceAddVM x)
+        //{
+        //    var newKlijentPravnoLice = new KlijentPravnoLice
+        //    {
+        //        NazivKlijenta = x.NazivKlijenta,
+        //        IdBrojFirme = x.IdBrojFirme,
+        //        BrojTelefona = x.BrojTelefona,
+        //        Email = x.Email,
+        //        Aktivan = x.Aktivan,
+        //        ClanskaKartica = x.ClanskaKartica,
+        //        DatumDodavanja = x.DatumDodavanja,
+        //        Adresa = x.Adresa,
+        //        Lozinka = x.Lozinka,
+        //        KorisnickoIme = x.KorisnickoIme
+        //    };
+        //    dBContext.Add(newKlijentPravnoLice);
+        //    dBContext.SaveChanges();
+        //    return newKlijentPravnoLice;
+        //}
     }
 }
 

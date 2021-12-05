@@ -1,34 +1,37 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LahorWebApp.Models
 {
-    public class Korisnik
+    [Table("Korisnici")]
+    public class Korisnik:IdentityUser
     {
-        public string Ime { get; set; }
-        public string Prezime { get; set; }
-        public string DatumRodjenja { get; set; }
-        public string JMBG { get; set; }
-        public string StrucnaSprema { get; set; }
-        public string MjestoRodjenja { get; set; }
-        public string MjestoPrebivalista { get; set; }
-        public virtual Spol Spol { get; set; }
-        public virtual BracniStatus BracniStatus { get; set; }
-        public string Nacionalost { get; set; }
-        public string Drzavljanstvo { get; set; }
-        public byte[] Slika { get; set; }
-        public bool RadnoIskustvo { get; set; }
-        public string Biografija { get; set; }
+        public string EmailAdresa { get; set; }
         public string BrojTelefona { get; set; }
-        public string Email { get; set; }
-        public string KorisnickoIme { get; set; }
-        public string Lozinka { get; set; }
-        public virtual VoazckaDozvolaKategorija VoazckaDozvolaKategorija { get; set; }
-        public string DatumZaposlenja { get; set; }
-        public string IznosPlate { get; set; }
-        public bool Aktivan { get; set; }
+        public DateTime DatumDodavanja { get; set; }
+        public string Adresa { get; set; }
+
+        public Uposlenik Uposlenik { get; set; }
+        public int UposlenikID { get; set; }
+
+        public UpravnoOsoblje UpravnoOsoblje { get; set; }
+        public int UpravnoOsobljeID { get; set; }
+
+        public KlijentPravnoLice KlijentPravnoLice { get; set; }
+        public int KlijentPravnoLiceID { get; set; }
+
+        public KlijentFizickoLice KlijentFizickoLice { get; set; }
+        public int KlijentFizickoLiceID { get; set; }
+
+        public bool isUposlenik { get; set; }
+        public bool isUpravnoOsoblje { get; set; }
+        public bool isKlijentPravnoLice { get; set; }
+        public bool isKlijentFizickoLice { get; set; }
+        public bool isAdmin { get; set; }
 
     }
 }

@@ -12,5 +12,8 @@ namespace LahorWebApp.Models
         public int Id { get; set; }
         public string NazivKlijenta { get; set; }
         public string IdBrojFirme { get; set; }
+
+        public Korisnik Korisnik { get; set; }
+        public string KorisnikID { get; set; }
     }
 }
