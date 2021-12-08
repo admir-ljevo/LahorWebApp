@@ -26,23 +26,23 @@ namespace LahorWebApp.Data
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Korisnik>()
-                .HasOne<Uposlenik>(s => s.Uposlenik)
-                .WithOne(ad => ad.Korisnik)
-                .HasForeignKey<Uposlenik>(ad => ad.KorisnikID);
+            //modelBuilder.Entity<Korisnik>()
+            //    .HasOne<Uposlenik>(s => s.Uposlenik)
+            //    .WithOne(ad => ad.Korisnik)
+            //    .HasForeignKey<Uposlenik>(ad => ad.KorisnikID);
 
-            modelBuilder.Entity<Korisnik>()
-                .HasOne<UpravnoOsoblje>(s => s.UpravnoOsoblje)
-                .WithOne(ad => ad.Korisnik)
-                .HasForeignKey<UpravnoOsoblje>(ad => ad.KorisnikID);
-            modelBuilder.Entity<Korisnik>()
-               .HasOne<KlijentPravnoLice>(s => s.KlijentPravnoLice)
-               .WithOne(ad => ad.Korisnik)
-               .HasForeignKey<KlijentPravnoLice>(ad => ad.KorisnikID);
-            modelBuilder.Entity<Korisnik>()
-               .HasOne<KlijentFizickoLice>(s => s.KlijentFizickoLice)
-               .WithOne(ad => ad.Korisnik)
-               .HasForeignKey<KlijentFizickoLice>(ad => ad.KorisnikID);
+            //modelBuilder.Entity<Korisnik>()
+            //    .HasOne<UpravnoOsoblje>(s => s.UpravnoOsoblje)
+            //    .WithOne(ad => ad.Korisnik)
+            //    .HasForeignKey<UpravnoOsoblje>(ad => ad.KorisnikID);
+            //modelBuilder.Entity<Korisnik>()
+            //   .HasOne<KlijentPravnoLice>(s => s.KlijentPravnoLice)
+            //   .WithOne(ad => ad.Korisnik)
+            //   .HasForeignKey<KlijentPravnoLice>(ad => ad.KorisnikID);
+            //modelBuilder.Entity<Korisnik>()
+            //   .HasOne<KlijentFizickoLice>(s => s.KlijentFizickoLice)
+            //   .WithOne(ad => ad.Korisnik)
+            //   .HasForeignKey<KlijentFizickoLice>(ad => ad.KorisnikID);
         }
         public DbSet<Spol> Spolovi { get; set; }
         public DbSet<BracniStatus> BracniStatusi { get; set; }

@@ -8,9 +8,8 @@ namespace LahorWebApp.Views
 {
     public class UposlenikAddVM
     {
-        public int Id { get; set; }
         public string Zanimanje { get; set; }
-        public string Pozicija { get; set; }
+        public Pozicija Pozicija { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string DatumRodjenja { get; set; }

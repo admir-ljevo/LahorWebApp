@@ -8,11 +8,10 @@ namespace LahorWebApp.Views
 {
     public class KlijentFizickoLiceAddVM
     {
-        public int Id { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public string DatumRodjenja { get; set; }
-        public virtual Spol Spol { get; set; }
+        public Spol Spol { get; set; }
         public string BrojTelefona { get; set; }
         public string Email { get; set; }
         public bool Aktivan { get; set; }

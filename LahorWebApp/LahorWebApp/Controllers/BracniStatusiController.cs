@@ -1,4 +1,5 @@
 ﻿using LahorWebApp.Data;
+using LahorWebApp.Helpers;
 using LahorWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LahorWebApp.Views
 {
-    [ApiController]
+    
     [Route("[controller]/[action]")]
     public class BracniStatusiController : ControllerBase
     {
