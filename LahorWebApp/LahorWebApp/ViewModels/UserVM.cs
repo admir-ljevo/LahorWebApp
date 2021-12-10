@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LahorWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,14 +8,12 @@ namespace LahorWebApp.Views
 {
     public class UserVM
     {
-        public UserVM(string username,string email,string role)
+        public UserVM(Korisnik korisnik,string role)
         {
-            this.Username = username;
-            this.Email = email;
             this.Role = role;
+            this.Korisnik = korisnik;
         }
-        public string Username { get; set; }
-        public string Email { get; set; }
+        public Korisnik Korisnik { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }
     }

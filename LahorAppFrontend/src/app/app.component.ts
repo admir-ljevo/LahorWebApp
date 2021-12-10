@@ -8,19 +8,5 @@ import {LoginComponent} from "./Components/login/login.component";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-
-  bracniStatusiPodaci:any;
-  constructor(private httpKlijent: HttpClient) {
-  }
-
-
-getBracniStatus(){
-    return this.bracniStatusiPodaci;
-}
-  testirajWebApi() :void
-  {
-    this.httpKlijent.get("https://localhost:44365/BracniStatusi/GetAll").subscribe(x=>{
-      this.bracniStatusiPodaci = x;
-    });
-  }
+title='LahorAppFronted'
 }

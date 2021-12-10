@@ -22,6 +22,7 @@ namespace LahorWebApp
 {
     public class Startup
     {
+        private readonly string _localOrigin = "_localOrigin";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -41,16 +42,17 @@ namespace LahorWebApp
             //services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = false)
             //    .AddEntityFrameworkStores<LahorAppDBContext>();
 
-            services.AddIdentity<Korisnik, IdentityRole>(options => {
+            services.AddIdentity<Korisnik, IdentityRole>(options =>
+            {
                 options.SignIn.RequireConfirmedEmail = true;
             }).
                 AddEntityFrameworkStores<LahorAppDBContext>();
             services.AddControllersWithViews();
-//                AddNewtonsoftJson(options =>
-//                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-//);
+            //                AddNewtonsoftJson(options =>
+            //                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //);
 
-            services.AddAuthentication(x=>
+            services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,55 +64,60 @@ namespace LahorWebApp
                     var audience = Configuration["JWTConfig:Audience"];
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidateIssuerSigningKey=true,
-                        IssuerSigningKey=new SymmetricSecurityKey(key),
-                        ValidateIssuer=true,
-                        ValidateAudience=true,
-                        RequireExpirationTime=true,
-                        ValidIssuer=issuer,
-                        ValidAudience=audience
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        RequireExpirationTime = true,
+                        ValidIssuer = issuer,
+                        ValidAudience = audience
                     };
                 });
             services.AddControllers();
 
+            services.AddSwaggerGen();
+
             // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c=>
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
+            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            //    {
+            //        In = ParameterLocation.Header,
+            //        Description = "Unesite token",
+            //        Name = "Authorization",
+            //        Type = SecuritySchemeType.Http,
+            //        BearerFormat = "JWT",
+            //        Scheme = "bearer"
+            //    });
+            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            //    {
+            //        {
+            //            new OpenApiSecurityScheme
+            //            {
+            //                Reference=new OpenApiReference
+            //                {
+            //                    Type=ReferenceType.SecurityScheme,
+            //                    Id="Bearer"
+            //                }
+            //            },
+            //            new string[]{}
+            //        }
+            //    });
+            //});
+            services.AddCors(opt =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                opt.AddPolicy(_localOrigin, builder =>
                 {
-                    In = ParameterLocation.Header,
-                    Description = "Unesite token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "bearer"
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference=new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        new string[]{}
-                    }
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
                 });
             });
-            services.AddCors();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -134,13 +141,14 @@ namespace LahorWebApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "LahorApp Api v1");
             });
             app.UseStaticFiles();
-            app.UseCors(
-            options => options
-            .SetIsOriginAllowed(x => _ = true)
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials()
-            ); //This needs to set everything allowed
+            //app.UseCors(
+            //options => options
+            //.SetIsOriginAllowed(x => _ = true)
+            //.AllowAnyMethod()
+            //.AllowAnyHeader()
+            //.AllowCredentials()
+            //); //This needs to set everything allowed
+            app.UseCors(_localOrigin);
             app.UseRouting();
 
             app.UseAuthentication();

@@ -1,8 +1,12 @@
-﻿using LahorWebApp.Data;
+﻿using Data.Enum;
+using Data.Models;
+using LahorWebApp.Data;
 using LahorWebApp.Models;
 using LahorWebApp.Views;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,43 +20,99 @@ namespace LahorWebApp.Controllers
     {
         private readonly LahorAppDBContext dBContext;
         private UserManager<Korisnik> _userManager;
+        private readonly ILogger<UserController> _logger;
+        private readonly SignInManager<Korisnik> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IOptions<JWTConfig> _jwtConfig;
 
-        public KlijentFizickoLiceController(LahorAppDBContext dBContext,
-            UserManager<Korisnik> userManager)
+        public KlijentFizickoLiceController(
+            LahorAppDBContext dBContext,
+            UserManager<Korisnik> userManager,
+            ILogger<UserController> logger,
+            SignInManager<Korisnik> signInManager,
+            RoleManager<IdentityRole> roleManager,
+            IOptions<JWTConfig> jwtConfig)
         {
             this.dBContext = dBContext;
             _userManager = userManager;
+            _logger = logger;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _jwtConfig = jwtConfig;
+
         }
         [HttpPost]
-
-        public KlijentFizickoLice Add(KlijentFizickoLiceAddVM x)
+        public async Task<object> Add(KlijentFizickoLiceAddVM x)
         {
-            var korisnik = new Korisnik
+            UserController uc = new UserController(_logger, _userManager, _signInManager,
+                _roleManager,_jwtConfig);
+            try
             {
-                BrojTelefona=x.BrojTelefona,
-                EmailAdresa=x.Email,
-                UserName=x.KorisnickoIme,
-                Adresa=x.Adresa,
-                DatumDodavanja=DateTime.Now
-            };
-            string password = "AAzzzBB123/";
-            IdentityResult result = _userManager.CreateAsync(korisnik, password).Result;
+                if (!await _roleManager.RoleExistsAsync("Klijent"))
+                {
+                    return await Task.FromResult("Ne postoji rola za korisnika");
+                }
+                var user = new Korisnik
+                {
+                    UserName = x.KorisnickoIme,
+                    EmailAdresa = x.Email,
+                    BrojTelefona=x.BrojTelefona,
+                    DatumDodavanja = DateTime.Now,
+                    Adresa = x.Adresa,
+                    isKlijentFizickoLice = true,
+                    EmailConfirmed=true
+                };
+                var result = await _userManager.CreateAsync(user, x.Lozinka);
+                if (result.Succeeded)
+                {
+                    var tempUser = await _userManager.FindByNameAsync(user.UserName);
+                    await _userManager.AddToRoleAsync(tempUser, "Klijent");
+                    var newKlijentFizickoLice = new KlijentFizickoLice
+                    {
+                        Ime = x.Ime,
+                        Prezime = x.Prezime,
+                        DatumRodjenja = x.DatumRodjenja,
+                        Spol = x.Spol,
+                        Aktivan = x.Aktivan,
+                        ClanskaKartica = x.ClanskaKartica,
+                        KorisnikID = user.Id
+                    };
+                    dBContext.Add(newKlijentFizickoLice);
+                    dBContext.SaveChanges();
+                    return await Task.FromResult(newKlijentFizickoLice);
+                }
+                return await Task.FromResult(string.Join(",", result.Errors.Select(
+                    x => x.Description).ToArray()));
+            }
+            catch (Exception ex)
+            {
 
-            //string confirmationToken = _userManager.
-            //    GenerateEmailConfirmationTokenAsync(korisnik).Result;
-            var newKlijentFizickoLice = new KlijentFizickoLice
-           {
-               Ime = x.Ime,
-               Prezime = x.Prezime,
-               DatumRodjenja = x.DatumRodjenja,
-               Spol = x.Spol,
-               Aktivan = x.Aktivan,
-               ClanskaKartica = x.ClanskaKartica,
-               KorisnikID=korisnik.Id
-           };
-            dBContext.Add(newKlijentFizickoLice);
-            dBContext.SaveChanges();
-           return newKlijentFizickoLice;
+                return await Task.FromResult(ex.Message);
+            }
+        }
+
+
+        [HttpGet]
+        public ResponseModel GetKlijentFizickoById(string id)
+        {
+            try
+            {
+                if(id==null || id=="")
+                {
+                    return new ResponseModel(ResponseCode.Error,
+                        "Korisnik nije pronađen", null);
+                }
+                var klijentFizicko = dBContext.KlijentiFizickoLice.
+                    Where(k => k.KorisnikID == id).FirstOrDefault();
+                return new ResponseModel(ResponseCode.OK,
+                    "Klijent uspješno pronađen", klijentFizicko);
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error,
+                    ex.Message, null);
+            }
         }
     }
 }

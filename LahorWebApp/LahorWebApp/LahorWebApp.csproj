@@ -23,4 +23,8 @@
     <PackageReference Include="WireMock.Net.Abstractions" Version="1.4.28" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
 </Project>

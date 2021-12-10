@@ -1,4 +1,6 @@
-﻿using LahorWebApp.Models;
+﻿using Data.Enum;
+using Data.Models;
+using LahorWebApp.Models;
 using LahorWebApp.Views;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,8 +18,6 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Ubiety.Dns.Core.Common;
-using WireMock.Admin.Mappings;
 
 namespace LahorWebApp.Controllers
 {
@@ -29,7 +29,6 @@ namespace LahorWebApp.Controllers
         private readonly UserManager<Korisnik> _userManager;
         private readonly SignInManager<Korisnik> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-
         private readonly JWTConfig _jwtConfig; 
 
          public UserController(ILogger<UserController> logger,
@@ -52,7 +51,8 @@ namespace LahorWebApp.Controllers
             {
                 if(!await _roleManager.RoleExistsAsync(model.Role))
                 {
-                    return await Task.FromResult("Ne postoji rola za korisnika");
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.Error,"Ne postoji rola za korisnika",null));
                 }
                 var user = new Korisnik()
                 {
@@ -64,7 +64,8 @@ namespace LahorWebApp.Controllers
                 {
                     var tempUser = await _userManager.FindByNameAsync(model.Username);
                     await _userManager.AddToRoleAsync(tempUser, model.Role);
-                    return await Task.FromResult("Korisnik uspješno registrovan");
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.OK,"Registracija uspješna",user));
                 }
                 return await Task.FromResult(string.Join(",", result.Errors.Select(
                     x => x.Description).ToArray()));
@@ -72,7 +73,8 @@ namespace LahorWebApp.Controllers
             catch (Exception ex)
             {
 
-                return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error, ex.Message, null));
             }
             
         }
@@ -87,14 +89,16 @@ namespace LahorWebApp.Controllers
                 foreach (var korisnik in korisnici)
                 {
                     var role = (await _userManager.GetRolesAsync(korisnik)).FirstOrDefault();
-                    new UserVM(korisnik.UserName, korisnik.EmailAdresa, role);
+                    new UserVM( korisnik, role);
                 }
-                return await Task.FromResult(korisnici);
+                return await Task.FromResult(new ResponseModel(ResponseCode.OK,
+                    "Korisnici uspješno preuzeti",korisnici));
             }
             catch (Exception ex)
             {
 
-                return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error,ex.Message,null));
             }
         }
 
@@ -111,17 +115,20 @@ namespace LahorWebApp.Controllers
                     {
                         var appUser = await _userManager.FindByNameAsync(model.Username);
                         var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
-                        var user = new UserVM(appUser.UserName, appUser.Email,role);
+                        var user = new UserVM(appUser,role);
                         user.Token = GenerateToken(appUser,role);
-                        return await Task.FromResult(user);
+                        return await Task.FromResult(new ResponseModel(
+                            ResponseCode.OK,"Uspješna prijava",user));
                     }
                 }
-                return await Task.FromResult("Username ili password nisu validni");
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error,"Username ili password nisu ispravni",null));
             }
             catch (Exception ex)
             {
 
-                return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error,ex.Message,null));
             }
         }
         //[Authorize(Roles ="Admin")]
@@ -132,25 +139,31 @@ namespace LahorWebApp.Controllers
             {
                 if(model==null || model.Role=="")
                 {
-                    return await Task.FromResult("Podaci nisu validni");
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.Error,"Podaci nisu validni",null));
                 }
                 if(await _roleManager.RoleExistsAsync(model.Role))
                 {
-                    return await Task.FromResult("Rola vec postoji");
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.Error,"Rola već postoji",null));
                 }
                 var role = new IdentityRole();
                 role.Name = model.Role;
                 var result = await _roleManager.CreateAsync(role);
                 if(result.Succeeded)
                 {
-                    return await Task.FromResult("Rola uspješno dodana");
+                    return await Task.FromResult(new ResponseModel(
+                        ResponseCode.OK,"Rola uspješno dodana",null));
                 }
-                return await Task.FromResult("Username ili password nisu validni");
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error, "Nemoguće dodati rolu", null));
+                
             }
             catch (Exception ex)
             {
 
-                return await Task.FromResult(ex.Message);
+                return await Task.FromResult(new ResponseModel(
+                    ResponseCode.Error,ex.Message,null));
             }
         }
         private string GenerateToken(Korisnik user,string role)
@@ -161,7 +174,7 @@ namespace LahorWebApp.Controllers
                 Subject = new System.Security.Claims.ClaimsIdentity(new[]
             {
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.Id),
-                new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email,user.Email),
+                new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email,user.EmailAdresa),
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new System.Security.Claims.Claim(ClaimTypes.Role,role),
             }),
