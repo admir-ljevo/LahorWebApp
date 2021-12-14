@@ -10,6 +10,7 @@ namespace LahorWebApp.Models
     [Table("Korisnici")]
     public class Korisnik:IdentityUser
     {
+        public string Naziv { get; set; }
         public string EmailAdresa { get; set; }
         public string BrojTelefona { get; set; }
         public DateTime DatumDodavanja { get; set; }

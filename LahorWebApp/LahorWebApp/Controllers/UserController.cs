@@ -1,6 +1,7 @@
 ﻿using Data.Enum;
 using Data.Models;
 using LahorWebApp.Models;
+using LahorWebApp.ViewModels;
 using LahorWebApp.Views;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -79,18 +80,14 @@ namespace LahorWebApp.Controllers
             
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<object> GetAllUser()
         {
             try
             {
-                var korisnici = _userManager.Users.ToList();
-                foreach (var korisnik in korisnici)
-                {
-                    var role = (await _userManager.GetRolesAsync(korisnik)).FirstOrDefault();
-                    new UserVM( korisnik, role);
-                }
+                    var korisnici = _userManager.Users.Select(x => new User(
+                    x.UserName, x.EmailAdresa, x.Adresa, x.BrojTelefona)).ToList();
                 return await Task.FromResult(new ResponseModel(ResponseCode.OK,
                     "Korisnici uspješno preuzeti",korisnici));
             }
@@ -115,7 +112,7 @@ namespace LahorWebApp.Controllers
                     {
                         var appUser = await _userManager.FindByNameAsync(model.Username);
                         var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
-                        var user = new UserVM(appUser,role);
+                        var user = new LoginInformation(appUser,role);
                         user.Token = GenerateToken(appUser,role);
                         return await Task.FromResult(new ResponseModel(
                             ResponseCode.OK,"Uspješna prijava",user));

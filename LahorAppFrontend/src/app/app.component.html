@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="!isUserLogin()">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -12,6 +12,9 @@
       <li class="nav-item">
         <a class="button">Sign up</a>
       </li>
+      <!--<li class="nav-item">
+        <a class="nav-link active" *ngIf="isUserLogin()" (click)="logOut()">Log out</a>
+      </li>-->
     </ul>
   </div>
 </nav>

@@ -44,8 +44,8 @@ namespace LahorWebApp.Controllers
         [HttpPost]
         public async Task<object> Add(KlijentFizickoLiceAddVM x)
         {
-            UserController uc = new UserController(_logger, _userManager, _signInManager,
-                _roleManager,_jwtConfig);
+            //UserController uc = new UserController(_logger, _userManager, _signInManager,
+            //    _roleManager, _jwtConfig);
             try
             {
                 if (!await _roleManager.RoleExistsAsync("Klijent"))
@@ -56,11 +56,12 @@ namespace LahorWebApp.Controllers
                 {
                     UserName = x.KorisnickoIme,
                     EmailAdresa = x.Email,
-                    BrojTelefona=x.BrojTelefona,
+                    BrojTelefona = x.BrojTelefona,
                     DatumDodavanja = DateTime.Now,
                     Adresa = x.Adresa,
+                    Naziv = x.Ime + " "+x.Prezime,
                     isKlijentFizickoLice = true,
-                    EmailConfirmed=true
+                    EmailConfirmed = true
                 };
                 var result = await _userManager.CreateAsync(user, x.Lozinka);
                 if (result.Succeeded)
@@ -92,7 +93,7 @@ namespace LahorWebApp.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public ResponseModel GetKlijentFizickoById(string id)
         {
             try
@@ -104,8 +105,16 @@ namespace LahorWebApp.Controllers
                 }
                 var klijentFizicko = dBContext.KlijentiFizickoLice.
                     Where(k => k.KorisnikID == id).FirstOrDefault();
-                return new ResponseModel(ResponseCode.OK,
-                    "Klijent uspješno pronađen", klijentFizicko);
+                if (klijentFizicko != null)
+                {
+                    return new ResponseModel(ResponseCode.OK,
+                        "Klijent uspješno pronađen", klijentFizicko);
+                }
+                else
+                {
+                    return new ResponseModel(ResponseCode.Error,
+                        "Klijent nije pronađen", null);
+                }     
 
             }
             catch (Exception ex)

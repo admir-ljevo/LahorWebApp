@@ -1,53 +1,69 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MyConfig} from "../MyConfig";
 import {Router} from "@angular/router";
+import {ResponseModel} from "../Model/ResponseModel";
+import {map} from "rxjs/operators";
+import {ResponseCode} from "../enum/ResponseCode";
+import {User} from "../Model/User";
+import {AutentifikacijaHelper} from "../_helpers/autentifikacijaHelper";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private httpClient:HttpClient,private router:Router) { }
+  constructor(private httpClient: HttpClient, private router: Router) {
+  }
 
-  public login(username:string,password:string)
-  {
-    const body={
-      Username:username,
-      Password:password
+  public login(username: string, password: string) {
+    const body = {
+      Username: username,
+      Password: password
     }
-    return this.httpClient.post(MyConfig.adresa_servera+"User/Login",body,MyConfig.http_opcije).
-      subscribe((data:any)=>{
-      if(data.dataSet!=null)
+    return this.httpClient.post<ResponseModel>(MyConfig.adresa_servera + "User/Login", body, MyConfig.http_opcije).subscribe((data: any) => {
+      if(data.responseCode==ResponseCode.OK)
       {
-        console.log("uspješan login");
-        localStorage.setItem("auth-token",data.dataSet.token);
-        if( data.responseCode==1 && data.dataSet.korisnik.isKlijentFizickoLice==true)
+      if (data.dataSet != null) {
+        console.log("Logiranje uspješno");
+        AutentifikacijaHelper.setLoginInfo(data.dataSet);
+       if(data.responseCode=ResponseCode.OK)
+       {
+         this.router.navigateByUrl("/home")
+       }
+      }
+      } else {
+        localStorage.setItem("auth-token", "");
+        console.log("Neispravan login -> "+data.ResponseMessage);
+      }
+    });
+  }
+
+  public getUserList() {
+    let userInfo = JSON.parse(localStorage.getItem("auth-token"));
+    const headers = new HttpHeaders({
+        'Authorization': `Bearer ${userInfo?.token}`
+      });
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"User/GetAllUser",{headers:headers}).pipe(map(res=>{
+      let userList=new Array<User>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
         {
-        this.router.navigateByUrl("/klijent");
+          res.dataSet.map((x:User)=>{
+            userList.push(new User(x.userName,x.brojTelefona,x.adresa,x.emailAdresa));
+          })
         }
-        else if(data.responseCode==1 && data.dataSet.korisnik.isKlijentPravnoLice==true)
+        else
         {
-          this.router.navigateByUrl("/klijent");
-        }
-        else if(data.responseCode==1 && data.dataSet.korisnik.isUposlenik==true)
-        {
-          this.router.navigateByUrl("/uposlenik");
-        }
-        else if(data.responseCode==1 && data.dataSet.korisnik.isUpravnoOsoblje==true)
-        {
-          this.router.navigateByUrl("/upravnoOsoblje");
-        }
-        else if(data.responseCode==1 && data.dataSet.korisnik.isAdmin==true)
-        {
-          this.router.navigateByUrl("/admin");
+          console.log(res.responseCode);
         }
       }
       else
       {
-        localStorage.setItem("auth-token","");
-        alert("neispravan login");
+        console.log(res.responseCode);
       }
-  });
+      return userList;
+    }));
   }
 }

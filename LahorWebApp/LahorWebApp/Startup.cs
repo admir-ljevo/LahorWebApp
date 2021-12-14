@@ -36,7 +36,8 @@ namespace LahorWebApp
             services.Configure<JWTConfig>(Configuration.GetSection("JWTConfig"));
             services.AddDbContext<LahorAppDBContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("LahorWebApp")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             //services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -77,43 +78,43 @@ namespace LahorWebApp
 
             services.AddSwaggerGen();
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        In = ParameterLocation.Header,
-            //        Description = "Unesite token",
-            //        Name = "Authorization",
-            //        Type = SecuritySchemeType.Http,
-            //        BearerFormat = "JWT",
-            //        Scheme = "bearer"
-            //    });
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            //    {
-            //        {
-            //            new OpenApiSecurityScheme
-            //            {
-            //                Reference=new OpenApiReference
-            //                {
-            //                    Type=ReferenceType.SecurityScheme,
-            //                    Id="Bearer"
-            //                }
-            //            },
-            //            new string[]{}
-            //        }
-            //    });
-            //});
-            services.AddCors(opt =>
+            //Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
             {
-                opt.AddPolicy(_localOrigin, builder =>
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
+                    In = ParameterLocation.Header,
+                    Description = "Unesite token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference=new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
                 });
             });
+            //services.AddCors(opt =>
+            //{
+            //    opt.AddPolicy(_localOrigin, builder =>
+            //    {
+            //        builder.AllowAnyOrigin();
+            //        builder.AllowAnyHeader();
+            //        builder.AllowAnyMethod();
+            //    });
+            //});
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -141,13 +142,13 @@ namespace LahorWebApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "LahorApp Api v1");
             });
             app.UseStaticFiles();
-            //app.UseCors(
-            //options => options
-            //.SetIsOriginAllowed(x => _ = true)
-            //.AllowAnyMethod()
-            //.AllowAnyHeader()
-            //.AllowCredentials()
-            //); //This needs to set everything allowed
+            app.UseCors(
+            options => options
+            .SetIsOriginAllowed(x => _ = true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            ); //This needs to set everything allowed
             app.UseCors(_localOrigin);
             app.UseRouting();
 
