@@ -1,6 +1,6 @@
 using System;
 
-namespace LahorWebApp.Models
+namespace Data.Models
 {
     public class ErrorViewModel
     {

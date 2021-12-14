@@ -1,5 +1,5 @@
-﻿using LahorWebApp.Data;
-using LahorWebApp.Models;
+﻿using Data.Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

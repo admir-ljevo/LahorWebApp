@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LahorWebApp.Models
+namespace Data.Models
 {
     [Table("Korisnici")]
     public class Korisnik:IdentityUser

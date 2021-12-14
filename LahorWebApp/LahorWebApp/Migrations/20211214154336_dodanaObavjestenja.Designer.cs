@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211204211705_updateIdentity")]
-    partial class updateIdentity
+    [Migration("20211214154336_dodanaObavjestenja")]
+    partial class dodanaObavjestenja
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LahorWebApp.Models.BracniStatus", b =>
+            modelBuilder.Entity("Data.Models.BracniStatus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace Data.Migrations
                     b.ToTable("BracniStatusi");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.KlijentFizickoLice", b =>
+            modelBuilder.Entity("Data.Models.KlijentFizickoLice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,16 +66,14 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KorisnikID")
-                        .IsUnique()
-                        .HasFilter("[KorisnikID] IS NOT NULL");
+                    b.HasIndex("KorisnikID");
 
                     b.HasIndex("SpolID");
 
                     b.ToTable("KlijentiFizickoLice");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.KlijentPravnoLice", b =>
+            modelBuilder.Entity("Data.Models.KlijentPravnoLice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,14 +97,12 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KorisnikID")
-                        .IsUnique()
-                        .HasFilter("[KorisnikID] IS NOT NULL");
+                    b.HasIndex("KorisnikID");
 
                     b.ToTable("KlijentiPravnoLice");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.Korisnik", b =>
+            modelBuilder.Entity("Data.Models.Korisnik", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -137,17 +133,14 @@ namespace Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("KlijentFizickoLiceID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("KlijentPravnoLiceID")
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -171,12 +164,6 @@ namespace Data.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
-
-                    b.Property<int>("UposlenikID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpravnoOsobljeID")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -210,7 +197,39 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.Pozicija", b =>
+            modelBuilder.Entity("Data.Models.Obavijest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DatumKreiranja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("JavnaObavijest")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Naslov")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sadrzaj")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SlikaObavještenja")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AutorId");
+
+                    b.ToTable("Obavještenja");
+                });
+
+            modelBuilder.Entity("Data.Models.Pozicija", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,7 +244,7 @@ namespace Data.Migrations
                     b.ToTable("Pozicija");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.Spol", b =>
+            modelBuilder.Entity("Data.Models.Spol", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +259,7 @@ namespace Data.Migrations
                     b.ToTable("Spolovi");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.Uposlenik", b =>
+            modelBuilder.Entity("Data.Models.Uposlenik", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -314,9 +333,7 @@ namespace Data.Migrations
 
                     b.HasIndex("BracniStatusID");
 
-                    b.HasIndex("KorisnikID")
-                        .IsUnique()
-                        .HasFilter("[KorisnikID] IS NOT NULL");
+                    b.HasIndex("KorisnikID");
 
                     b.HasIndex("PozicijaID");
 
@@ -327,7 +344,7 @@ namespace Data.Migrations
                     b.ToTable("Uposlenici");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.UpravnoOsoblje", b =>
+            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -401,9 +418,7 @@ namespace Data.Migrations
 
                     b.HasIndex("BracniStatusID");
 
-                    b.HasIndex("KorisnikID")
-                        .IsUnique()
-                        .HasFilter("[KorisnikID] IS NOT NULL");
+                    b.HasIndex("KorisnikID");
 
                     b.HasIndex("PozicijaID");
 
@@ -414,7 +429,7 @@ namespace Data.Migrations
                     b.ToTable("UpravnoOsoblje");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.VoazckaDozvolaKategorija", b =>
+            modelBuilder.Entity("Data.Models.VoazckaDozvolaKategorija", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -507,12 +522,10 @@ namespace Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -549,12 +562,10 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -564,13 +575,13 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.KlijentFizickoLice", b =>
+            modelBuilder.Entity("Data.Models.KlijentFizickoLice", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.Korisnik", "Korisnik")
-                        .WithOne("KlijentFizickoLice")
-                        .HasForeignKey("LahorWebApp.Models.KlijentFizickoLice", "KorisnikID");
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
 
-                    b.HasOne("LahorWebApp.Models.Spol", "Spol")
+                    b.HasOne("Data.Models.Spol", "Spol")
                         .WithMany()
                         .HasForeignKey("SpolID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -581,40 +592,51 @@ namespace Data.Migrations
                     b.Navigation("Spol");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.KlijentPravnoLice", b =>
+            modelBuilder.Entity("Data.Models.KlijentPravnoLice", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.Korisnik", "Korisnik")
-                        .WithOne("KlijentPravnoLice")
-                        .HasForeignKey("LahorWebApp.Models.KlijentPravnoLice", "KorisnikID");
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
 
                     b.Navigation("Korisnik");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.Uposlenik", b =>
+            modelBuilder.Entity("Data.Models.Obavijest", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.BracniStatus", "BracniStatus")
+                    b.HasOne("Data.Models.UpravnoOsoblje", "Autor")
+                        .WithMany()
+                        .HasForeignKey("AutorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Autor");
+                });
+
+            modelBuilder.Entity("Data.Models.Uposlenik", b =>
+                {
+                    b.HasOne("Data.Models.BracniStatus", "BracniStatus")
                         .WithMany()
                         .HasForeignKey("BracniStatusID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.Korisnik", "Korisnik")
-                        .WithOne("Uposlenik")
-                        .HasForeignKey("LahorWebApp.Models.Uposlenik", "KorisnikID");
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
 
-                    b.HasOne("LahorWebApp.Models.Pozicija", "Pozicija")
+                    b.HasOne("Data.Models.Pozicija", "Pozicija")
                         .WithMany()
                         .HasForeignKey("PozicijaID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.Spol", "Spol")
+                    b.HasOne("Data.Models.Spol", "Spol")
                         .WithMany()
                         .HasForeignKey("SpolID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
+                    b.HasOne("Data.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
                         .WithMany()
                         .HasForeignKey("VoazckaDozvolaKategorijaID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -631,31 +653,31 @@ namespace Data.Migrations
                     b.Navigation("VoazckaDozvolaKategorija");
                 });
 
-            modelBuilder.Entity("LahorWebApp.Models.UpravnoOsoblje", b =>
+            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.BracniStatus", "BracniStatus")
+                    b.HasOne("Data.Models.BracniStatus", "BracniStatus")
                         .WithMany()
                         .HasForeignKey("BracniStatusID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.Korisnik", "Korisnik")
-                        .WithOne("UpravnoOsoblje")
-                        .HasForeignKey("LahorWebApp.Models.UpravnoOsoblje", "KorisnikID");
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
 
-                    b.HasOne("LahorWebApp.Models.Pozicija", "Pozicija")
+                    b.HasOne("Data.Models.Pozicija", "Pozicija")
                         .WithMany()
                         .HasForeignKey("PozicijaID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.Spol", "Spol")
+                    b.HasOne("Data.Models.Spol", "Spol")
                         .WithMany()
                         .HasForeignKey("SpolID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
+                    b.HasOne("Data.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
                         .WithMany()
                         .HasForeignKey("VoazckaDozvolaKategorijaID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -683,7 +705,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.Korisnik", null)
+                    b.HasOne("Data.Models.Korisnik", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -692,7 +714,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.Korisnik", null)
+                    b.HasOne("Data.Models.Korisnik", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -707,7 +729,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LahorWebApp.Models.Korisnik", null)
+                    b.HasOne("Data.Models.Korisnik", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -716,22 +738,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("LahorWebApp.Models.Korisnik", null)
+                    b.HasOne("Data.Models.Korisnik", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("LahorWebApp.Models.Korisnik", b =>
-                {
-                    b.Navigation("KlijentFizickoLice");
-
-                    b.Navigation("KlijentPravnoLice");
-
-                    b.Navigation("Uposlenik");
-
-                    b.Navigation("UpravnoOsoblje");
                 });
 #pragma warning restore 612, 618
         }

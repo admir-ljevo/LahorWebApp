@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LahorWebApp.Models
+namespace Data.Models
 {
     [Table("KlijentiFizickoLice")]
     public class KlijentFizickoLice:Klijent

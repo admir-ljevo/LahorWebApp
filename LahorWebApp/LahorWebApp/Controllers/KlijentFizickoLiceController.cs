@@ -1,7 +1,6 @@
 ﻿using Data.Enum;
 using Data.Models;
-using LahorWebApp.Data;
-using LahorWebApp.Models;
+using Data.Data;
 using LahorWebApp.Views;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

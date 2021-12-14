@@ -1,5 +1,5 @@
-using LahorWebApp.Data;
-using LahorWebApp.Models;
+using Data.Data;
+using Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

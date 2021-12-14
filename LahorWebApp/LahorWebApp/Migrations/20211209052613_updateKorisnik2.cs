@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LahorWebApp.Migrations
+namespace Data.Migrations
 {
     public partial class updateKorisnik2 : Migration
     {

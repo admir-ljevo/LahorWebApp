@@ -1,4 +1,4 @@
-﻿using LahorWebApp.Models;
+﻿using Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks; 
 
-namespace LahorWebApp.Data
+namespace Data.Data
 {
     public class LahorAppDBContext:IdentityDbContext<Korisnik>
     {
@@ -53,6 +53,7 @@ namespace LahorWebApp.Data
         public DbSet<KlijentPravnoLice> KlijentiPravnoLice { get; set; }
         public DbSet<VoazckaDozvolaKategorija> VoazckaDozvolaKategorije { get; set; }
         public DbSet<Korisnik> Korisnici { get; set; }
+        public DbSet<Obavijest> Obavještenja { get; set; }
 
     }
 }
