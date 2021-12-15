@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -7,8 +7,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor(private router:Router) { }
+  prikazObav:boolean=true;
+  constructor(private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -17,5 +17,9 @@ export class HomePageComponent implements OnInit {
     localStorage.clear();
     this.router.navigateByUrl("/login");
 
+  }
+
+  prikazObavijesti() {
+    this.router.navigate(['obavijesti'],{relativeTo:this.route})
   }
 }

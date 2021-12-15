@@ -5,10 +5,11 @@
   <ul class="sidebar-navigation">
     <li class="header">MAIN MENU</li>
     <li>
-      <a href="#">
-        <i class="fa fa-home" aria-hidden="true"></i> POČETNA
+      <a>
+        <i class="nav-link" aria-hidden="true" (click)="prikazObavijesti()"> POČETNA</i>
       </a>
     </li>
+
     <li>
       <a href="#">
         <i class="fa fa-tachometer" aria-hidden="true"></i> NARUDŽBE
@@ -33,11 +34,9 @@
     </li>
   </ul>
 </div>
+  <router-outlet></router-outlet>
 
 <div class="content-container">
-
-  <div class="container-fluid">
-
-
-  </div>
 </div>
+
+
