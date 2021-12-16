@@ -47,6 +47,9 @@ import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke
     BrowserModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
+      { path: 'registracija-fizicko-lice', component: RegistracijaFizickoLiceComponent },
+      { path: 'registracija-pravno-lice', component: RegistracijaPravnoLiceComponent },
+      { path: 'uspjesna-registracija', component: UspjesnaRegistracijaComponent },
       {path: 'uposlenik', component: UposlenikComponent},
       {path: 'upravnoOsoblje', component: UpravnoOsobljeComponent},
       {path:'admin',component:AdminComponent},
