@@ -1,7 +1,6 @@
 
 * {
   padding: 0;
-  margin: 0;
   border: 0;
   font-family: roboto, serif;
   font-weight: normal;
@@ -12,6 +11,7 @@
   width: 100%;
   background-color: #424242;
   position: relative;
+
 }
 .home-button{
   height: 100px;
@@ -38,7 +38,9 @@
   color: white;
   border-radius: 10px;
   border: 0;
-
+  padding: 5%;
+  display: inline-block;
+  line-height: 2%;
 }
 .f-button:hover{
   cursor: pointer;
@@ -87,7 +89,7 @@ input:hover, select:hover{
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
+  margin-top: 9%;
   position: relative;
 }
 .registracija{
