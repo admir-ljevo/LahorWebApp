@@ -17,6 +17,8 @@ import {AutorizacijaKlijent} from "./_guards/autorizacija-klijent";
 import {AutorizacijaUposlenik} from "./_guards/autorizacija-uposlenik";
 import {AutorizacijaUpravnoOsoblje} from "./_guards/autorizacija-upravnoOsoblje";
 import { ObavijestiComponent } from './Components/obavijesti/obavijesti.component';
+import { NarudzbeComponent } from './Components/narudzbe/narudzbe.component';
+import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke-profila.component';
 
 /*const appRoutes: Routes=[
   {path: '', component: AppComponent},
@@ -33,7 +35,9 @@ import { ObavijestiComponent } from './Components/obavijesti/obavijesti.componen
     KlijentComponent,
     UpravnoOsobljeComponent,
     HomePageComponent,
-    ObavijestiComponent
+    ObavijestiComponent,
+    NarudzbeComponent,
+    PostavkeProfilaComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,8 @@ import { ObavijestiComponent } from './Components/obavijesti/obavijesti.componen
       {path:'admin',component:AdminComponent},
       {path: 'klijent', component: KlijentComponent,canActivate:[AutorizacijaLogin]},
       {path: 'home', component: HomePageComponent,},
+      {path: 'narudzbe', component: NarudzbeComponent,},
+      {path: 'postavkeProfila', component: PostavkeProfilaComponent,},
       {path: 'obavijesti', component: ObavijestiComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),

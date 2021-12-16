@@ -25,15 +25,15 @@ export class UserService {
       if(data.responseCode==ResponseCode.OK)
       {
       if (data.dataSet != null) {
-        console.log("Logiranje uspješno");
         AutentifikacijaHelper.setLoginInfo(data.dataSet);
        if(data.responseCode=ResponseCode.OK)
        {
-         this.router.navigateByUrl("/home")
+         this.router.navigateByUrl("/home");
        }
       }
       } else {
         localStorage.setItem("auth-token", "");
+        alert("Nije pronađen račun sa unesenim podacima")
         console.log("Neispravan login -> "+data.ResponseMessage);
       }
     });
