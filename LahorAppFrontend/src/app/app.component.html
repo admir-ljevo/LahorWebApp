@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 
 <nav  class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isUserLogin()">
   <a class="navbar-brand" href="https://www.fit.ba"><img src="https://i.ibb.co/RHpLMss/LAHOR-LOGO-rac-final.png"></a>
@@ -18,20 +16,6 @@
       <li *ngIf="loginInfo().role=='UpravnoOsoblje'" class="nav-item">
         <a class="nav-link" routerLink="/narudzbe">Narudzbe</a>
       </li>
-
-
-      <!--<li class="nav-item dropdown"  >
-        <a class="nav-link dropdown-toggle" href="#" id="navbarProbaLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Proba
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarProbaLink">
-          <a class="dropdown-item" routerLink="/proba1">Proba1</a>
-          <a class="dropdown-item" routerLink="/proba2">Proba2</a>
-          <a class="dropdown-item" routerLink="/proba3">Proba3</a>
-          <a class="dropdown-item" routerLink="/proba4">Proba4</a>
-          <a class="dropdown-item" routerLink="/proba5">Proba5</a>
-        </div>
-      </li>-->
 
       <li class="nav-item dropdown" *ngIf="loginInfo().role=='Klijent'" >
         <a class="nav-link dropdown-toggle" href="#" id="navbarSifarniciLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -56,27 +40,4 @@
   </div>
 
 </nav>
-
-
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="!isUserLogin()">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="button" routerLink="/login">Sign in</a>
-      </li>
-      <li class="nav-item">
-        <a class="button">Sign up</a>
-
-      </li>
-      &lt;!&ndash;<li class="nav-item">
-        <a class="nav-link active" *ngIf="isUserLogin()" (click)="logOut()">Log out</a>
-      </li>&ndash;&gt;
-    </ul>
-  </div>
-</nav>-->
->>>>>>> 7313aae6db0a7c8cd26a09fba1484c30fcdee23d
 <router-outlet></router-outlet>
