@@ -1,5 +1,5 @@
-using LahorWebApp.Data;
-using LahorWebApp.Models;
+using Data.Data;
+using Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace LahorWebApp
 {
     public class Startup
     {
+        private readonly string _localOrigin = "_localOrigin";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,14 +36,28 @@ namespace LahorWebApp
             services.Configure<JWTConfig>(Configuration.GetSection("JWTConfig"));
             services.AddDbContext<LahorAppDBContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("LahorWebApp")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<LahorAppDBContext>();
-            services.AddControllersWithViews();
+            //services.AddDefaultIdentity<Korisnik>(options => options.SignIn.RequireConfirmedAccount = false)
+            //    .AddEntityFrameworkStores<LahorAppDBContext>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+            services.AddIdentity<Korisnik, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            }).
+                AddEntityFrameworkStores<LahorAppDBContext>();
+            services.AddControllersWithViews();
+            //                AddNewtonsoftJson(options =>
+            //                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(
                 options =>
                 {
                     var key = Encoding.ASCII.GetBytes(Configuration["JWTConfig:Key"]);
@@ -49,29 +65,60 @@ namespace LahorWebApp
                     var audience = Configuration["JWTConfig:Audience"];
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidateIssuerSigningKey=true,
-                        IssuerSigningKey=new SymmetricSecurityKey(key),
-                        ValidateIssuer=true,
-                        ValidateAudience=true,
-                        RequireExpirationTime=true,
-                        ValidIssuer=issuer,
-                        ValidAudience=audience
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        RequireExpirationTime = true,
+                        ValidIssuer = issuer,
+                        ValidAudience = audience
                     };
                 });
             services.AddControllers();
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
-            services.AddCors();
-        }
 
+            //Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dotnetClaimAuthorization", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Unesite token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference=new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+            });
+            //services.AddCors(opt =>
+            //{
+            //    opt.AddPolicy(_localOrigin, builder =>
+            //    {
+            //        builder.AllowAnyOrigin();
+            //        builder.AllowAnyHeader();
+            //        builder.AllowAnyMethod();
+            //    });
+            //});
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(options =>
-            options.WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader());
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -102,6 +149,7 @@ namespace LahorWebApp
             .AllowAnyHeader()
             .AllowCredentials()
             ); //This needs to set everything allowed
+            app.UseCors(_localOrigin);
             app.UseRouting();
 
             app.UseAuthentication();
@@ -113,7 +161,7 @@ namespace LahorWebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
             });
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LahorWebApp.Migrations
+namespace Data.Migrations
 {
     public partial class updateIdentity : Migration
     {

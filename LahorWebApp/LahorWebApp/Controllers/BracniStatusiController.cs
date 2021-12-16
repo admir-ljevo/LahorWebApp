@@ -1,5 +1,5 @@
-﻿using LahorWebApp.Data;
-using LahorWebApp.Models;
+﻿using Data.Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LahorWebApp.Views
 {
-    [ApiController]
+    
     [Route("[controller]/[action]")]
     public class BracniStatusiController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace LahorWebApp.Views
         }
         [HttpPost]
 
-        public BracniStatus Add(BracniStatusiVM x)
+        public BracniStatus Add(BracniStatusiAddVM x)
         {
             var newBracniStatus = new BracniStatus {
                 Naziv = x.Naziv
