@@ -1,10 +1,8 @@
 <div class="login-form">
-  <form>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h1>Login</h1>
     <div class="content">
       <div class="input-field">
-        <input type="email" placeholder="Email" autocomplete="nope">
         <input type="text" formControlName="username" autocomplete="nope">
       </div>
       <div class="input-field">
@@ -13,15 +11,9 @@
       <a href="#" class="link">Forgot Your Password?</a>
     </div>
     <div class="action">
-<<<<<<< HEAD
       <button routerLink="/registracija-fizicko-lice" routerLinkActive="active">Register</button>
-      <button>Sign in</button>
-=======
-      <button>Register</button>
       <button type="submit" [disabled]="!loginForm.valid">Sign in</button>
->>>>>>> 7313aae6db0a7c8cd26a09fba1484c30fcdee23d
     </div>
-  </form>
 </div>
 
 
