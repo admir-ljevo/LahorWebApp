@@ -5,19 +5,16 @@ import {Router} from "@angular/router";
 import {AutentifikacijaHelper} from "./_helpers/autentifikacijaHelper";
 import {LoginInformation} from "./_helpers/loginInformacije";
 
+
+declare function porukaSuccess(a: string):any;
+declare function porukaError(a: string):any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-<<<<<<< HEAD
-    title(title: any) {
-        throw new Error('Method not implemented.');
-    }
-=======
 title='LahorAppFronted'
->>>>>>> 7313aae6db0a7c8cd26a09fba1484c30fcdee23d
 
 constructor(private router:Router) {
 
