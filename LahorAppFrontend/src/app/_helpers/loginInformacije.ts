@@ -1,7 +1,7 @@
 export class LoginInformation{
-  KorisnikId:string;
-  Naziv:string;
-  SlikaKorisnika:string;
-  Token:string;
-  Role:string;
+  korisnikId:string;
+  naziv:string;
+  slikaKorisnika:string;
+  token:string;
+  role:string;
 }

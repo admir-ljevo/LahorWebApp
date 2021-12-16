@@ -47,7 +47,7 @@ namespace LahorWebApp.Controllers
                     return new ResponseModel(ResponseCode.OK, "Obavijest uspješno dodana",
                     newObavijest);
                 }
-                return new ResponseModel(ResponseCode.Error, "Obavijest->null",
+                return new ResponseModel(ResponseCode.Error, "Obavijest nije pronađena",
                     newObavijest);
             }
             catch (Exception ex)
@@ -145,6 +145,31 @@ namespace LahorWebApp.Controllers
 
             return new ResponseModel(ResponseCode.OK, "Obavijest uspješno " +
                 "modifikovana", obavijest);
+        }
+
+        [HttpGet]
+        public ResponseModel OrderByDescendingDatum()
+        {
+            try
+            {
+                var obavijesti = dBContext.Obavještenja.Select(o => new ObavijestGetVM
+                {
+                    AutorId = o.AutorId,
+                    Naslov = o.Naslov,
+                    Sadrzaj = o.Sadrzaj,
+                    Slika = o.SlikaObavještenja,
+                    DatumKreiranja = o.DatumKreiranja,
+                    JavnaObavijest = o.JavnaObavijest
+                }).ToList().OrderByDescending(ob=>ob.DatumKreiranja);
+                return new ResponseModel(ResponseCode.OK,
+                    "Obavještenja uspješno sortirana po datumu", obavijesti);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error, "Greška prilikom preuzimanja" +
+                    "obavještenja. Greška -> " + ex.Message, null);
+            }
         }
     }
 }

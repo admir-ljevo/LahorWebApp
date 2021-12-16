@@ -1,6 +1,5 @@
 ﻿using Data.Enum;
 using Data.Models;
-using Data.Models;
 using LahorWebApp.ViewModels;
 using LahorWebApp.Views;
 using Microsoft.AspNetCore.Authentication;

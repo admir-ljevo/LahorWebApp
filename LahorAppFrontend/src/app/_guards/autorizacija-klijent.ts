@@ -9,7 +9,7 @@ export class AutorizacijaKlijent implements CanActivate{
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (AutentifikacijaHelper.getLoginInfo().Role=="Klijent")
+    if (AutentifikacijaHelper.getLoginInfo().role=="Klijent")
       return true;
 
     // not logged in so redirect to login page with the return url

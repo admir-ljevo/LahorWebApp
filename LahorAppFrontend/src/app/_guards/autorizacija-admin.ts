@@ -8,7 +8,7 @@ export class AutorizacijaAdmin implements CanActivate{
   constructor(private router:Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)  {
-    if(AutentifikacijaHelper.getLoginInfo().Role=="Admin")
+    if(AutentifikacijaHelper.getLoginInfo().role=="Admin")
       return true;
     // not logged in so redirect to login page with the return url
     this.router.navigate([''], { queryParams: { returnUrl: state.url }});

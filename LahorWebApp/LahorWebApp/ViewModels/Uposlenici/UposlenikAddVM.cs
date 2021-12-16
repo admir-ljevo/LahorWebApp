@@ -28,7 +28,7 @@ namespace LahorWebApp.Views
         public string Email { get; set; }
         public string KorisnickoIme { get; set; }
         public string Lozinka { get; set; }
-        public virtual VoazckaDozvolaKategorija VoazckaDozvolaKategorija { get; set; }
+        public virtual VozackaDozvolaKategorija VoazckaDozvolaKategorija { get; set; }
         public string DatumZaposlenja { get; set; }
         public string IznosPlate { get; set; }
         public bool Aktivan { get; set; }

@@ -1,0 +1,23 @@
+<p>obavijesti works!</p>
+
+<table class="table table-striped">
+  <tr>
+    <th>Naslov</th>
+    <th>Autor</th>
+    <th>Javna obavijest</th>
+    <th>Datum kreiranja</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let o of obavijestiList">
+    <td>{{o.naslov}}</td>
+    <td>{{o.autorId}}</td>
+    <td>{{o.javnaObavijest}}</td>
+    <td>{{o.datumKreiranja}}</td>
+    <td>
+      <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'">Obrisi</button>
+      <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje'">Detalji</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -13,11 +13,11 @@ namespace LahorWebApp.ViewModels
             this.KorisnikId = korisnik.Id;
             this.Role = role;
             this.Naziv = korisnik.Naziv;
-            //this.SlikaKorisnika = korisnik.Slika;
+            this.slikaKorisnika = korisnik.Slika;
         }
         public string KorisnikId { get; set; }
         public string Naziv { get; set; }
-        public string SlikaKorisnika { get; set; }
+        public string slikaKorisnika { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }
     }

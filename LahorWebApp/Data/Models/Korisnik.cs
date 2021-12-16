@@ -15,7 +15,7 @@ namespace Data.Models
         public string BrojTelefona { get; set; }
         public DateTime DatumDodavanja { get; set; }
         public string Adresa { get; set; }
-        //public string Slika  { get; set; }
+        public string Slika  { get; set; }
 
         //public Uposlenik Uposlenik { get; set; }
         //public int UposlenikID { get; set; }

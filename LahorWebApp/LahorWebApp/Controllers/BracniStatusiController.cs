@@ -20,7 +20,7 @@ namespace LahorWebApp.Views
         }
         [HttpPost]
 
-        public BracniStatus Add(BracniStatusiVM x)
+        public BracniStatus Add(BracniStatusiAddVM x)
         {
             var newBracniStatus = new BracniStatus {
                 Naziv = x.Naziv

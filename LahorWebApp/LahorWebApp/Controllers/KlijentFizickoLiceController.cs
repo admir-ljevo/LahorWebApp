@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Helpers;
 
 namespace LahorWebApp.Controllers
 {
@@ -57,6 +58,7 @@ namespace LahorWebApp.Controllers
                     EmailAdresa = x.Email,
                     BrojTelefona = x.BrojTelefona,
                     DatumDodavanja = DateTime.Now,
+                    Slika = Config.SlikeURL + "empty.png",
                     Adresa = x.Adresa,
                     Naziv = x.Ime + " "+x.Prezime,
                     isKlijentFizickoLice = true,

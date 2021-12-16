@@ -16,7 +16,7 @@ import {AutorizacijaAdmin} from "./_guards/autorizacija-admin";
 import {AutorizacijaKlijent} from "./_guards/autorizacija-klijent";
 import {AutorizacijaUposlenik} from "./_guards/autorizacija-uposlenik";
 import {AutorizacijaUpravnoOsoblje} from "./_guards/autorizacija-upravnoOsoblje";
-import { ObavijestiComponent } from './Components/home-page/obavijesti/obavijesti.component';
+import { ObavijestiComponent } from './Components/obavijesti/obavijesti.component';
 
 /*const appRoutes: Routes=[
   {path: '', component: AppComponent},
@@ -43,11 +43,8 @@ import { ObavijestiComponent } from './Components/home-page/obavijesti/obavijest
       {path: 'upravnoOsoblje', component: UpravnoOsobljeComponent},
       {path:'admin',component:AdminComponent},
       {path: 'klijent', component: KlijentComponent,canActivate:[AutorizacijaLogin]},
-      {path: 'home', component: HomePageComponent,
-        children:[
-          {path: 'obavijesti', component: ObavijestiComponent},
-        ]
-      },
+      {path: 'home', component: HomePageComponent,},
+      {path: 'obavijesti', component: ObavijestiComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,

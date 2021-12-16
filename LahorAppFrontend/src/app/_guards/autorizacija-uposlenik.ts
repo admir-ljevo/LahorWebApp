@@ -9,7 +9,7 @@ export class AutorizacijaUposlenik implements CanActivate{
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    if (AutentifikacijaHelper.getLoginInfo().Role=="Uposlenik")
+    if (AutentifikacijaHelper.getLoginInfo().role=="Uposlenik")
       return true;
 
     // not logged in so redirect to login page with the return url

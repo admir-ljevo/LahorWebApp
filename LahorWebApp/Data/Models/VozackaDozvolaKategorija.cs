@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Data.Models
 {
     [Table("VozackaDozvolaKategorija")]
-    public class VoazckaDozvolaKategorija
+    public class VozackaDozvolaKategorija
     {
         public int Id { get; set; }
         public string Naziv { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,21 +15,29 @@ namespace Data.Models
         public string StrucnaSprema { get; set; }
         public string MjestoRodjenja { get; set; }
         public string MjestoPrebivalista { get; set; }
-        public Spol Spol { get; set; }
+
+        [ForeignKey(nameof(Spol))]
         public int SpolID { get; set; }
-        public BracniStatus BracniStatus { get; set; }
+        public Spol Spol { get; set; }
+
+        [ForeignKey(nameof(BracniStatus))]
         public int BracniStatusID { get; set; }
+        public BracniStatus BracniStatus { get; set; }
         public string Nacionalost { get; set; }
         public string Drzavljanstvo { get; set; }
-        public byte[] Slika { get; set; }
+        public string Slika { get; set; }
         public bool RadnoIskustvo { get; set; }
         public string Biografija { get; set; }
+
+        [ForeignKey(nameof(Pozicija))]
+        public int PozicijaId { get; set; }
         public Pozicija Pozicija { get; set; }
-        public int PozicijaID { get; set; }
-        public VoazckaDozvolaKategorija VoazckaDozvolaKategorija { get; set; }
+
+        [ForeignKey(nameof(VozackaDozvolaKategorija))]
         public int VoazckaDozvolaKategorijaID { get; set; }
+        public VozackaDozvolaKategorija VozackaDozvolaKategorija { get; set; }
         public DateTime DatumZaposlenja { get; set; }
-        public string IznosPlate { get; set; }
+        public float IznosPlate { get; set; }
         public bool Aktivan { get; set; }
     }
 }
