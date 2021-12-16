@@ -1,0 +1,51 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Roboto,sans-serif;
+  font-weight: normal;
+  font-size: 24px;
+}
+.content{
+  height: 100%;
+  width: 100%;
+  background-color: #424242;
+  position: relative;
+}
+.lahor_logo{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  margin-top: 2.5%;
+  margin-left: 3.5%;
+}
+.kvadrat{
+  background-color: #28a9e1;
+  height: 50%;
+  width: 40%;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-left: 30%;
+}
+p{
+  color: white;
+  text-align: center;
+  padding-top: 20%;
+  padding-bottom: 5%;
+}
+button{
+  padding: 10px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #e5e5e5;
+  color: #2fc3ea;
+  display: flex;
+  align-items: center;
+  margin-left: 25%;
+}
+button:hover{
+  border: 1px solid black;
+  cursor: pointer;
+}

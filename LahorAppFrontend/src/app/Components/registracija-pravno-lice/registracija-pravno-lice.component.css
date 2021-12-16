@@ -1,0 +1,135 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: roboto, serif;
+  font-weight: normal;
+  font-size: 24px;
+}
+.container{
+  height: 100%;
+  width: 100%;
+  background-color: #424242;
+  position: relative;
+}
+.home-button{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  margin-left: 85%;
+  margin-top: 2.5%;
+
+}
+.home-button:hover{
+  cursor: pointer;
+}
+.lahor_logo{
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  margin-top: 2.5%;
+  margin-left: 3.5%;
+}
+.f-button, .p-button {
+  height: 100%;
+  width: 50%;
+  background-color: #28a9e1;
+  color: white;
+  border-radius: 10px;
+  border: 0;
+
+}
+.f-button:hover{
+  cursor: pointer;
+  border: 1px solid black;
+}
+.p-button {
+  background-color: #2fc3ea;
+}
+.fizicko-pravno{
+  margin-left: auto;
+  margin-right: auto;
+  height: 75px;
+  width: 50%;
+  border-radius: 10px;
+  padding-top: 40px;
+}
+
+form {
+  display: block;
+  width: 100%;
+  position: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+input, select{
+  border-radius: 10px;
+  height: 50px;
+  background-color: #2fc3ea;
+  color: white;
+  margin: 20px;
+
+}
+input:hover, select:hover{
+  border: 1px solid black;
+}
+::placeholder {
+  color: #e5e5e5;
+  text-align: left;
+  padding-left: 15px;
+  font-size: 20px;
+}
+.form-group {
+  height: 450px;
+  width: 90%;
+  background-color: #28a9e1;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  position: relative;
+}
+.registracija{
+  background-color: #e5e5e5;
+  color: #2fc3ea;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  position: absolute;
+  margin-top: 200px;
+  margin-left: -200px;
+}
+.registracija:hover{
+  border: 1px solid black;
+}
+.inputi-1{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  float: left;
+}
+.inputi-2{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  float: left;
+}
+.inputi-3{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  float: left;
+}
+select:required:invalid {
+  color: #e5e5e5;
+}
+option[value=""][disabled] {
+  display: none;
+}
+select {
+  color: #e5e5e5;
+  font-size: 20px;
+  padding-left: 15px;
+}
+
