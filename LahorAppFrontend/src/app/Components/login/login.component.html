@@ -1,20 +1,29 @@
+<div class="home-container">
+  <a href="/"><img class="home-button" src="../assets/Slike/home-button.png"></a>
+</div>
+<div class="container">
+<div class="slika">
+  <img class="logo" src="../assets/Slike/lahor-logo-login.png" alt="">
+</div>
 <div class="login-form">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h1>Login</h1>
+    <h1>Dobrodošli</h1>
     <div class="content">
       <div class="input-field">
-        <input type="text" placeholder="UserName" formControlName="username" autocomplete="nope">
+        <input type="text" placeholder="Korisničko ime" formControlName="username" autocomplete="nope">
       </div>
       <div class="input-field">
-        <input type="password" placeholder="Password" formControlName="password" autocomplete="new-password">
+        <input type="password" placeholder="Lozinka" formControlName="password" autocomplete="new-password">
       </div>
-      <a href="#" class="link">Forgot Your Password?</a>
+      <a href="#" class="link">Zaboravili ste lozinku?</a>
     </div>
     <div class="action">
-      <button routerLink="/registracija-fizicko-lice" routerLinkActive="active">Register</button>
-      <button type="submit" [disabled]="!loginForm.valid">Sign in</button>
+      <button routerLink="/registracija-fizicko-lice" routerLinkActive="active">Registracija</button>
+      <button id="btn-login" type="submit" [disabled]="!loginForm.valid">Prijava</button>
     </div>
   </form>
 </div>
+</div>
+
 
 
