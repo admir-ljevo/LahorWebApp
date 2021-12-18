@@ -4,4 +4,5 @@ export class LoginInformation{
   slikaKorisnika:string;
   token:string;
   role:string;
+  id:Number;
 }

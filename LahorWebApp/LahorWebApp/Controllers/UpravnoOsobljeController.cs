@@ -52,7 +52,7 @@ namespace LahorWebApp.Controllers
                 if (!await _roleManager.RoleExistsAsync("UpravnoOsoblje"))
                 {
                     return await Task.FromResult(new ResponseModel(
-                        ResponseCode.Error,"Ne postoji rola",null));
+                        ResponseCode.Error, "Ne postoji rola", null));
                 }
                 var user = new Korisnik
                 {
@@ -78,70 +78,60 @@ namespace LahorWebApp.Controllers
                         DatumRodjenja = x.DatumRodjenja,
                         SpolID = x.SpolId,
                         Aktivan = x.Aktivan,
-                        Titula=x.Titula,
-                        PozicijaId=x.PozicijaId,
-                        JMBG=x.JMBG,
-                        StrucnaSprema=x.StrucnaSprema,
-                        MjestoRodjenja=x.MjestoRodjenja,
-                        MjestoPrebivalista=x.MjestoPrebivalista,
-                        BracniStatusID=x.BracniStatusID,
-                        Nacionalost=x.Nacionalost,
-                        Drzavljanstvo=x.Drzavljanstvo,
-                        RadnoIskustvo=x.RadnoIskustvo,
-                        Biografija=x.Biografija,
-                        VoazckaDozvolaKategorijaID=x.VozackaKategorijaId,
-                        DatumZaposlenja=x.DatumZaposlenja,
-                        IznosPlate=x.IznosPlate,
+                        Titula = x.Titula,
+                        PozicijaId = x.PozicijaId,
+                        JMBG = x.JMBG,
+                        StrucnaSprema = x.StrucnaSprema,
+                        MjestoRodjenja = x.MjestoRodjenja,
+                        MjestoPrebivalista = x.MjestoPrebivalista,
+                        BracniStatusID = x.BracniStatusID,
+                        Nacionalost = x.Nacionalost,
+                        Drzavljanstvo = x.Drzavljanstvo,
+                        RadnoIskustvo = x.RadnoIskustvo,
+                        Biografija = x.Biografija,
+                        VoazckaDozvolaKategorijaID = x.VozackaKategorijaId,
+                        DatumZaposlenja = x.DatumZaposlenja,
+                        IznosPlate = x.IznosPlate,
                         KorisnikID = user.Id
                     };
                     dBContext.Add(newUpravnoOsoblje);
                     dBContext.SaveChanges();
                     return await Task.FromResult(new ResponseModel(ResponseCode.OK,
-                        "Upravno osoblje zaposlenik uspješno dodan",newUpravnoOsoblje));
+                        "Upravno osoblje zaposlenik uspješno dodan", newUpravnoOsoblje));
                 }
                 return await Task.FromResult(new ResponseModel(
-                    ResponseCode.Error,"Korisnik nije kreiran",null));
+                    ResponseCode.Error, "Korisnik nije kreiran", null));
             }
             catch (Exception ex)
             {
 
                 return await Task.FromResult(new ResponseModel(
-                    ResponseCode.Error, "Greška -> "+ex.Message, null));
+                    ResponseCode.Error, "Greška -> " + ex.Message, null));
             }
         }
-        //[HttpPost]
 
-        //public UpravnoOsoblje Add(UpravnoOsobljeAddVM x)
-        //{
-        //    var newUpravnoOsoblje = new UpravnoOsoblje
-        //    {
-        //        Titula = x.Titula,
-        //        Pozicija = x.Pozicija,
-        //        Ime = x.Ime,
-        //        Prezime = x.Prezime,
-        //        DatumRodjenja = x.DatumRodjenja,
-        //        JMBG = x.JMBG,
-        //        StrucnaSprema = x.StrucnaSprema,
-        //        MjestoRodjenja = x.MjestoRodjenja,
-        //        MjestoPrebivalista = x.MjestoPrebivalista,
-        //        Spol = x.Spol,
-        //        BracniStatus = x.BracniStatus,
-        //        Nacionalost = x.Nacionalost,
-        //        Drzavljanstvo = x.Drzavljanstvo,
-        //        RadnoIskustvo = x.RadnoIskustvo,
-        //        Biografija = x.Biografija,
-        //        BrojTelefona = x.BrojTelefona,
-        //        Email = x.Email,
-        //        KorisnickoIme = x.KorisnickoIme,
-        //        Lozinka = x.Lozinka,
-        //        VoazckaDozvolaKategorija = x.VoazckaDozvolaKategorija,
-        //        DatumZaposlenja = x.DatumZaposlenja,
-        //        IznosPlate = x.IznosPlate,
-        //        Aktivan = x.Aktivan
-        //    };
-        //    dBContext.Add(newUpravnoOsoblje);
-        //    dBContext.SaveChanges();
-        //    return newUpravnoOsoblje;
-        //}
+        [HttpGet("{id}")]
+        public ResponseModel getUpravnoOsobljeById(string id)
+        {
+            try
+            {
+                    var upravnoOsoblje = dBContext.UpravnoOsoblje.Where(uo =>
+                      uo.KorisnikID == id).FirstOrDefault();
+
+                    if (upravnoOsoblje != null)
+                        return new ResponseModel(ResponseCode.OK,
+                            "Upravno osoblje uposlenik uspješno preuzet", upravnoOsoblje);
+                    else
+                    {
+                        return new ResponseModel(ResponseCode.Error,
+                   "Upravno osoblje uposlenik nije pronađen", null);
+                    }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error,
+                    "Korisnik nije preuzet"+ ex.InnerException, null);
+            }
+        }
     }
 }

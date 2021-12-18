@@ -1,0 +1,21 @@
+<div class="main">
+  <form class="container">
+    <div class="form-group">
+      <label class="form-label">Naslov</label>
+     <input type="text" class="form-control" [(ngModel)]="this.odabranaObavijest.naslov" name="naslov" placeholder="Unesite naslov obavijesti*">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Autor</label>
+      <input type="text" class="form-control" [(ngModel)]="this.odabranaObavijest.autorId" name="autorId" placeholder="AutoriId">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sadrzaj</label>
+      <textarea class="form-control" [(ngModel)]="this.odabranaObavijest.sadrzaj" name="sadrzaj"rows="4"></textarea>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="this.odabranaObavijest.javnaObavijest" name="javnaObavijest">
+      <label class="form-check-label" >Javna obavijest</label>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="dodajObavijest()">Dodaj</button>
+  </form>
+</div>

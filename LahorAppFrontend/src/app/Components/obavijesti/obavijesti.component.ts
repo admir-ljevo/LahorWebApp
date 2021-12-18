@@ -14,18 +14,51 @@ import {LoginInformation} from "../../_helpers/loginInformacije";
 export class ObavijestiComponent implements OnInit {
   constructor(private router:Router,private obavijestiService:ObavijestiServices) { }
 
-  public obavijestiList:any;
-  ngOnInit(): void {
-    this.getAllObavijesti();
+  obavijestiList:any;
+  filterObavList:any;
+  odabranaObavijest:any;
+  naslovPretraga:any;
+  ngOnInit():void {
+       this.PreuzmiSveObavjesti();
   }
-  getAllObavijesti()
+  PreuzmiSveObavjesti()
   {
     this.obavijestiService.getAllObavijesti().subscribe((data: Obavijest[]) => {
       this.obavijestiList = data;
+      this.filterObavList=this.obavijestiList;
   });
-}
+  }
+
+  filter()
+  {
+    if(this.naslovPretraga!="")
+    {
+   this.filterObavList= this.obavijestiList.filter((x:any)=>{
+     return x.naslov.toLocaleLowerCase().match(this.naslovPretraga.toLocaleLowerCase());
+   });
+    }
+    else if(this.naslovPretraga=="")
+    {
+      this.ngOnInit();
+    }
+  }
+
   loginInfo():LoginInformation
   {
     return AutentifikacijaHelper.getLoginInfo();
+  }
+
+  detalji(o:any)
+  {
+    this.odabranaObavijest=o;
+    this.odabranaObavijest.prikazi=true;
+  }
+
+  obrisi(o: any) {
+    this.obavijestiService.DeleteObavijest(o);
+    const index = this.obavijestiList.indexOf(o);
+    if (index > -1) {
+      this.obavijestiList.splice(index, 1);
+    }
   }
 }

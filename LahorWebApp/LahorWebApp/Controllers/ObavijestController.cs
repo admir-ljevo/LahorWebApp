@@ -60,19 +60,12 @@ namespace LahorWebApp.Controllers
 
         //[Authorize(Roles = "Admin,UpravnoOsoblje,Uposlenik")]
         [HttpGet]
-        public ResponseModel GetAllObavijesti()
+        public ResponseModel GetAllObavijesti(string naslov)
         {
             try
             {
-                var obavijesti = dBContext.Obavještenja.Select(o => new ObavijestGetVM
-                {
-                    AutorId = o.AutorId,
-                    Naslov = o.Naslov,
-                    Sadrzaj = o.Sadrzaj,
-                    Slika = o.SlikaObavještenja,
-                    DatumKreiranja = o.DatumKreiranja,
-                    JavnaObavijest = o.JavnaObavijest
-                }).ToList();
+                var obavijesti = dBContext.Obavještenja.Where(
+                    o=>naslov==null || (o.Naslov.ToLower().StartsWith(naslov))).ToList();
                 return new ResponseModel(ResponseCode.OK,
                     "Obavještenja uspješno preuzeta", obavijesti);
             }
@@ -125,8 +118,8 @@ namespace LahorWebApp.Controllers
         [HttpPost("{id}")]
         public ResponseModel UpdateObavijest(int id,[FromBody] ObavijestUpdateVM model)
         {
-            if (id == null)
-                return new ResponseModel(ResponseCode.Error, "id je null", null);
+            if (id == 0)
+                return new ResponseModel(ResponseCode.Error, "id ne postoji", null);
 
             Obavijest obavijest = dBContext.Obavještenja.Where(o => o.Id == id).FirstOrDefault();
 
@@ -169,6 +162,33 @@ namespace LahorWebApp.Controllers
 
                 return new ResponseModel(ResponseCode.Error, "Greška prilikom preuzimanja" +
                     "obavještenja. Greška -> " + ex.Message, null);
+            }
+        }
+
+        [HttpPost("{id}")]
+        public ResponseModel Obrisi(int id)
+        {
+            try
+            {
+                var obavijest = dBContext.Obavještenja.Where(o => o.Id == id).FirstOrDefault();
+                if(obavijest!=null)
+                {
+                    ObavijestDeleteVM x = new ObavijestDeleteVM
+                    {
+                        Naslov = obavijest.Naslov
+                    };
+                    dBContext.Obavještenja.Remove(obavijest);
+                    dBContext.SaveChanges();
+
+                    return new ResponseModel(ResponseCode.OK, "Obavijest uspješno obrisana",
+                        x);
+                }
+                return new ResponseModel(ResponseCode.Error, "Obavijest nije pronađena", null);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " + ex.InnerException,
+                    null);
             }
         }
     }

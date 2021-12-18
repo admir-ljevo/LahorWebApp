@@ -1,4 +1,5 @@
-﻿using Data.Enum;
+﻿using Data.Data;
+using Data.Enum;
 using Data.Models;
 using LahorWebApp.ViewModels;
 using LahorWebApp.Views;
@@ -25,6 +26,7 @@ namespace LahorWebApp.Controllers
     [Route("[controller]/[action]")]
     public class UserController:ControllerBase
     {
+        private readonly LahorAppDBContext dbContext;
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<Korisnik> _userManager;
         private readonly SignInManager<Korisnik> _signInManager;
@@ -35,13 +37,15 @@ namespace LahorWebApp.Controllers
              UserManager<Korisnik> userManager,
              SignInManager<Korisnik> signInManager,
              RoleManager<IdentityRole> roleManager,
-        IOptions<JWTConfig> jwtConfig)
+        IOptions<JWTConfig> jwtConfig,
+             LahorAppDBContext dbContext)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _jwtConfig = jwtConfig.Value;
+            this.dbContext = dbContext;
         }
 
         [HttpPost]
@@ -111,7 +115,11 @@ namespace LahorWebApp.Controllers
                     {
                         var appUser = await _userManager.FindByNameAsync(model.Username);
                         var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
-                        var user = new LoginInformation(appUser,role);
+                        int id = dbContext.UpravnoOsoblje.ToList()
+                            .Where(up => up.KorisnikID ==
+                          appUser.Id).ToList().FirstOrDefault().Id;
+                        var user = new LoginInformation(appUser,role,id);
+
                         user.Token = GenerateToken(appUser,role);
                         return await Task.FromResult(new ResponseModel(
                             ResponseCode.OK,"Uspješna prijava",user));

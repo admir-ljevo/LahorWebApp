@@ -1,5 +1,14 @@
-<p>obavijesti works!</p>
 
+<div class="klasa1">
+  <div style="width:100%;height:100px;display: flex; flex-direction: row" >
+    <div class="mb-3" style="margin-top:31px; width: 20%;">
+        <button class="btn btn-primary" routerLink="/dodajObavijest">Dodaj obavijest</button>
+      </div>
+    <div class="mb-3" style="width:70%; margin-left:20%;">
+      <label class="form-label">Unesite naslov za pretragu</label>
+      <input type="text" class="form-control" [(ngModel)]="naslovPretraga" (input)="filter()" placeholder="Naslov">
+    </div>
+  </div>
 <table class="table table-striped">
   <tr>
     <th>Naslov</th>
@@ -9,15 +18,18 @@
     <th>Akcija</th>
   </tr>
   <tbody>
-  <tr *ngFor="let o of obavijestiList">
+  <tr *ngFor="let o of filterObavList">
     <td>{{o.naslov}}</td>
     <td>{{o.autorId}}</td>
     <td>{{o.javnaObavijest}}</td>
     <td>{{o.datumKreiranja}}</td>
     <td>
-      <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'">Obrisi</button>
-      <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje'">Detalji</button>
+      <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(o)">Obrisi</button>
+      <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="detalji(o)">Detalji</button>
     </td>
   </tr>
   </tbody>
 </table>
+</div>
+
+<app-pregled-edit-obavijesti [urediObavijest] = "odabranaObavijest"></app-pregled-edit-obavijesti>

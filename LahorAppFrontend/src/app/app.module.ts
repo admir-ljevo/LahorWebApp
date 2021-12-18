@@ -22,12 +22,12 @@ import {AutorizacijaUpravnoOsoblje} from "./_guards/autorizacija-upravnoOsoblje"
 import { ObavijestiComponent } from './Components/obavijesti/obavijesti.component';
 import { NarudzbeComponent } from './Components/narudzbe/narudzbe.component';
 import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke-profila.component';
-
-
+import {DodajObavijestComponent} from "./Components/dodaj-obavijest/dodaj-obavijest.component";
+import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-edit-obavijesti/pregled-edit-obavijesti.component';
 
 
 @NgModule({
-   
+
   declarations: [
     AppComponent,
     LoginComponent,
@@ -41,7 +41,9 @@ import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke
     HomePageComponent,
     ObavijestiComponent,
     NarudzbeComponent,
-    PostavkeProfilaComponent
+    PostavkeProfilaComponent,
+    DodajObavijestComponent,
+    PregledEditObavijestiComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,8 @@ import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke
       {path: 'narudzbe', component: NarudzbeComponent,},
       {path: 'postavkeProfila', component: PostavkeProfilaComponent,},
       {path: 'obavijesti', component: ObavijestiComponent},
+      {path: 'dodajObavijest', component: DodajObavijestComponent
+      },
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,

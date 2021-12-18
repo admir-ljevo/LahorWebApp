@@ -7,6 +7,7 @@ namespace LahorWebApp.ViewModels
 {
     public class ObavijestGetVM
     {
+        public int Id { get; set; }
         public string Naslov { get; set; }
         public int AutorId { get; set; }
         public string Sadrzaj { get; set; }
