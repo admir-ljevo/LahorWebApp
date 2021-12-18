@@ -24,7 +24,9 @@ import { NarudzbeComponent } from './Components/narudzbe/narudzbe.component';
 import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke-profila.component';
 import {DodajObavijestComponent} from "./Components/dodaj-obavijest/dodaj-obavijest.component";
 import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-edit-obavijesti/pregled-edit-obavijesti.component';
-
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {Ng2OrderModule} from "ng2-order-pipe";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
 
@@ -47,6 +49,9 @@ import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-
   ],
   imports: [
     BrowserModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       { path: 'registracija-fizicko-lice', component: RegistracijaFizickoLiceComponent },

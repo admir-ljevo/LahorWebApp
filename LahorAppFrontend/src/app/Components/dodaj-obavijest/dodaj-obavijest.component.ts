@@ -20,7 +20,7 @@ export class DodajObavijestComponent implements OnInit {
 
   }
   public odabranaObavijest:Obavijest=new Obavijest(0,"",AutentifikacijaHelper.getLoginInfo().id,
-    "",false,"",new Date(),false);
+    "",false,"","",false);
 
   ngOnInit(): void {
   }
