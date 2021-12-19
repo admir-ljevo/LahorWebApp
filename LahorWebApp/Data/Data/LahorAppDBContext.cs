@@ -57,6 +57,7 @@ namespace Data.Data
         public DbSet<Obavijest> Obavještenja { get; set; }
         public DbSet<VrstaUsluge> VrsteUsluga { get; set; }
         public DbSet<Usluga> Usluge { get; set; }
-
+        public DbSet<NarudzbaOnlineKlijentFizicko> OnlineNarduzbeKlijentiFizickoLice { get; set; }
+        public DbSet<NarudzbaOnlineKlijentPravno> OnlineNarduzbeKlijentiPravnoLice { get; set; }
     }
 }
