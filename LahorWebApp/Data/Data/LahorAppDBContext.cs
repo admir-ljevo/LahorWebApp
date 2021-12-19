@@ -55,6 +55,8 @@ namespace Data.Data
         public DbSet<Pozicija>Pozicije { get; set; }
         public DbSet<Korisnik> Korisnici { get; set; }
         public DbSet<Obavijest> Obavještenja { get; set; }
+        public DbSet<VrstaUsluge> VrsteUsluga { get; set; }
+        public DbSet<Usluga> Usluge { get; set; }
 
     }
 }

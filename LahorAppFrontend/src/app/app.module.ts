@@ -27,6 +27,8 @@ import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
+import { OnlineNarudzbeComponent } from './Components/online-narudzbe/online-narudzbe.component';
+import { CjenovnikComponent } from './Components/cjenovnik/cjenovnik.component';
 
 @NgModule({
 
@@ -45,7 +47,9 @@ import {NgxPaginationModule} from "ngx-pagination";
     NarudzbeComponent,
     PostavkeProfilaComponent,
     DodajObavijestComponent,
-    PregledEditObavijestiComponent
+    PregledEditObavijestiComponent,
+    OnlineNarudzbeComponent,
+    CjenovnikComponent
   ],
   imports: [
     BrowserModule,
@@ -65,8 +69,9 @@ import {NgxPaginationModule} from "ngx-pagination";
       {path: 'narudzbe', component: NarudzbeComponent,},
       {path: 'postavkeProfila', component: PostavkeProfilaComponent,},
       {path: 'obavijesti', component: ObavijestiComponent},
-      {path: 'dodajObavijest', component: DodajObavijestComponent
-      },
+      {path: 'dodajObavijest', component: DodajObavijestComponent},
+      {path: 'onlineNarudzbe', component: OnlineNarudzbeComponent},
+      {path: 'cjenovnik', component: CjenovnikComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,
