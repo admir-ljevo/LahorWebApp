@@ -16,6 +16,7 @@ namespace Data.Data
         {
 
         }
+        }      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var cascadeFK = modelBuilder.Model.GetEntityTypes()
@@ -52,7 +53,6 @@ namespace Data.Data
         public DbSet<KlijentFizickoLice> KlijentiFizickoLice { get; set; }
         public DbSet<KlijentPravnoLice> KlijentiPravnoLice { get; set; }
         public DbSet<VozackaDozvolaKategorija> VoazckaDozvolaKategorije { get; set; }
-        public DbSet<Pozicija>Pozicije { get; set; }
         public DbSet<Korisnik> Korisnici { get; set; }
         public DbSet<Obavijest> Obavještenja { get; set; }
 
