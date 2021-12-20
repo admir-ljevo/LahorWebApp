@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Data.Models
 {
     [Table("OnlineNarduzbeKlijentiFizickoLice")]
-    public class NarudzbaOnlineKlijentFizicko
+    public class NarudzbaOnlineKlijentFizicko:Narudzba
     {
         [Key]
         public int Id { get; set; }

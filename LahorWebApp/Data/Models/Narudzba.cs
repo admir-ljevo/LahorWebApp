@@ -14,7 +14,6 @@ namespace Data.Models
         public bool Isporucena { get; set; }
         public float Cijena { get; set; }
         public float Kolicina { get; set; }
-        public float KolicinaVrsteUsluge { get; set; }
         public string Opis { get; set; }
     }
 }
