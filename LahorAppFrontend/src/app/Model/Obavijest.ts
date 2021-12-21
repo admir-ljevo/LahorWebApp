@@ -8,11 +8,11 @@ export class Obavijest{
   public sadrzaj:string=" ";
   public javnaObavijest:boolean=false;
   public slika:string=" ";
-  public datumKreiranja:Date;
+  public datumKreiranja:any;
   public prikazi:boolean=false;
 
   constructor(id:Number,naslov:string,autorId:Number,sadrzaj:string,javnaObavijest:boolean,
-              slika:string,datumKreiranja:Date,prikazi:boolean) {
+              slika:string,datumKreiranja:any,prikazi:boolean) {
 
     this.id=id;
     this.naslov=naslov;

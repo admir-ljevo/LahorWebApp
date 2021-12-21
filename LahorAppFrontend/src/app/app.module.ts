@@ -24,7 +24,11 @@ import { NarudzbeComponent } from './Components/narudzbe/narudzbe.component';
 import { PostavkeProfilaComponent } from './Components/postavke-profila/postavke-profila.component';
 import {DodajObavijestComponent} from "./Components/dodaj-obavijest/dodaj-obavijest.component";
 import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-edit-obavijesti/pregled-edit-obavijesti.component';
-
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {Ng2OrderModule} from "ng2-order-pipe";
+import {NgxPaginationModule} from "ngx-pagination";
+import { OnlineNarudzbeComponent } from './Components/online-narudzbe/online-narudzbe.component';
+import { CjenovnikComponent } from './Components/cjenovnik/cjenovnik.component';
 
 @NgModule({
 
@@ -43,10 +47,15 @@ import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-
     NarudzbeComponent,
     PostavkeProfilaComponent,
     DodajObavijestComponent,
-    PregledEditObavijestiComponent
+    PregledEditObavijestiComponent,
+    OnlineNarudzbeComponent,
+    CjenovnikComponent
   ],
   imports: [
     BrowserModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       { path: 'registracija-fizicko-lice', component: RegistracijaFizickoLiceComponent },
@@ -60,8 +69,9 @@ import { PregledEditObavijestiComponent } from './Components/obavijesti/pregled-
       {path: 'narudzbe', component: NarudzbeComponent,},
       {path: 'postavkeProfila', component: PostavkeProfilaComponent,},
       {path: 'obavijesti', component: ObavijestiComponent},
-      {path: 'dodajObavijest', component: DodajObavijestComponent
-      },
+      {path: 'dodajObavijest', component: DodajObavijestComponent},
+      {path: 'onlineNarudzbe', component: OnlineNarudzbeComponent},
+      {path: 'cjenovnik', component: CjenovnikComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,

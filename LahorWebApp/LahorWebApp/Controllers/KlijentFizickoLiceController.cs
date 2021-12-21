@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Helpers;
+using LahorWebApp.ViewModels.OnlineNarudzbaKlijentFizicko;
 
 namespace LahorWebApp.Controllers
 {
@@ -124,5 +125,21 @@ namespace LahorWebApp.Controllers
                     ex.Message, null);
             }
         }
+
+        //public ResponseModel AddOnlineNarudzba([FromBody] OnlineNarudzbaKlijentFizickoAddVM model)
+        //{
+        //    try
+        //    {
+        //        NarudzbaOnlineKlijentFizicko newNarudzba = new NarudzbaOnlineKlijentFizicko
+        //        {
+                    
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ResponseModel(ResponseCode.Error, "Greška -> " + ex.InnerException,
+        //            null);
+        //    }
+        //}
     }
 }

@@ -132,7 +132,7 @@ namespace LahorWebApp.Controllers
             obavijest.Naslov = model.Naslov;
             obavijest.Sadrzaj = model.Sadrzaj;
             obavijest.JavnaObavijest = model.JavnaObavijest;
-            obavijest.DatumKreiranja = DateTime.Now;
+            obavijest.DatumKreiranja = DateTime.Now.Date;
 
             dBContext.SaveChanges();
 

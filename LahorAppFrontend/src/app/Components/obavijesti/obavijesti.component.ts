@@ -18,6 +18,7 @@ export class ObavijestiComponent implements OnInit {
   filterObavList:any;
   odabranaObavijest:any;
   naslovPretraga:any;
+  p:number=1;
   ngOnInit():void {
        this.PreuzmiSveObavjesti();
   }
@@ -28,8 +29,7 @@ export class ObavijestiComponent implements OnInit {
       this.filterObavList=this.obavijestiList;
   });
   }
-
-  filter()
+  filterNaslov()
   {
     if(this.naslovPretraga!="")
     {
@@ -60,5 +60,11 @@ export class ObavijestiComponent implements OnInit {
     if (index > -1) {
       this.obavijestiList.splice(index, 1);
     }
+  }
+  key:string='datumKreiranja';
+  reverse:boolean=false;
+  sort(key) {
+    this.key=key;
+    this.reverse=!this.reverse;
   }
 }

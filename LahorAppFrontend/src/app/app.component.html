@@ -10,21 +10,20 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li *ngIf="loginInfo().role=='UpravnoOsoblje'" class="nav-item">
+      <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
         <a class="nav-link" routerLink="/obavijesti">Obavijesti</a>
       </li>
-      <li *ngIf="loginInfo().role=='UpravnoOsoblje'" class="nav-item">
-        <a class="nav-link" routerLink="/narudzbe">Narudzbe</a>
-      </li>
-
-      <li class="nav-item dropdown" *ngIf="loginInfo().role=='Klijent'" >
-        <a class="nav-link dropdown-toggle" href="#" id="navbarSifarniciLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Šifarnici
+      <li class="nav-item dropdown" *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" >
+        <a class="nav-link dropdown-toggle" href="#" id="navBarNarudzbeLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Narudžbe
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarSifarniciLink">
-          <a class="dropdown-item" routerLink="/drzave">Države</a>
-          <a class="dropdown-item" routerLink="/opstine">Opstine</a>
+        <div class="dropdown-menu" aria-labelledby="navBarNarudzbeLink">
+          <a class="dropdown-item" routerLink="/narudzbe">Narudžbe</a>
+          <a class="dropdown-item" routerLink="/narudzbeOnline">Online narudžbe</a>
         </div>
+    </li>
+      <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
+        <a class="nav-link" routerLink="/cjenovnik">Cjenovnik</a>
       </li>
 
       <li class="nav-item dropdown" >
