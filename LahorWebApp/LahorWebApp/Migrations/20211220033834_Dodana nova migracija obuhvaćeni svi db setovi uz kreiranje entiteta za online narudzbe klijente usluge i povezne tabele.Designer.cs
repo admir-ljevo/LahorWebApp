@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Data.Migrations
+namespace LahorWebApp.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211215210752_dodanPropertySlika")]
-    partial class dodanPropertySlika
+    [Migration("20211220033834_Dodana nova migracija obuhvaćeni svi db setovi uz kreiranje entiteta za online narudzbe klijente usluge i povezne tabele")]
+    partial class Dodananovamigracijaobuhvaćenisvidbsetoviuzkreiranjeentitetazaonlinenarudzbeklijenteuslugeipoveznetabele
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -200,6 +200,97 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentFizicko", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("DatumIsporuke")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatumNarudzbe")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Isporucena")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("KlijentFizickoLiceId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Kolicina")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KlijentFizickoLiceId");
+
+                    b.ToTable("OnlineNarduzbeKlijentiFizickoLice");
+                });
+
+            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentPravno", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("DatumIsporuke")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatumNarudzbe")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Isporucena")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("KlijentPravnoLiceId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Kolicina")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Opis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KlijentPravnoLiceId");
+
+                    b.ToTable("OnlineNarduzbeKlijentiPravnoLice");
+                });
+
+            modelBuilder.Entity("Data.Models.NivoIzvrsenjaUsluge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NivoIzvrsenjaUsluge");
+                });
+
             modelBuilder.Entity("Data.Models.Obavijest", b =>
                 {
                     b.Property<int>("Id")
@@ -232,6 +323,78 @@ namespace Data.Migrations
                     b.ToTable("Obavještenja");
                 });
 
+            modelBuilder.Entity("Data.Models.OnlineNarudzbeFizickoUsluge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
+
+                    b.Property<float>("JedinicnaCijena")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Kolicina")
+                        .HasColumnType("real");
+
+                    b.Property<int>("NarudzbaOnlineKlijentFizickoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NivoIzvrsenjaUslugeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UslugaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NarudzbaOnlineKlijentFizickoId");
+
+                    b.HasIndex("NivoIzvrsenjaUslugeId");
+
+                    b.HasIndex("UslugaId");
+
+                    b.ToTable("OnlineNarudzbeFizickoUsluge");
+                });
+
+            modelBuilder.Entity("Data.Models.OnlineNarudzbePravnoUsluge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
+
+                    b.Property<float>("JedinicnaCijena")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Kolicina")
+                        .HasColumnType("real");
+
+                    b.Property<int>("NarudzbaOnlineKlijentPravnoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NivoIzvrsenjaUslugeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UslugaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NarudzbaOnlineKlijentPravnoId");
+
+                    b.HasIndex("NivoIzvrsenjaUslugeId");
+
+                    b.HasIndex("UslugaId");
+
+                    b.ToTable("OnlineNarudzbePravnoUsluge");
+                });
+
             modelBuilder.Entity("Data.Models.Pozicija", b =>
                 {
                     b.Property<int>("Id")
@@ -244,7 +407,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pozicija");
+                    b.ToTable("Pozicije");
                 });
 
             modelBuilder.Entity("Data.Models.Spol", b =>
@@ -290,8 +453,8 @@ namespace Data.Migrations
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IznosPlate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("IznosPlate")
+                        .HasColumnType("real");
 
                     b.Property<string>("JMBG")
                         .HasColumnType("nvarchar(max)");
@@ -308,7 +471,7 @@ namespace Data.Migrations
                     b.Property<string>("Nacionalost")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PozicijaID")
+                    b.Property<int>("PozicijaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Prezime")
@@ -317,8 +480,8 @@ namespace Data.Migrations
                     b.Property<bool>("RadnoIskustvo")
                         .HasColumnType("bit");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SpolID")
                         .HasColumnType("int");
@@ -338,7 +501,7 @@ namespace Data.Migrations
 
                     b.HasIndex("KorisnikID");
 
-                    b.HasIndex("PozicijaID");
+                    b.HasIndex("PozicijaId");
 
                     b.HasIndex("SpolID");
 
@@ -375,8 +538,8 @@ namespace Data.Migrations
                     b.Property<string>("Ime")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IznosPlate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("IznosPlate")
+                        .HasColumnType("real");
 
                     b.Property<string>("JMBG")
                         .HasColumnType("nvarchar(max)");
@@ -393,7 +556,7 @@ namespace Data.Migrations
                     b.Property<string>("Nacionalost")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PozicijaID")
+                    b.Property<int>("PozicijaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Prezime")
@@ -402,8 +565,8 @@ namespace Data.Migrations
                     b.Property<bool>("RadnoIskustvo")
                         .HasColumnType("bit");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SpolID")
                         .HasColumnType("int");
@@ -423,7 +586,7 @@ namespace Data.Migrations
 
                     b.HasIndex("KorisnikID");
 
-                    b.HasIndex("PozicijaID");
+                    b.HasIndex("PozicijaId");
 
                     b.HasIndex("SpolID");
 
@@ -432,7 +595,45 @@ namespace Data.Migrations
                     b.ToTable("UpravnoOsoblje");
                 });
 
-            modelBuilder.Entity("Data.Models.VoazckaDozvolaKategorija", b =>
+            modelBuilder.Entity("Data.Models.Usluga", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("CijenaPeglanje")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CijenaPranje")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CijenaPranjeSusenje")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CijenaPranjeSusenjePeglanje")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CijenaSusenje")
+                        .HasColumnType("real");
+
+                    b.Property<float>("CijenaSusenjePeglanje")
+                        .HasColumnType("real");
+
+                    b.Property<string>("NazivUsluge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VrstaUslugeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VrstaUslugeId");
+
+                    b.ToTable("Usluge");
+                });
+
+            modelBuilder.Entity("Data.Models.VozackaDozvolaKategorija", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -445,6 +646,21 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VozackaDozvolaKategorija");
+                });
+
+            modelBuilder.Entity("Data.Models.VrstaUsluge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VrsteUsluga");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -604,6 +820,28 @@ namespace Data.Migrations
                     b.Navigation("Korisnik");
                 });
 
+            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentFizicko", b =>
+                {
+                    b.HasOne("Data.Models.KlijentFizickoLice", "KlijentFizickoLice")
+                        .WithMany()
+                        .HasForeignKey("KlijentFizickoLiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("KlijentFizickoLice");
+                });
+
+            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentPravno", b =>
+                {
+                    b.HasOne("Data.Models.KlijentPravnoLice", "KlijentPravnoLice")
+                        .WithMany()
+                        .HasForeignKey("KlijentPravnoLiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("KlijentPravnoLice");
+                });
+
             modelBuilder.Entity("Data.Models.Obavijest", b =>
                 {
                     b.HasOne("Data.Models.UpravnoOsoblje", "Autor")
@@ -613,6 +851,60 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Autor");
+                });
+
+            modelBuilder.Entity("Data.Models.OnlineNarudzbeFizickoUsluge", b =>
+                {
+                    b.HasOne("Data.Models.NarudzbaOnlineKlijentFizicko", "NarudzbaOnlineKlijentFizicko")
+                        .WithMany()
+                        .HasForeignKey("NarudzbaOnlineKlijentFizickoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
+                        .WithMany()
+                        .HasForeignKey("NivoIzvrsenjaUslugeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Usluga", "Usluga")
+                        .WithMany()
+                        .HasForeignKey("UslugaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NarudzbaOnlineKlijentFizicko");
+
+                    b.Navigation("NivoIzvrsenjaUsluge");
+
+                    b.Navigation("Usluga");
+                });
+
+            modelBuilder.Entity("Data.Models.OnlineNarudzbePravnoUsluge", b =>
+                {
+                    b.HasOne("Data.Models.NarudzbaOnlineKlijentPravno", "NarudzbaOnlineKlijentPravno")
+                        .WithMany()
+                        .HasForeignKey("NarudzbaOnlineKlijentPravnoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
+                        .WithMany()
+                        .HasForeignKey("NivoIzvrsenjaUslugeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Usluga", "Usluga")
+                        .WithMany()
+                        .HasForeignKey("UslugaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NarudzbaOnlineKlijentPravno");
+
+                    b.Navigation("NivoIzvrsenjaUsluge");
+
+                    b.Navigation("Usluga");
                 });
 
             modelBuilder.Entity("Data.Models.Uposlenik", b =>
@@ -629,7 +921,7 @@ namespace Data.Migrations
 
                     b.HasOne("Data.Models.Pozicija", "Pozicija")
                         .WithMany()
-                        .HasForeignKey("PozicijaID")
+                        .HasForeignKey("PozicijaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -639,7 +931,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
+                    b.HasOne("Data.Models.VozackaDozvolaKategorija", "VozackaDozvolaKategorija")
                         .WithMany()
                         .HasForeignKey("VoazckaDozvolaKategorijaID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -653,7 +945,7 @@ namespace Data.Migrations
 
                     b.Navigation("Spol");
 
-                    b.Navigation("VoazckaDozvolaKategorija");
+                    b.Navigation("VozackaDozvolaKategorija");
                 });
 
             modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
@@ -670,7 +962,7 @@ namespace Data.Migrations
 
                     b.HasOne("Data.Models.Pozicija", "Pozicija")
                         .WithMany()
-                        .HasForeignKey("PozicijaID")
+                        .HasForeignKey("PozicijaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -680,7 +972,7 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Data.Models.VoazckaDozvolaKategorija", "VoazckaDozvolaKategorija")
+                    b.HasOne("Data.Models.VozackaDozvolaKategorija", "VozackaDozvolaKategorija")
                         .WithMany()
                         .HasForeignKey("VoazckaDozvolaKategorijaID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -694,7 +986,18 @@ namespace Data.Migrations
 
                     b.Navigation("Spol");
 
-                    b.Navigation("VoazckaDozvolaKategorija");
+                    b.Navigation("VozackaDozvolaKategorija");
+                });
+
+            modelBuilder.Entity("Data.Models.Usluga", b =>
+                {
+                    b.HasOne("Data.Models.VrstaUsluge", "VrstaUsluge")
+                        .WithMany()
+                        .HasForeignKey("VrstaUslugeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VrstaUsluge");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
