@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LahorWebApp.Migrations
 {
-    public partial class Dodananovamigracijaobuhvaćenisvidbsetoviuzkreiranjeentitetazaonlinenarudzbeklijenteuslugeipoveznetabele : Migration
+    public partial class Kreirananovabazasaizmjenamazanarudzbeikreiranajezajednickatabelanarudzbi : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -428,12 +428,8 @@ namespace LahorWebApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NazivUsluge = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CijenaPranje = table.Column<float>(type: "real", nullable: false),
-                    CijenaSusenje = table.Column<float>(type: "real", nullable: false),
-                    CijenaPeglanje = table.Column<float>(type: "real", nullable: false),
-                    CijenaPranjeSusenje = table.Column<float>(type: "real", nullable: false),
-                    CijenaSusenjePeglanje = table.Column<float>(type: "real", nullable: false),
-                    CijenaPranjeSusenjePeglanje = table.Column<float>(type: "real", nullable: false),
+                    DatumKreiranja = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DatumModifikovanja = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VrstaUslugeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -448,53 +444,48 @@ namespace LahorWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OnlineNarduzbeKlijentiPravnoLice",
+                name: "Narudzbe",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KlijentPravnoLiceId = table.Column<int>(type: "int", nullable: false),
                     Naziv = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatumNarudzbe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DatumIsporuke = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Isporucena = table.Column<bool>(type: "bit", nullable: false),
-                    Cijena = table.Column<float>(type: "real", nullable: false),
+                    UkupnaCijena = table.Column<float>(type: "real", nullable: false),
                     Kolicina = table.Column<float>(type: "real", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AutorUpravnoId = table.Column<int>(type: "int", nullable: true),
+                    AutorUposlenikId = table.Column<int>(type: "int", nullable: true),
+                    KlijentFizickoLiceId = table.Column<int>(type: "int", nullable: true),
+                    KlijentPravnoLiceId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OnlineNarduzbeKlijentiPravnoLice", x => x.Id);
+                    table.PrimaryKey("PK_Narudzbe", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OnlineNarduzbeKlijentiPravnoLice_KlijentiPravnoLice_KlijentPravnoLiceId",
+                        name: "FK_Narudzbe_KlijentiFizickoLice_KlijentFizickoLiceId",
+                        column: x => x.KlijentFizickoLiceId,
+                        principalTable: "KlijentiFizickoLice",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Narudzbe_KlijentiPravnoLice_KlijentPravnoLiceId",
                         column: x => x.KlijentPravnoLiceId,
                         principalTable: "KlijentiPravnoLice",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OnlineNarduzbeKlijentiFizickoLice",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KlijentFizickoLiceId = table.Column<int>(type: "int", nullable: false),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatumNarudzbe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DatumIsporuke = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Isporucena = table.Column<bool>(type: "bit", nullable: false),
-                    Cijena = table.Column<float>(type: "real", nullable: false),
-                    Kolicina = table.Column<float>(type: "real", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OnlineNarduzbeKlijentiFizickoLice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OnlineNarduzbeKlijentiFizickoLice_KlijentiFizickoLice_KlijentFizickoLiceId",
-                        column: x => x.KlijentFizickoLiceId,
-                        principalTable: "KlijentiFizickoLice",
+                        name: "FK_Narudzbe_Uposlenici_AutorUposlenikId",
+                        column: x => x.AutorUposlenikId,
+                        principalTable: "Uposlenici",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Narudzbe_UpravnoOsoblje_AutorUpravnoId",
+                        column: x => x.AutorUpravnoId,
+                        principalTable: "UpravnoOsoblje",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -524,35 +515,26 @@ namespace LahorWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OnlineNarudzbePravnoUsluge",
+                name: "UslugeNivoIzvrsenja",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NarudzbaOnlineKlijentPravnoId = table.Column<int>(type: "int", nullable: false),
                     UslugaId = table.Column<int>(type: "int", nullable: false),
-                    NivoIzvrsenjaUslugeId = table.Column<int>(type: "int", nullable: false),
-                    Kolicina = table.Column<float>(type: "real", nullable: false),
-                    Cijena = table.Column<float>(type: "real", nullable: false),
-                    JedinicnaCijena = table.Column<float>(type: "real", nullable: false)
+                    NivoIzvrsenjaId = table.Column<int>(type: "int", nullable: false),
+                    Cijena = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OnlineNarudzbePravnoUsluge", x => x.Id);
+                    table.PrimaryKey("PK_UslugeNivoIzvrsenja", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OnlineNarudzbePravnoUsluge_NivoIzvrsenjaUsluge_NivoIzvrsenjaUslugeId",
-                        column: x => x.NivoIzvrsenjaUslugeId,
+                        name: "FK_UslugeNivoIzvrsenja_NivoIzvrsenjaUsluge_NivoIzvrsenjaId",
+                        column: x => x.NivoIzvrsenjaId,
                         principalTable: "NivoIzvrsenjaUsluge",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OnlineNarudzbePravnoUsluge_OnlineNarduzbeKlijentiPravnoLice_NarudzbaOnlineKlijentPravnoId",
-                        column: x => x.NarudzbaOnlineKlijentPravnoId,
-                        principalTable: "OnlineNarduzbeKlijentiPravnoLice",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OnlineNarudzbePravnoUsluge_Usluge_UslugaId",
+                        name: "FK_UslugeNivoIzvrsenja_Usluge_UslugaId",
                         column: x => x.UslugaId,
                         principalTable: "Usluge",
                         principalColumn: "Id",
@@ -560,35 +542,34 @@ namespace LahorWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OnlineNarudzbeFizickoUsluge",
+                name: "NarudzbeUslugeNivoIzvrsenja",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NarudzbaOnlineKlijentFizickoId = table.Column<int>(type: "int", nullable: false),
+                    NarudzbaId = table.Column<int>(type: "int", nullable: false),
                     UslugaId = table.Column<int>(type: "int", nullable: false),
-                    NivoIzvrsenjaUslugeId = table.Column<int>(type: "int", nullable: false),
-                    Kolicina = table.Column<float>(type: "real", nullable: false),
+                    NivoIzvrsenjaId = table.Column<int>(type: "int", nullable: false),
                     Cijena = table.Column<float>(type: "real", nullable: false),
-                    JedinicnaCijena = table.Column<float>(type: "real", nullable: false)
+                    Kolicina = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OnlineNarudzbeFizickoUsluge", x => x.Id);
+                    table.PrimaryKey("PK_NarudzbeUslugeNivoIzvrsenja", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OnlineNarudzbeFizickoUsluge_NivoIzvrsenjaUsluge_NivoIzvrsenjaUslugeId",
-                        column: x => x.NivoIzvrsenjaUslugeId,
+                        name: "FK_NarudzbeUslugeNivoIzvrsenja_Narudzbe_NarudzbaId",
+                        column: x => x.NarudzbaId,
+                        principalTable: "Narudzbe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_NarudzbeUslugeNivoIzvrsenja_NivoIzvrsenjaUsluge_NivoIzvrsenjaId",
+                        column: x => x.NivoIzvrsenjaId,
                         principalTable: "NivoIzvrsenjaUsluge",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OnlineNarudzbeFizickoUsluge_OnlineNarduzbeKlijentiFizickoLice_NarudzbaOnlineKlijentFizickoId",
-                        column: x => x.NarudzbaOnlineKlijentFizickoId,
-                        principalTable: "OnlineNarduzbeKlijentiFizickoLice",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OnlineNarudzbeFizickoUsluge_Usluge_UslugaId",
+                        name: "FK_NarudzbeUslugeNivoIzvrsenja_Usluge_UslugaId",
                         column: x => x.UslugaId,
                         principalTable: "Usluge",
                         principalColumn: "Id",
@@ -650,49 +631,44 @@ namespace LahorWebApp.Migrations
                 column: "KorisnikID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obavještenja_AutorId",
-                table: "Obavještenja",
-                column: "AutorId");
+                name: "IX_Narudzbe_AutorUposlenikId",
+                table: "Narudzbe",
+                column: "AutorUposlenikId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarduzbeKlijentiFizickoLice_KlijentFizickoLiceId",
-                table: "OnlineNarduzbeKlijentiFizickoLice",
+                name: "IX_Narudzbe_AutorUpravnoId",
+                table: "Narudzbe",
+                column: "AutorUpravnoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Narudzbe_KlijentFizickoLiceId",
+                table: "Narudzbe",
                 column: "KlijentFizickoLiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarduzbeKlijentiPravnoLice_KlijentPravnoLiceId",
-                table: "OnlineNarduzbeKlijentiPravnoLice",
+                name: "IX_Narudzbe_KlijentPravnoLiceId",
+                table: "Narudzbe",
                 column: "KlijentPravnoLiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbeFizickoUsluge_NarudzbaOnlineKlijentFizickoId",
-                table: "OnlineNarudzbeFizickoUsluge",
-                column: "NarudzbaOnlineKlijentFizickoId");
+                name: "IX_NarudzbeUslugeNivoIzvrsenja_NarudzbaId",
+                table: "NarudzbeUslugeNivoIzvrsenja",
+                column: "NarudzbaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbeFizickoUsluge_NivoIzvrsenjaUslugeId",
-                table: "OnlineNarudzbeFizickoUsluge",
-                column: "NivoIzvrsenjaUslugeId");
+                name: "IX_NarudzbeUslugeNivoIzvrsenja_NivoIzvrsenjaId",
+                table: "NarudzbeUslugeNivoIzvrsenja",
+                column: "NivoIzvrsenjaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbeFizickoUsluge_UslugaId",
-                table: "OnlineNarudzbeFizickoUsluge",
+                name: "IX_NarudzbeUslugeNivoIzvrsenja_UslugaId",
+                table: "NarudzbeUslugeNivoIzvrsenja",
                 column: "UslugaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbePravnoUsluge_NarudzbaOnlineKlijentPravnoId",
-                table: "OnlineNarudzbePravnoUsluge",
-                column: "NarudzbaOnlineKlijentPravnoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbePravnoUsluge_NivoIzvrsenjaUslugeId",
-                table: "OnlineNarudzbePravnoUsluge",
-                column: "NivoIzvrsenjaUslugeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OnlineNarudzbePravnoUsluge_UslugaId",
-                table: "OnlineNarudzbePravnoUsluge",
-                column: "UslugaId");
+                name: "IX_Obavještenja_AutorId",
+                table: "Obavještenja",
+                column: "AutorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Uposlenici_BracniStatusID",
@@ -748,6 +724,16 @@ namespace LahorWebApp.Migrations
                 name: "IX_Usluge_VrstaUslugeId",
                 table: "Usluge",
                 column: "VrstaUslugeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UslugeNivoIzvrsenja_NivoIzvrsenjaId",
+                table: "UslugeNivoIzvrsenja",
+                column: "NivoIzvrsenjaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UslugeNivoIzvrsenja_UslugaId",
+                table: "UslugeNivoIzvrsenja",
+                column: "UslugaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -768,43 +754,25 @@ namespace LahorWebApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "NarudzbeUslugeNivoIzvrsenja");
+
+            migrationBuilder.DropTable(
                 name: "Obavještenja");
 
             migrationBuilder.DropTable(
-                name: "OnlineNarudzbeFizickoUsluge");
-
-            migrationBuilder.DropTable(
-                name: "OnlineNarudzbePravnoUsluge");
-
-            migrationBuilder.DropTable(
-                name: "Uposlenici");
+                name: "UslugeNivoIzvrsenja");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "UpravnoOsoblje");
-
-            migrationBuilder.DropTable(
-                name: "OnlineNarduzbeKlijentiFizickoLice");
+                name: "Narudzbe");
 
             migrationBuilder.DropTable(
                 name: "NivoIzvrsenjaUsluge");
 
             migrationBuilder.DropTable(
-                name: "OnlineNarduzbeKlijentiPravnoLice");
-
-            migrationBuilder.DropTable(
                 name: "Usluge");
-
-            migrationBuilder.DropTable(
-                name: "BracniStatusi");
-
-            migrationBuilder.DropTable(
-                name: "Pozicije");
-
-            migrationBuilder.DropTable(
-                name: "VozackaDozvolaKategorija");
 
             migrationBuilder.DropTable(
                 name: "KlijentiFizickoLice");
@@ -813,13 +781,28 @@ namespace LahorWebApp.Migrations
                 name: "KlijentiPravnoLice");
 
             migrationBuilder.DropTable(
+                name: "Uposlenici");
+
+            migrationBuilder.DropTable(
+                name: "UpravnoOsoblje");
+
+            migrationBuilder.DropTable(
                 name: "VrsteUsluga");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BracniStatusi");
+
+            migrationBuilder.DropTable(
+                name: "Pozicije");
 
             migrationBuilder.DropTable(
                 name: "Spolovi");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "VozackaDozvolaKategorija");
         }
     }
 }

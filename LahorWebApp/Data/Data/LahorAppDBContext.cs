@@ -57,11 +57,13 @@ namespace Data.Data
         public DbSet<Obavijest> Obavještenja { get; set; }
         public DbSet<VrstaUsluge> VrsteUsluga { get; set; }
         public DbSet<Usluga> Usluge { get; set; }
-        public DbSet<NarudzbaOnlineKlijentFizicko> OnlineNarduzbeKlijentiFizickoLice { get; set; }
-        public DbSet<NarudzbaOnlineKlijentPravno> OnlineNarduzbeKlijentiPravnoLice { get; set; }
-        public DbSet<OnlineNarudzbeFizickoUsluge> OnlineNarudzbeFizickoUsluge { get; set; }
-        public DbSet<OnlineNarudzbePravnoUsluge> OnlineNarudzbePravnoUsluge { get; set; }
+        //public DbSet<NarudzbaOnlineKlijentFizicko> OnlineNarduzbeKlijentiFizickoLice { get; set; }
+        //public DbSet<NarudzbaOnlineKlijentPravno> OnlineNarduzbeKlijentiPravnoLice { get; set; }
+        //public DbSet<OnlineNarudzbeFizickoUsluge> OnlineNarudzbeFizickoUsluge { get; set; }
+        //public DbSet<OnlineNarudzbePravnoUsluge> OnlineNarudzbePravnoUsluge { get; set; }
         public DbSet<NivoIzvrsenjaUsluge> NivoIzvrsenjaUsluge { get; set; }
-        //public DbSet<Narudzba> Narudzbe { get; set; }
+        public DbSet<Narudzba> Narudzbe { get; set; }
+        public DbSet<UslugeNivoIzvrsenja> UslugeNivoIzvrsenja { get; set; }
+        public DbSet<NarudzbeUslugeNivoIzvrsenja> NarudzbeUslugeNivoIzvrsenja { get; set; }
     }
 }

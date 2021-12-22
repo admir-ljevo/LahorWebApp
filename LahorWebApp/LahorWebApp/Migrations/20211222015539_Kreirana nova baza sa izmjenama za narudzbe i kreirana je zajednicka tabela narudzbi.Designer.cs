@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LahorWebApp.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211220033834_Dodana nova migracija obuhvaćeni svi db setovi uz kreiranje entiteta za online narudzbe klijente usluge i povezne tabele")]
-    partial class Dodananovamigracijaobuhvaćenisvidbsetoviuzkreiranjeentitetazaonlinenarudzbeklijenteuslugeipoveznetabele
+    [Migration("20211222015539_Kreirana nova baza sa izmjenama za narudzbe i kreirana je zajednicka tabela narudzbi")]
+    partial class Kreirananovabazasaizmjenamazanarudzbeikreiranajezajednickatabelanarudzbi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -200,15 +200,18 @@ namespace LahorWebApp.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentFizicko", b =>
+            modelBuilder.Entity("Data.Models.Narudzba", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Cijena")
-                        .HasColumnType("real");
+                    b.Property<int?>("AutorUposlenikId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AutorUpravnoId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DatumIsporuke")
                         .HasColumnType("datetime2");
@@ -219,7 +222,10 @@ namespace LahorWebApp.Migrations
                     b.Property<bool>("Isporucena")
                         .HasColumnType("bit");
 
-                    b.Property<int>("KlijentFizickoLiceId")
+                    b.Property<int?>("KlijentFizickoLiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("KlijentPravnoLiceId")
                         .HasColumnType("int");
 
                     b.Property<float>("Kolicina")
@@ -231,14 +237,23 @@ namespace LahorWebApp.Migrations
                     b.Property<string>("Opis")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<float>("UkupnaCijena")
+                        .HasColumnType("real");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AutorUposlenikId");
+
+                    b.HasIndex("AutorUpravnoId");
 
                     b.HasIndex("KlijentFizickoLiceId");
 
-                    b.ToTable("OnlineNarduzbeKlijentiFizickoLice");
+                    b.HasIndex("KlijentPravnoLiceId");
+
+                    b.ToTable("Narudzbe");
                 });
 
-            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentPravno", b =>
+            modelBuilder.Entity("Data.Models.NarudzbeUslugeNivoIzvrsenja", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,32 +263,27 @@ namespace LahorWebApp.Migrations
                     b.Property<float>("Cijena")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("DatumIsporuke")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatumNarudzbe")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Isporucena")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("KlijentPravnoLiceId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Kolicina")
                         .HasColumnType("real");
 
-                    b.Property<string>("Naziv")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NarudzbaId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Opis")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NivoIzvrsenjaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UslugaId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KlijentPravnoLiceId");
+                    b.HasIndex("NarudzbaId");
 
-                    b.ToTable("OnlineNarduzbeKlijentiPravnoLice");
+                    b.HasIndex("NivoIzvrsenjaId");
+
+                    b.HasIndex("UslugaId");
+
+                    b.ToTable("NarudzbeUslugeNivoIzvrsenja");
                 });
 
             modelBuilder.Entity("Data.Models.NivoIzvrsenjaUsluge", b =>
@@ -321,78 +331,6 @@ namespace LahorWebApp.Migrations
                     b.HasIndex("AutorId");
 
                     b.ToTable("Obavještenja");
-                });
-
-            modelBuilder.Entity("Data.Models.OnlineNarudzbeFizickoUsluge", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Cijena")
-                        .HasColumnType("real");
-
-                    b.Property<float>("JedinicnaCijena")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Kolicina")
-                        .HasColumnType("real");
-
-                    b.Property<int>("NarudzbaOnlineKlijentFizickoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NivoIzvrsenjaUslugeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UslugaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NarudzbaOnlineKlijentFizickoId");
-
-                    b.HasIndex("NivoIzvrsenjaUslugeId");
-
-                    b.HasIndex("UslugaId");
-
-                    b.ToTable("OnlineNarudzbeFizickoUsluge");
-                });
-
-            modelBuilder.Entity("Data.Models.OnlineNarudzbePravnoUsluge", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float>("Cijena")
-                        .HasColumnType("real");
-
-                    b.Property<float>("JedinicnaCijena")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Kolicina")
-                        .HasColumnType("real");
-
-                    b.Property<int>("NarudzbaOnlineKlijentPravnoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NivoIzvrsenjaUslugeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UslugaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NarudzbaOnlineKlijentPravnoId");
-
-                    b.HasIndex("NivoIzvrsenjaUslugeId");
-
-                    b.HasIndex("UslugaId");
-
-                    b.ToTable("OnlineNarudzbePravnoUsluge");
                 });
 
             modelBuilder.Entity("Data.Models.Pozicija", b =>
@@ -602,23 +540,11 @@ namespace LahorWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("CijenaPeglanje")
-                        .HasColumnType("real");
+                    b.Property<DateTime>("DatumKreiranja")
+                        .HasColumnType("datetime2");
 
-                    b.Property<float>("CijenaPranje")
-                        .HasColumnType("real");
-
-                    b.Property<float>("CijenaPranjeSusenje")
-                        .HasColumnType("real");
-
-                    b.Property<float>("CijenaPranjeSusenjePeglanje")
-                        .HasColumnType("real");
-
-                    b.Property<float>("CijenaSusenje")
-                        .HasColumnType("real");
-
-                    b.Property<float>("CijenaSusenjePeglanje")
-                        .HasColumnType("real");
+                    b.Property<DateTime>("DatumModifikovanja")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("NazivUsluge")
                         .HasColumnType("nvarchar(max)");
@@ -631,6 +557,31 @@ namespace LahorWebApp.Migrations
                     b.HasIndex("VrstaUslugeId");
 
                     b.ToTable("Usluge");
+                });
+
+            modelBuilder.Entity("Data.Models.UslugeNivoIzvrsenja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cijena")
+                        .HasColumnType("real");
+
+                    b.Property<int>("NivoIzvrsenjaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UslugaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NivoIzvrsenjaId");
+
+                    b.HasIndex("UslugaId");
+
+                    b.ToTable("UslugeNivoIzvrsenja");
                 });
 
             modelBuilder.Entity("Data.Models.VozackaDozvolaKategorija", b =>
@@ -820,26 +771,58 @@ namespace LahorWebApp.Migrations
                     b.Navigation("Korisnik");
                 });
 
-            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentFizicko", b =>
+            modelBuilder.Entity("Data.Models.Narudzba", b =>
                 {
+                    b.HasOne("Data.Models.Uposlenik", "AutorUposlenik")
+                        .WithMany()
+                        .HasForeignKey("AutorUposlenikId");
+
+                    b.HasOne("Data.Models.UpravnoOsoblje", "AutorUpravno")
+                        .WithMany()
+                        .HasForeignKey("AutorUpravnoId");
+
                     b.HasOne("Data.Models.KlijentFizickoLice", "KlijentFizickoLice")
                         .WithMany()
-                        .HasForeignKey("KlijentFizickoLiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("KlijentFizickoLiceId");
 
-                    b.Navigation("KlijentFizickoLice");
-                });
-
-            modelBuilder.Entity("Data.Models.NarudzbaOnlineKlijentPravno", b =>
-                {
                     b.HasOne("Data.Models.KlijentPravnoLice", "KlijentPravnoLice")
                         .WithMany()
-                        .HasForeignKey("KlijentPravnoLiceId")
+                        .HasForeignKey("KlijentPravnoLiceId");
+
+                    b.Navigation("AutorUposlenik");
+
+                    b.Navigation("AutorUpravno");
+
+                    b.Navigation("KlijentFizickoLice");
+
+                    b.Navigation("KlijentPravnoLice");
+                });
+
+            modelBuilder.Entity("Data.Models.NarudzbeUslugeNivoIzvrsenja", b =>
+                {
+                    b.HasOne("Data.Models.Narudzba", "Narudzba")
+                        .WithMany()
+                        .HasForeignKey("NarudzbaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("KlijentPravnoLice");
+                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
+                        .WithMany()
+                        .HasForeignKey("NivoIzvrsenjaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Usluga", "Usluga")
+                        .WithMany()
+                        .HasForeignKey("UslugaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Narudzba");
+
+                    b.Navigation("NivoIzvrsenjaUsluge");
+
+                    b.Navigation("Usluga");
                 });
 
             modelBuilder.Entity("Data.Models.Obavijest", b =>
@@ -851,60 +834,6 @@ namespace LahorWebApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Autor");
-                });
-
-            modelBuilder.Entity("Data.Models.OnlineNarudzbeFizickoUsluge", b =>
-                {
-                    b.HasOne("Data.Models.NarudzbaOnlineKlijentFizicko", "NarudzbaOnlineKlijentFizicko")
-                        .WithMany()
-                        .HasForeignKey("NarudzbaOnlineKlijentFizickoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
-                        .WithMany()
-                        .HasForeignKey("NivoIzvrsenjaUslugeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Usluga", "Usluga")
-                        .WithMany()
-                        .HasForeignKey("UslugaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("NarudzbaOnlineKlijentFizicko");
-
-                    b.Navigation("NivoIzvrsenjaUsluge");
-
-                    b.Navigation("Usluga");
-                });
-
-            modelBuilder.Entity("Data.Models.OnlineNarudzbePravnoUsluge", b =>
-                {
-                    b.HasOne("Data.Models.NarudzbaOnlineKlijentPravno", "NarudzbaOnlineKlijentPravno")
-                        .WithMany()
-                        .HasForeignKey("NarudzbaOnlineKlijentPravnoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
-                        .WithMany()
-                        .HasForeignKey("NivoIzvrsenjaUslugeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Usluga", "Usluga")
-                        .WithMany()
-                        .HasForeignKey("UslugaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("NarudzbaOnlineKlijentPravno");
-
-                    b.Navigation("NivoIzvrsenjaUsluge");
-
-                    b.Navigation("Usluga");
                 });
 
             modelBuilder.Entity("Data.Models.Uposlenik", b =>
@@ -998,6 +927,25 @@ namespace LahorWebApp.Migrations
                         .IsRequired();
 
                     b.Navigation("VrstaUsluge");
+                });
+
+            modelBuilder.Entity("Data.Models.UslugeNivoIzvrsenja", b =>
+                {
+                    b.HasOne("Data.Models.NivoIzvrsenjaUsluge", "NivoIzvrsenjaUsluge")
+                        .WithMany()
+                        .HasForeignKey("NivoIzvrsenjaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Usluga", "Usluga")
+                        .WithMany()
+                        .HasForeignKey("UslugaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NivoIzvrsenjaUsluge");
+
+                    b.Navigation("Usluga");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

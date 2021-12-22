@@ -47,7 +47,7 @@ namespace LahorWebApp.Controllers
                     return new ResponseModel(ResponseCode.OK, "Obavijest uspješno dodana",
                     newObavijest);
                 }
-                return new ResponseModel(ResponseCode.Error, "Obavijest nije pronađena",
+                return new ResponseModel(ResponseCode.Error, "Obavijest nije kreirana",
                     newObavijest);
             }
             catch (Exception ex)

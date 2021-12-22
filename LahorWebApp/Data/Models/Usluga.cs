@@ -14,12 +14,14 @@ namespace Data.Models
         [Key]
         public int Id { get; set; }
         public string NazivUsluge { get; set; }
-        public float CijenaPranje { get; set; }
-        public float CijenaSusenje { get; set; }
-        public float CijenaPeglanje { get; set; }
-        public float CijenaPranjeSusenje { get; set; }
-        public float CijenaSusenjePeglanje { get; set; }
-        public float CijenaPranjeSusenjePeglanje { get; set; }
+        public DateTime DatumKreiranja { get; set; }
+        public DateTime DatumModifikovanja { get; set; }
+        //public float CijenaPranje { get; set; }
+        //public float CijenaSusenje { get; set; }
+        //public float CijenaPeglanje { get; set; }
+        //public float CijenaPranjeSusenje { get; set; }
+        //public float CijenaSusenjePeglanje { get; set; }
+        //public float CijenaPranjeSusenjePeglanje { get; set; }
 
         [ForeignKey(nameof(VrstaUsluge))]
         public int VrstaUslugeId { get; set; }

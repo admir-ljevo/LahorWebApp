@@ -8,18 +8,25 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-
+    [Table("Narudzbe")]
     public class Narudzba
     {
-     
-        //public int ID { get; set; }
-
+        [Key]
+        public int Id { get; set; }
         public string Naziv { get; set; }
         public DateTime DatumNarudzbe { get; set; }
         public DateTime DatumIsporuke { get; set; }
         public bool Isporucena { get; set; }
-        public float Cijena { get; set; }
+        public float UkupnaCijena { get; set; }
         public float Kolicina { get; set; }
         public string Opis { get; set; }
+        public string NazivKlijenta { get; set; }
+        public UpravnoOsoblje AutorUpravno { get; set; }
+        public Uposlenik AutorUposlenik { get; set; }
+        public KlijentFizickoLice KlijentFizickoLice { get; set; }
+        public KlijentPravnoLice KlijentPravnoLice { get; set; }
+        public bool isOnline { get; set; }
+        public bool isGuest { get; set; }
+        public bool isNarudzbaAutor { get; set; }
     }
 }

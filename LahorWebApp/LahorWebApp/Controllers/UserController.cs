@@ -115,11 +115,11 @@ namespace LahorWebApp.Controllers
                     {
                         var appUser = await _userManager.FindByNameAsync(model.Username);
                         var role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault();
-                        int id = dbContext.UpravnoOsoblje.ToList()
-                            .Where(up => up.KorisnikID ==
-                          appUser.Id).ToList().FirstOrDefault().Id;
+                        int id = PronadjiIdPrijavljenogKorisnika(appUser);
+                        if(id==0)
+                            return await Task.FromResult(new ResponseModel(
+                   ResponseCode.Error,"Ne postoji korisnik", null));
                         var user = new LoginInformation(appUser,role,id);
-
                         user.Token = GenerateToken(appUser,role);
                         return await Task.FromResult(new ResponseModel(
                             ResponseCode.OK,"Uspješna prijava",user));
@@ -135,6 +135,32 @@ namespace LahorWebApp.Controllers
                     ResponseCode.Error,ex.Message,null));
             }
         }
+
+        private int PronadjiIdPrijavljenogKorisnika(Korisnik user)
+        {
+            if (user.isKlijentFizickoLice)
+            {
+                return dbContext.KlijentiFizickoLice.ToList().Where(up => up.KorisnikID ==
+                     user.Id).ToList().FirstOrDefault().Id;
+            }
+            else if(user.isKlijentPravnoLice)
+            {
+                return dbContext.KlijentiPravnoLice.ToList().Where(up => up.KorisnikID ==
+                     user.Id).ToList().FirstOrDefault().Id;
+            }
+            else if(user.isUposlenik)
+            {
+                return dbContext.Uposlenici.ToList().Where(up => up.KorisnikID ==
+                     user.Id).ToList().FirstOrDefault().Id;
+            }
+            else if(user.isUpravnoOsoblje)
+            {
+                return dbContext.UpravnoOsoblje.ToList().Where(up => up.KorisnikID ==
+                     user.Id).ToList().FirstOrDefault().Id;
+            }
+            return 0;
+        }
+
         //[Authorize(Roles ="Admin")]
         [HttpPost]
         public async Task<object> AddRole([FromBody] RoleModel model)

@@ -125,21 +125,5 @@ namespace LahorWebApp.Controllers
                     ex.Message, null);
             }
         }
-
-        //public ResponseModel AddOnlineNarudzba([FromBody] OnlineNarudzbaKlijentFizickoAddVM model)
-        //{
-        //    try
-        //    {
-        //        NarudzbaOnlineKlijentFizicko newNarudzba = new NarudzbaOnlineKlijentFizicko
-        //        {
-                    
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ResponseModel(ResponseCode.Error, "Greška -> " + ex.InnerException,
-        //            null);
-        //    }
-        //}
     }
 }
