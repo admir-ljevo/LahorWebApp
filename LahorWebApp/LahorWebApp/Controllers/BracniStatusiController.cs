@@ -1,4 +1,5 @@
 ﻿using Data.Data;
+using Data.Helpers;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -41,6 +42,20 @@ namespace LahorWebApp.Views
         public List<BracniStatus> GetAll()
         {
             return dBContext.BracniStatusi.ToList();
+        }
+
+        [HttpGet]
+        public List<CmbStavke> GetAllCmb()
+        {
+            var data = dBContext.BracniStatusi
+                .OrderBy(s => s.Naziv)
+                .Select(s => new CmbStavke()
+                {
+                    id = s.Id,
+                    opis = s.Naziv,
+                })
+                .AsQueryable();
+            return data.Take(100).ToList();
         }
     }
 }

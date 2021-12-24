@@ -9,6 +9,10 @@
       <input type="text" class="form-control" [(ngModel)]="naslovPretraga" (input)="filterNaslov()" placeholder="Naslov">
     </div>
   </div>
+
+  <!--<select>
+    <option *ngFor="let s of listaBracniStatusi" [value]="s.id">{{s.opis}}</option>
+  </select>-->
 <table class="table table-striped">
   <tr>
     <th>Naslov</th>

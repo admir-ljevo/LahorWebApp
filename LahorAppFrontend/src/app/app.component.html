@@ -13,6 +13,9 @@
       <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
         <a class="nav-link" routerLink="/obavijesti">Obavijesti</a>
       </li>
+      <li *ngIf="loginInfo().role=='Klijent'" class="nav-item">
+        <a class="nav-link" routerLink="/onlineNarudzbeKlijent">Narudzbe</a>
+      </li>
       <li class="nav-item dropdown" *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" >
         <a class="nav-link dropdown-toggle" href="#" id="navBarNarudzbeLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Narudžbe
