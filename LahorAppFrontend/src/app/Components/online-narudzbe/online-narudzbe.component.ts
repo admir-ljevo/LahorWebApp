@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {LoginInformation} from "../../_helpers/loginInformacije";
+import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
 
 @Component({
   selector: 'app-online-narudzbe',
@@ -7,9 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OnlineNarudzbeComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private httpClient:HttpClient,private router:Router) { }
 
   ngOnInit(): void {
   }
-
 }

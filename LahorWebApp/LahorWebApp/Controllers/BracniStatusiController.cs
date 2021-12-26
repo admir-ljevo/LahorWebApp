@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LahorWebApp.Views
 {
-    
+    [ApiController]
     [Route("[controller]/[action]")]
     public class BracniStatusiController : ControllerBase
     {

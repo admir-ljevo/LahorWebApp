@@ -1,0 +1,68 @@
+  <div class="main" style="display: flex; flex-direction: column;">
+    <div style="display: flex; flex-direction: row">
+    <form class="container">
+      <div class="form-group">
+        <label class="form-label">Datum isporuke</label>
+        <input type="Date" class="form-control" [(ngModel)]="this.novaNarudzba.DatumIsporuke" name="datumIsporuke" placeholder="Unesite naslov obavijesti*">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Napomena</label>
+        <textarea class="form-control" [(ngModel)]="this.novaNarudzba.Opis" name="opis"rows="4"></textarea>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-primary" (click)="dodajNarudzbu()">Dodaj narudžbu</button>
+    </form>
+
+    <form class="container">
+      <div class="form-group">
+        <label class="form-label">Vrsta usluge</label>
+        <br/>
+        <select class="cmb" [(ngModel)]="odabranaVrstaUsluge" (ngModelChange)='onSelectedVrsta($event)' [ngModelOptions]="{standalone:true}">
+          <option *ngFor="let vu of vrsteUsluga" [value]="vu.id">{{vu.opis}}</option>
+        </select>
+      </div>
+      <br/>
+      <div class="form-group">
+        <label class="form-label">Usluga</label>
+        <br/>
+        <select class="cmb" [(ngModel)]="odabranaUsluga" (ngModelChange)='onSelectedUsluga($event)' [ngModelOptions]="{standalone:true}">
+          <option *ngFor="let u of listaUsluge" [value]="u.id">{{u.opis}}</option>
+        </select>
+        <br/>
+        <br/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nivo izvršenja usluge</label>
+        <br/>
+        <select class="cmb" [ngModel]="odabraniNivo" (ngModelChange)='onSelectedOdabraniNivo($event)' [ngModelOptions]="{standalone:true}">
+          <option *ngFor="let u of listaNivoiIzvrsenja" [value]="u.id">{{u.opis}}</option>
+        </select>
+        <br/>
+        <br/>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="dodajUslugu()">Dodaj uslugu</button>
+    </form>
+    </div>
+
+    <div>
+    <table class="table table-striped">
+      <tr>
+        <th>Rb</th>
+        <th>Usluga</th>
+        <th>Nivo izvršenja</th>
+        <th>Akcija</th>
+      </tr>
+      <tbody>
+      <tr *ngFor="let o of listaUslugeNivoIzvrsenja; let i=index">
+        <td>{{i}}</td>
+        <td>{{o.uslugaId}}</td>
+        <td>{{o.NivoIzvrsenjaId}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(o)">Obrisi</button>
+          <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="detalji(o)">Detalji</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>

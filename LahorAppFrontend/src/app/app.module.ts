@@ -30,6 +30,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { OnlineNarudzbeComponent } from './Components/online-narudzbe/online-narudzbe.component';
 import { CjenovnikComponent } from './Components/cjenovnik/cjenovnik.component';
 import { OnlineNarudzbeKlijentComponent } from './Components/online-narudzbe-klijent/online-narudzbe-klijent.component';
+import { DodavanjeOnlineNarudzbeComponent } from './Components/dodavanje-online-narudzbe/dodavanje-online-narudzbe.component';
 
 @NgModule({
 
@@ -51,7 +52,8 @@ import { OnlineNarudzbeKlijentComponent } from './Components/online-narudzbe-kli
     PregledEditObavijestiComponent,
     OnlineNarudzbeComponent,
     CjenovnikComponent,
-    OnlineNarudzbeKlijentComponent
+    OnlineNarudzbeKlijentComponent,
+    DodavanjeOnlineNarudzbeComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +77,7 @@ import { OnlineNarudzbeKlijentComponent } from './Components/online-narudzbe-kli
       {path: 'onlineNarudzbe', component: OnlineNarudzbeComponent},
       {path: 'cjenovnik', component: CjenovnikComponent},
       {path: 'onlineNarudzbeKlijent', component: OnlineNarudzbeKlijentComponent},
+      {path: 'dodavanjeOnlineNarudzbe', component: DodavanjeOnlineNarudzbeComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,

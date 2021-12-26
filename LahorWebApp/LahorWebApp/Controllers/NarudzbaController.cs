@@ -14,7 +14,7 @@ namespace LahorWebApp.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class NarudzbaController:ControllerBase
+    public class NarudzbaController : ControllerBase
     {
         private readonly LahorAppDBContext dBContext;
         public NarudzbaController(LahorAppDBContext dBContext)
@@ -32,16 +32,15 @@ namespace LahorWebApp.Controllers
                 {
                     Narudzba novaNarudzba = new Narudzba
                     {
-                        Naziv = model.Naziv,
+                        Naziv = "N",
                         DatumNarudzbe = DateTime.Now.Date,
                         DatumIsporuke = model.DatumIsporuke,
-                        UkupnaCijena = model.Cijena,
-                        Kolicina = model.Kolicina,
+                        UkupnaCijena = 0,
+                        Kolicina = 0,
                         Opis = model.Opis,
-                        NazivKlijenta="",
-                        isOnline=true
+                        NazivKlijenta = "",
+                        isOnline = true
                     };
-
                     if (klijent is KlijentFizickoLice)
                         novaNarudzba.KlijentFizickoLice = klijent as KlijentFizickoLice;
                     else
@@ -49,6 +48,16 @@ namespace LahorWebApp.Controllers
                     if (novaNarudzba != null)
                     {
                         dBContext.Add(novaNarudzba);
+                        dBContext.SaveChanges();
+                        foreach (var un in model.UslugeNivoIzvrsenja)
+                        {
+                            dBContext.Add(new NarudzbeUslugeNivoIzvrsenja
+                            {
+                                NarudzbaId=novaNarudzba.Id,
+                                UslugaId=un.UslugaId,
+                                NivoIzvrsenjaId=un.NivoIzvrsenjaId
+                            });
+                        }
                         dBContext.SaveChanges();
                         return new ResponseModel(ResponseCode.OK, "Narudžba uspješno dodana.", novaNarudzba);
                     }
@@ -70,7 +79,7 @@ namespace LahorWebApp.Controllers
             {
                 var klijent = PronadjiKlijenta(model.KlijentId);
                 var autor = PronadjiAutor(model.AutorId);
-                if (klijent != null || autor!=null)
+                if (klijent != null || autor != null)
                 {
                     Narudzba novaNarudzba = new Narudzba
                     {
@@ -80,8 +89,8 @@ namespace LahorWebApp.Controllers
                         UkupnaCijena = model.Cijena,
                         Kolicina = model.Kolicina,
                         Opis = model.Opis,
-                        NazivKlijenta="",
-                        isNarudzbaAutor=true
+                        NazivKlijenta = "",
+                        isNarudzbaAutor = true
                     };
 
                     if (klijent is KlijentFizickoLice)
@@ -130,8 +139,8 @@ namespace LahorWebApp.Controllers
                         UkupnaCijena = model.Cijena,
                         Kolicina = model.Kolicina,
                         Opis = model.Opis,
-                        NazivKlijenta=model.NazivKlijenta,
-                        isGuest=true
+                        NazivKlijenta = model.NazivKlijenta,
+                        isGuest = true
                     };
 
                     if (autor is UpravnoOsoblje)
@@ -170,11 +179,52 @@ namespace LahorWebApp.Controllers
 
         private object PronadjiKlijenta(int klijentId)
         {
-            dynamic klijent =dBContext.KlijentiFizickoLice.Where(k => k.Id == klijentId).FirstOrDefault();
+            dynamic klijent = dBContext.KlijentiFizickoLice.Where(k => k.Id == klijentId).FirstOrDefault();
             if (klijent != null)
                 return klijent;
             klijent = dBContext.KlijentiPravnoLice.Where(k => k.Id == klijentId).FirstOrDefault();
-                return klijent;
+            return klijent;
+        }
+
+        [HttpGet("{klijentId}")]
+        public ResponseModel GetNarudzbeOnlineKlijentPravno(int klijentId)
+        {
+            try
+            {            
+                var onlineNarudzbe=dBContext.Narudzbe.ToList().Where(n => 
+                n.isOnline && n.KlijentPravnoLice!=null &&
+                n?.KlijentPravnoLice?.Id ==
+                klijentId).ToList();
+
+                return new ResponseModel(ResponseCode.OK,
+                    "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " +
+                    ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet("{klijentId}")]
+        public ResponseModel GetNarudzbeOnlineKlijentFizicko(int klijentId)
+        {
+            try
+            {
+                var onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                  n.isOnline && n.KlijentFizickoLice != null &&
+                  n?.KlijentFizickoLice?.Id ==
+                  klijentId).ToList();
+
+                return new ResponseModel(ResponseCode.OK,
+                    "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " +
+                    ex.Message + " " + ex.InnerException, null);
+            }
         }
     }
+
 }
