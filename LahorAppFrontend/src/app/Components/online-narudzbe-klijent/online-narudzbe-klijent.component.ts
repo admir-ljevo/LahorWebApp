@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {LoginInformation} from "../../_helpers/loginInformacije";
 import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
+import {MyConfig} from "../../MyConfig";
 
 @Component({
   selector: 'app-online-narudzbe-klijent',
@@ -13,9 +14,12 @@ export class OnlineNarudzbeKlijentComponent implements OnInit {
 
   OnlineNarudzbeList:any;
   p:number=1;
+  brojac:Number=1;
+  onlineNarudzbe:any;
   constructor(private httpClient:HttpClient,private router:Router) { }
 
   ngOnInit(): void {
+    this.preuzmiOnlineNarudzbe();
   }
 
   loginInfo():LoginInformation
@@ -35,5 +39,15 @@ export class OnlineNarudzbeKlijentComponent implements OnInit {
 
   detalji(o: any) {
 
+  }
+
+  private preuzmiOnlineNarudzbe() {
+    this.httpClient.get(MyConfig.adresa_servera+"Narudzba/GetNarudzbeOnlineKlijentFizicko/"+
+      this.loginInfo().id,MyConfig.http_opcije).subscribe(
+      (data:any)=>{
+        this.OnlineNarudzbeList=data.dataSet;
+
+      }
+    );
   }
 }

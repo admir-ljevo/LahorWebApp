@@ -190,11 +190,13 @@ namespace LahorWebApp.Controllers
         public ResponseModel GetNarudzbeOnlineKlijentPravno(int klijentId)
         {
             try
-            {            
-                var onlineNarudzbe=dBContext.Narudzbe.ToList().Where(n => 
-                n.isOnline && n.KlijentPravnoLice!=null &&
-                n?.KlijentPravnoLice?.Id ==
-                klijentId).ToList();
+            {
+                var klijent = dBContext.KlijentiPravnoLice.Where(k =>
+                   k.Id == klijentId).FirstOrDefault();
+
+                var onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                  n.isOnline && n.KlijentPravnoLice ==
+                  klijent).ToList();
 
                 return new ResponseModel(ResponseCode.OK,
                     "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
@@ -211,10 +213,12 @@ namespace LahorWebApp.Controllers
         {
             try
             {
+                var klijent = dBContext.KlijentiFizickoLice.Where(k =>
+                  k.Id == klijentId).FirstOrDefault();
+                
                 var onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
-                  n.isOnline && n.KlijentFizickoLice != null &&
-                  n?.KlijentFizickoLice?.Id ==
-                  klijentId).ToList();
+                  n.isOnline && n.KlijentFizickoLice ==
+                  klijent).ToList();
 
                 return new ResponseModel(ResponseCode.OK,
                     "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);

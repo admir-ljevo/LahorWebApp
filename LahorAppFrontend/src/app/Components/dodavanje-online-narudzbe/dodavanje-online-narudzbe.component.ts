@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {MyConfig} from "../../MyConfig";
 import {UslugaNivoIzvrsenja} from "../../Model/UslugaNivoIzvrsenja";
 import {ResponseCode} from "../../enum/ResponseCode";
+import {UslugeNivoiNazivi} from "../../Model/UslugeNivoiNazivi";
 
 @Component({
   selector: 'app-dodavanje-online-narudzbe',
@@ -20,6 +21,9 @@ export class DodavanjeOnlineNarudzbeComponent implements OnInit {
   odabranaUsluga:any;
   odabranaVrstaUsluge:any;
   odabraniNivo:any;
+  odabranaUslugaNaziv:any;
+  odabraniNivoNaziv:any;
+  listaUslugeNivoNazivi:Array<UslugeNivoiNazivi> = [];
   brojac:Number=1;
   listaUslugeNivoIzvrsenja: Array<UslugaNivoIzvrsenja> = [];
   novaNarudzba={
@@ -95,6 +99,21 @@ export class DodavanjeOnlineNarudzbeComponent implements OnInit {
   }
   dodajUslugu() {
     this.listaUslugeNivoIzvrsenja.push(new UslugaNivoIzvrsenja(this.odabranaUsluga,this.odabraniNivo));
+    for (let i of this.listaNivoiIzvrsenja)
+    {
+      if(i.id==this.odabraniNivo)
+      {
+      this.odabraniNivoNaziv=i.opis;
+      }
+    }
+    for (let i of this.listaUsluge)
+    {
+      if(i.id==this.odabranaUsluga)
+      {
+        this.odabranaUslugaNaziv=i.opis;
+      }
+    }
+    this.listaUslugeNivoNazivi.push(new UslugeNivoiNazivi(this.odabranaUslugaNaziv,this.odabraniNivoNaziv));
 
   }
   onSelectedUsluga(o: any) {

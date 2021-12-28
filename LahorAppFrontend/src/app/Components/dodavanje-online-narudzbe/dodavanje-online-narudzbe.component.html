@@ -53,10 +53,10 @@
         <th>Akcija</th>
       </tr>
       <tbody>
-      <tr *ngFor="let o of listaUslugeNivoIzvrsenja; let i=index">
-        <td>{{i}}</td>
-        <td>{{o.uslugaId}}</td>
-        <td>{{o.NivoIzvrsenjaId}}</td>
+      <tr *ngFor="let o of listaUslugeNivoNazivi; let i=index">
+        <td>{{i+1}}</td>
+        <td>{{o.usluga}}</td>
+        <td>{{o.nivo}}</td>
         <td>
           <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(o)">Obrisi</button>
           <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="detalji(o)">Detalji</button>
