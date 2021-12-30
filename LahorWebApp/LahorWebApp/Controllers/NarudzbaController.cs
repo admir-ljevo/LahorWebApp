@@ -187,17 +187,30 @@ namespace LahorWebApp.Controllers
         }
 
         [HttpGet("{klijentId}")]
-        public ResponseModel GetNarudzbeOnlineKlijentPravno(int klijentId)
+        public ResponseModel GetNarudzbeOnline(int klijentId)
         {
             try
             {
-                var klijent = dBContext.KlijentiPravnoLice.Where(k =>
-                   k.Id == klijentId).FirstOrDefault();
+                //var klijent = dBContext.KlijentiPravnoLice.Where(k =>
+                //   k.Id == klijentId).FirstOrDefault();
 
-                var onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
-                  n.isOnline && n.KlijentPravnoLice ==
-                  klijent).ToList();
-
+                var klijent = PronadjiKlijenta(klijentId);
+                dynamic onlineNarudzbe=null;
+                if (klijent != null)
+                {
+                    if (klijent is KlijentFizickoLice)
+                    {
+                        onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                     n.isOnline && n.KlijentFizickoLice ==
+                     klijent).ToList();
+                    }
+                    else if (klijent is KlijentPravnoLice)
+                    {
+                        onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                          n.isOnline && n.KlijentPravnoLice ==
+                          klijent).ToList();
+                    }
+                }
                 return new ResponseModel(ResponseCode.OK,
                     "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
             }
@@ -208,20 +221,17 @@ namespace LahorWebApp.Controllers
             }
         }
 
-        [HttpGet("{klijentId}")]
-        public ResponseModel GetNarudzbeOnlineKlijentFizicko(int klijentId)
+        [HttpGet]
+        public ResponseModel GetAllNarudzbeOnline()
         {
             try
             {
-                var klijent = dBContext.KlijentiFizickoLice.Where(k =>
-                  k.Id == klijentId).FirstOrDefault();
-                
+                      
                 var onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
-                  n.isOnline && n.KlijentFizickoLice ==
-                  klijent).ToList();
+                  n.isOnline).ToList();
 
                 return new ResponseModel(ResponseCode.OK,
-                    "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
+                    "Online narudzbe uspješno preuzete", onlineNarudzbe);
             }
             catch (Exception ex)
             {

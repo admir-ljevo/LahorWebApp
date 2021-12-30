@@ -9,7 +9,7 @@ namespace Data.Models
     [Table("KlijentiPravnoLice")]
     public class KlijentPravnoLice:Klijent
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string NazivKlijenta { get; set; }
         public string IdBrojFirme { get; set; }
 

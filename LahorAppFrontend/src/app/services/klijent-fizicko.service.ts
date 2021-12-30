@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Route} from "@angular/router";
 import {ResponseModel} from "../Model/ResponseModel";
 import {MyConfig} from "../MyConfig";
 import {ResponseCode} from "../enum/ResponseCode";

@@ -50,6 +50,7 @@ namespace Data.Data
         public DbSet<BracniStatus> BracniStatusi { get; set; }
         public DbSet<Uposlenik> Uposlenici { get; set; }
         public DbSet<UpravnoOsoblje> UpravnoOsoblje { get; set; }
+        public DbSet<Klijent> Klijenti { get; set; }
         public DbSet<KlijentFizickoLice> KlijentiFizickoLice { get; set; }
         public DbSet<KlijentPravnoLice> KlijentiPravnoLice { get; set; }
         public DbSet<VozackaDozvolaKategorija> VoazckaDozvolaKategorije { get; set; }

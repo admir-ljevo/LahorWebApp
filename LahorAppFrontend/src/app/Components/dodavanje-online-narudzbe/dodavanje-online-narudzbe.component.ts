@@ -32,6 +32,7 @@ export class DodavanjeOnlineNarudzbeComponent implements OnInit {
     Naziv :"",
     Opis:"",
     DatumNarudzbe: new Date(),
+
     DatumIsporuke: new Date(),
     KlijentId:  this.loginInfo().id,
     UslugeNivoIzvrsenja:this.listaUslugeNivoIzvrsenja

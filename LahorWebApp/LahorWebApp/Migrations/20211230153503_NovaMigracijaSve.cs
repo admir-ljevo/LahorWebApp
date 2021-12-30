@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LahorWebApp.Migrations
 {
-    public partial class Kreirananovabazasaizmjenamazanarudzbeikreiranajezajednickatabelanarudzbi : Migration
+    public partial class NovaMigracijaSve : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,20 @@ namespace LahorWebApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BracniStatusi", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Klijenti",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Aktivan = table.Column<bool>(type: "bit", nullable: false),
+                    ClanskaKartica = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Klijenti", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -245,13 +259,10 @@ namespace LahorWebApp.Migrations
                 name: "KlijentiPravnoLice",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     NazivKlijenta = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdBrojFirme = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    KorisnikID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Aktivan = table.Column<bool>(type: "bit", nullable: false),
-                    ClanskaKartica = table.Column<bool>(type: "bit", nullable: false)
+                    KorisnikID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -262,21 +273,24 @@ namespace LahorWebApp.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_KlijentiPravnoLice_Klijenti_Id",
+                        column: x => x.Id,
+                        principalTable: "Klijenti",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "KlijentiFizickoLice",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatumRodjenja = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SpolID = table.Column<int>(type: "int", nullable: false),
-                    KorisnikID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Aktivan = table.Column<bool>(type: "bit", nullable: false),
-                    ClanskaKartica = table.Column<bool>(type: "bit", nullable: false)
+                    KorisnikID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,6 +299,12 @@ namespace LahorWebApp.Migrations
                         name: "FK_KlijentiFizickoLice_AspNetUsers_KorisnikID",
                         column: x => x.KorisnikID,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_KlijentiFizickoLice_Klijenti_Id",
+                        column: x => x.Id,
+                        principalTable: "Klijenti",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -456,10 +476,14 @@ namespace LahorWebApp.Migrations
                     UkupnaCijena = table.Column<float>(type: "real", nullable: false),
                     Kolicina = table.Column<float>(type: "real", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NazivKlijenta = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AutorUpravnoId = table.Column<int>(type: "int", nullable: true),
                     AutorUposlenikId = table.Column<int>(type: "int", nullable: true),
                     KlijentFizickoLiceId = table.Column<int>(type: "int", nullable: true),
-                    KlijentPravnoLiceId = table.Column<int>(type: "int", nullable: true)
+                    KlijentPravnoLiceId = table.Column<int>(type: "int", nullable: true),
+                    isOnline = table.Column<bool>(type: "bit", nullable: false),
+                    isGuest = table.Column<bool>(type: "bit", nullable: false),
+                    isNarudzbaAutor = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -788,6 +812,9 @@ namespace LahorWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "VrsteUsluga");
+
+            migrationBuilder.DropTable(
+                name: "Klijenti");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

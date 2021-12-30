@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LahorWebApp.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211224021717_updateNarudzbe")]
-    partial class updateNarudzbe
+    [Migration("20211230153503_NovaMigracijaSve")]
+    partial class NovaMigracijaSve
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace LahorWebApp.Migrations
                     b.ToTable("BracniStatusi");
                 });
 
-            modelBuilder.Entity("Data.Models.KlijentFizickoLice", b =>
+            modelBuilder.Entity("Data.Models.Klijent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,57 +49,9 @@ namespace LahorWebApp.Migrations
                     b.Property<bool>("ClanskaKartica")
                         .HasColumnType("bit");
 
-                    b.Property<string>("DatumRodjenja")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KorisnikID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Prezime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpolID")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("KorisnikID");
-
-                    b.HasIndex("SpolID");
-
-                    b.ToTable("KlijentiFizickoLice");
-                });
-
-            modelBuilder.Entity("Data.Models.KlijentPravnoLice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Aktivan")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ClanskaKartica")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("IdBrojFirme")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KorisnikID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NazivKlijenta")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KorisnikID");
-
-                    b.ToTable("KlijentiPravnoLice");
+                    b.ToTable("Klijenti");
                 });
 
             modelBuilder.Entity("Data.Models.Korisnik", b =>
@@ -759,28 +711,46 @@ namespace LahorWebApp.Migrations
 
             modelBuilder.Entity("Data.Models.KlijentFizickoLice", b =>
                 {
-                    b.HasOne("Data.Models.Korisnik", "Korisnik")
-                        .WithMany()
-                        .HasForeignKey("KorisnikID");
+                    b.HasBaseType("Data.Models.Klijent");
 
-                    b.HasOne("Data.Models.Spol", "Spol")
-                        .WithMany()
-                        .HasForeignKey("SpolID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Property<string>("DatumRodjenja")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Korisnik");
+                    b.Property<string>("Ime")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Navigation("Spol");
+                    b.Property<string>("KorisnikID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Prezime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SpolID")
+                        .HasColumnType("int");
+
+                    b.HasIndex("KorisnikID");
+
+                    b.HasIndex("SpolID");
+
+                    b.ToTable("KlijentiFizickoLice");
                 });
 
             modelBuilder.Entity("Data.Models.KlijentPravnoLice", b =>
                 {
-                    b.HasOne("Data.Models.Korisnik", "Korisnik")
-                        .WithMany()
-                        .HasForeignKey("KorisnikID");
+                    b.HasBaseType("Data.Models.Klijent");
 
-                    b.Navigation("Korisnik");
+                    b.Property<string>("IdBrojFirme")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KorisnikID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("NazivKlijenta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("KorisnikID");
+
+                    b.ToTable("KlijentiPravnoLice");
                 });
 
             modelBuilder.Entity("Data.Models.Narudzba", b =>
@@ -1009,6 +979,44 @@ namespace LahorWebApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Models.KlijentFizickoLice", b =>
+                {
+                    b.HasOne("Data.Models.Klijent", null)
+                        .WithOne()
+                        .HasForeignKey("Data.Models.KlijentFizickoLice", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
+
+                    b.HasOne("Data.Models.Spol", "Spol")
+                        .WithMany()
+                        .HasForeignKey("SpolID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Korisnik");
+
+                    b.Navigation("Spol");
+                });
+
+            modelBuilder.Entity("Data.Models.KlijentPravnoLice", b =>
+                {
+                    b.HasOne("Data.Models.Klijent", null)
+                        .WithOne()
+                        .HasForeignKey("Data.Models.KlijentPravnoLice", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
+
+                    b.Navigation("Korisnik");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,7 +14,6 @@ export class OnlineNarudzbeKlijentComponent implements OnInit {
 
   OnlineNarudzbeList:any;
   p:number=1;
-  brojac:Number=1;
   onlineNarudzbe:any;
   constructor(private httpClient:HttpClient,private router:Router) { }
 
@@ -42,7 +41,7 @@ export class OnlineNarudzbeKlijentComponent implements OnInit {
   }
 
   private preuzmiOnlineNarudzbe() {
-    this.httpClient.get(MyConfig.adresa_servera+"Narudzba/GetNarudzbeOnlineKlijentFizicko/"+
+    this.httpClient.get(MyConfig.adresa_servera+"Narudzba/GetNarudzbeOnline/"+
       this.loginInfo().id,MyConfig.http_opcije).subscribe(
       (data:any)=>{
         this.OnlineNarudzbeList=data.dataSet;
