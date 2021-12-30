@@ -1,4 +1,3 @@
-
 <nav  class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isUserLogin()">
   <a class="navbar-brand" href="https://www.fit.ba"><img src="https://i.ibb.co/RHpLMss/LAHOR-LOGO-rac-final.png"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +23,7 @@
           <a class="dropdown-item" routerLink="/narudzbe">Narudžbe</a>
           <a class="dropdown-item" routerLink="/onlineNarudzbe">Online narudžbe</a>
         </div>
-    </li>
+      </li>
       <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
         <a class="nav-link" routerLink="/cjenovnik">Cjenovnik</a>
       </li>
@@ -42,4 +41,5 @@
   </div>
 
 </nav>
+
 <router-outlet></router-outlet>

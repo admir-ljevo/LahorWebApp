@@ -31,6 +31,14 @@ import { OnlineNarudzbeComponent } from './Components/online-narudzbe/online-nar
 import { CjenovnikComponent } from './Components/cjenovnik/cjenovnik.component';
 import { OnlineNarudzbeKlijentComponent } from './Components/online-narudzbe-klijent/online-narudzbe-klijent.component';
 import { DodavanjeOnlineNarudzbeComponent } from './Components/dodavanje-online-narudzbe/dodavanje-online-narudzbe.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavComponent } from './Components/nav/nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
 
@@ -53,7 +61,8 @@ import { DodavanjeOnlineNarudzbeComponent } from './Components/dodavanje-online-
     OnlineNarudzbeComponent,
     CjenovnikComponent,
     OnlineNarudzbeKlijentComponent,
-    DodavanjeOnlineNarudzbeComponent
+    DodavanjeOnlineNarudzbeComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +93,13 @@ import { DodavanjeOnlineNarudzbeComponent } from './Components/dodavanje-online-
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
     /*RouterModule.forRoot(appRoutes, {enableTracing:true}),*/
   ],
   providers: [
