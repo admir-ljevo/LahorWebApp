@@ -87,6 +87,7 @@ import { MatListModule } from '@angular/material/list';
       {path: 'cjenovnik', component: CjenovnikComponent},
       {path: 'onlineNarudzbeKlijent', component: OnlineNarudzbeKlijentComponent},
       {path: 'dodavanjeOnlineNarudzbe', component: DodavanjeOnlineNarudzbeComponent},
+      {path: 'nav', component: NavComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
     HttpClientModule,
