@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LahorWebApp.Migrations
 {
     [DbContext(typeof(LahorAppDBContext))]
-    [Migration("20211230153503_NovaMigracijaSve")]
-    partial class NovaMigracijaSve
+    [Migration("20220103153411_Nova migracija Sve")]
+    partial class NovamigracijaSve
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,54 @@ namespace LahorWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BracniStatusi");
+                });
+
+            modelBuilder.Entity("Data.Models.Izvjestaj", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AutorUposlenikId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AutorUpravnoOsobljeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DatumKreiranja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Oznaka")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VrstaIzvjestajaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AutorUposlenikId");
+
+                    b.HasIndex("AutorUpravnoOsobljeId");
+
+                    b.HasIndex("VrstaIzvjestajaId");
+
+                    b.ToTable("Izvjestaji");
+                });
+
+            modelBuilder.Entity("Data.Models.IzvjestajiNarudzbe", b =>
+                {
+                    b.Property<int>("NarudzbaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IzvjestajId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NarudzbaId", "IzvjestajId");
+
+                    b.HasIndex("IzvjestajId");
+
+                    b.ToTable("IzvjestajiNarudzbe");
                 });
 
             modelBuilder.Entity("Data.Models.Klijent", b =>
@@ -312,6 +360,83 @@ namespace LahorWebApp.Migrations
                     b.ToTable("Pozicije");
                 });
 
+            modelBuilder.Entity("Data.Models.Radnik", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Aktivan")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Biografija")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BracniStatusID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DatumRodjenja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatumZaposlenja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drzavljanstvo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("IznosPlate")
+                        .HasColumnType("real");
+
+                    b.Property<string>("JMBG")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MjestoPrebivalista")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MjestoRodjenja")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nacionalost")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PozicijaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Prezime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RadnoIskustvo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SpolID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StrucnaSprema")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VoazckaDozvolaKategorijaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BracniStatusID");
+
+                    b.HasIndex("PozicijaId");
+
+                    b.HasIndex("SpolID");
+
+                    b.HasIndex("VoazckaDozvolaKategorijaID");
+
+                    b.ToTable("Radnici");
+                });
+
             modelBuilder.Entity("Data.Models.Spol", b =>
                 {
                     b.Property<int>("Id")
@@ -325,176 +450,6 @@ namespace LahorWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Spolovi");
-                });
-
-            modelBuilder.Entity("Data.Models.Uposlenik", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Aktivan")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Biografija")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BracniStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DatumRodjenja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatumZaposlenja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Drzavljanstvo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("IznosPlate")
-                        .HasColumnType("real");
-
-                    b.Property<string>("JMBG")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KorisnikID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MjestoPrebivalista")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MjestoRodjenja")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nacionalost")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PozicijaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Prezime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RadnoIskustvo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Slika")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpolID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StrucnaSprema")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VoazckaDozvolaKategorijaID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Zanimanje")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BracniStatusID");
-
-                    b.HasIndex("KorisnikID");
-
-                    b.HasIndex("PozicijaId");
-
-                    b.HasIndex("SpolID");
-
-                    b.HasIndex("VoazckaDozvolaKategorijaID");
-
-                    b.ToTable("Uposlenici");
-                });
-
-            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Aktivan")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Biografija")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BracniStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DatumRodjenja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatumZaposlenja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Drzavljanstvo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("IznosPlate")
-                        .HasColumnType("real");
-
-                    b.Property<string>("JMBG")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KorisnikID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MjestoPrebivalista")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MjestoRodjenja")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nacionalost")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PozicijaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Prezime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RadnoIskustvo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Slika")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpolID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StrucnaSprema")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Titula")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VoazckaDozvolaKategorijaID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BracniStatusID");
-
-                    b.HasIndex("KorisnikID");
-
-                    b.HasIndex("PozicijaId");
-
-                    b.HasIndex("SpolID");
-
-                    b.HasIndex("VoazckaDozvolaKategorijaID");
-
-                    b.ToTable("UpravnoOsoblje");
                 });
 
             modelBuilder.Entity("Data.Models.Usluga", b =>
@@ -561,6 +516,21 @@ namespace LahorWebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VozackaDozvolaKategorija");
+                });
+
+            modelBuilder.Entity("Data.Models.VrstaIzvjestaja", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VrstaIzvjestaja");
                 });
 
             modelBuilder.Entity("Data.Models.VrstaUsluge", b =>
@@ -753,6 +723,78 @@ namespace LahorWebApp.Migrations
                     b.ToTable("KlijentiPravnoLice");
                 });
 
+            modelBuilder.Entity("Data.Models.Uposlenik", b =>
+                {
+                    b.HasBaseType("Data.Models.Radnik");
+
+                    b.Property<string>("KorisnikID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Zanimanje")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("KorisnikID");
+
+                    b.ToTable("Uposlenici");
+                });
+
+            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
+                {
+                    b.HasBaseType("Data.Models.Radnik");
+
+                    b.Property<string>("KorisnikID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Titula")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("KorisnikID");
+
+                    b.ToTable("UpravnoOsoblje");
+                });
+
+            modelBuilder.Entity("Data.Models.Izvjestaj", b =>
+                {
+                    b.HasOne("Data.Models.Uposlenik", "AutorUposlenik")
+                        .WithMany()
+                        .HasForeignKey("AutorUposlenikId");
+
+                    b.HasOne("Data.Models.UpravnoOsoblje", "AutorUpravnoOsoblje")
+                        .WithMany()
+                        .HasForeignKey("AutorUpravnoOsobljeId");
+
+                    b.HasOne("Data.Models.VrstaIzvjestaja", "VrstaIzvjestaja")
+                        .WithMany()
+                        .HasForeignKey("VrstaIzvjestajaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AutorUposlenik");
+
+                    b.Navigation("AutorUpravnoOsoblje");
+
+                    b.Navigation("VrstaIzvjestaja");
+                });
+
+            modelBuilder.Entity("Data.Models.IzvjestajiNarudzbe", b =>
+                {
+                    b.HasOne("Data.Models.Izvjestaj", "Izvjestaj")
+                        .WithMany("IzvjestajiNarudzbe")
+                        .HasForeignKey("IzvjestajId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Narudzba", "Narudzba")
+                        .WithMany("IzvjestajiNarudzbe")
+                        .HasForeignKey("NarudzbaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Izvjestaj");
+
+                    b.Navigation("Narudzba");
+                });
+
             modelBuilder.Entity("Data.Models.Narudzba", b =>
                 {
                     b.HasOne("Data.Models.Uposlenik", "AutorUposlenik")
@@ -818,17 +860,13 @@ namespace LahorWebApp.Migrations
                     b.Navigation("Autor");
                 });
 
-            modelBuilder.Entity("Data.Models.Uposlenik", b =>
+            modelBuilder.Entity("Data.Models.Radnik", b =>
                 {
                     b.HasOne("Data.Models.BracniStatus", "BracniStatus")
                         .WithMany()
                         .HasForeignKey("BracniStatusID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Data.Models.Korisnik", "Korisnik")
-                        .WithMany()
-                        .HasForeignKey("KorisnikID");
 
                     b.HasOne("Data.Models.Pozicija", "Pozicija")
                         .WithMany()
@@ -849,49 +887,6 @@ namespace LahorWebApp.Migrations
                         .IsRequired();
 
                     b.Navigation("BracniStatus");
-
-                    b.Navigation("Korisnik");
-
-                    b.Navigation("Pozicija");
-
-                    b.Navigation("Spol");
-
-                    b.Navigation("VozackaDozvolaKategorija");
-                });
-
-            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
-                {
-                    b.HasOne("Data.Models.BracniStatus", "BracniStatus")
-                        .WithMany()
-                        .HasForeignKey("BracniStatusID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Korisnik", "Korisnik")
-                        .WithMany()
-                        .HasForeignKey("KorisnikID");
-
-                    b.HasOne("Data.Models.Pozicija", "Pozicija")
-                        .WithMany()
-                        .HasForeignKey("PozicijaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.Spol", "Spol")
-                        .WithMany()
-                        .HasForeignKey("SpolID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.VozackaDozvolaKategorija", "VozackaDozvolaKategorija")
-                        .WithMany()
-                        .HasForeignKey("VoazckaDozvolaKategorijaID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BracniStatus");
-
-                    b.Navigation("Korisnik");
 
                     b.Navigation("Pozicija");
 
@@ -1017,6 +1012,46 @@ namespace LahorWebApp.Migrations
                         .HasForeignKey("KorisnikID");
 
                     b.Navigation("Korisnik");
+                });
+
+            modelBuilder.Entity("Data.Models.Uposlenik", b =>
+                {
+                    b.HasOne("Data.Models.Radnik", null)
+                        .WithOne()
+                        .HasForeignKey("Data.Models.Uposlenik", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
+
+                    b.Navigation("Korisnik");
+                });
+
+            modelBuilder.Entity("Data.Models.UpravnoOsoblje", b =>
+                {
+                    b.HasOne("Data.Models.Radnik", null)
+                        .WithOne()
+                        .HasForeignKey("Data.Models.UpravnoOsoblje", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Korisnik", "Korisnik")
+                        .WithMany()
+                        .HasForeignKey("KorisnikID");
+
+                    b.Navigation("Korisnik");
+                });
+
+            modelBuilder.Entity("Data.Models.Izvjestaj", b =>
+                {
+                    b.Navigation("IzvjestajiNarudzbe");
+                });
+
+            modelBuilder.Entity("Data.Models.Narudzba", b =>
+                {
+                    b.Navigation("IzvjestajiNarudzbe");
                 });
 #pragma warning restore 612, 618
         }

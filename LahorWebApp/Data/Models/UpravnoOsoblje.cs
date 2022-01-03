@@ -10,8 +10,8 @@ namespace Data.Models
     [Table("UpravnoOsoblje")]
     public class UpravnoOsoblje:Radnik
     {
-        [Key]
-        public int Id { get; set; }
+        //[Key]
+        //public int Id { get; set; }
         public string Titula { get; set; }
         [ForeignKey(nameof(Korisnik))]
         public string KorisnikID { get; set; }
