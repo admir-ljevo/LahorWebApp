@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class Izvještaj
+    public class Izvjestaj
     {
         [Key]
         public int Id { get; set; }
         public string Oznaka { get; set; }
 
-        [ForeignKey(nameof(VrstaIzvještaja))]
-        public int VrstaIzvještajaId { get; set; }
-        public VrstaIzvještaja VrstaIzvještaja { get; set; }
+        [ForeignKey(nameof(VrstaIzvjestaja))]
+        public int VrstaIzvjestajaId { get; set; }
+        public VrstaIzvjestaja VrstaIzvjestaja { get; set; }
         public DateTime DatumKreiranja { get; set; }
         public Uposlenik AutorUposlenik { get; set; }
         public UpravnoOsoblje AutorUpravnoOsoblje { get; set; }
+        public IList<IzvjestajiNarudzbe> IzvjestajiNarudzbe { get; set; }
     }
 }

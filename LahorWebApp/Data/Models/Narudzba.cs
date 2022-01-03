@@ -28,5 +28,6 @@ namespace Data.Models
         public bool isOnline { get; set; }
         public bool isGuest { get; set; }
         public bool isNarudzbaAutor { get; set; }
+        public IList<IzvjestajiNarudzbe> IzvjestajiNarudzbe { get; set; }
     }
 }
