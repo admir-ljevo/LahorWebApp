@@ -19,7 +19,8 @@
       <td>{{i.ukupnaCijena}}</td>
       <td>
         <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(i)">Obrisi</button>
-        <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent'" (click)="detalji(i)">Detalji</button>
+        <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent' || loginInfo().role==
+            'UpravnoOsoblje'" (click)="detalji(i)">Detalji</button>
       </td>
     </tr>
     </tbody>
