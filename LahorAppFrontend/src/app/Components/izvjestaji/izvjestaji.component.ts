@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginInformation} from "../../_helpers/loginInformacije";
+import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
+import {IzvjestajiService} from "../../services/IzvjestajiService";
 
 @Component({
   selector: 'app-izvjestaji',
@@ -7,9 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IzvjestajiComponent implements OnInit {
 
-  constructor() { }
+  izvjestajiList:any;
+  constructor(private izvjestajiService:IzvjestajiService) { }
 
   ngOnInit(): void {
+    this.preuzmiIzvjestaje();
   }
+  p:number=1;
+  loginInfo():LoginInformation
+  {
+    return AutentifikacijaHelper.getLoginInfo();
+  }
+  preuzmiIzvjestaje()
+  {
+    this.izvjestajiService.GetAllIzvjestaji().subscribe(
+      (data:any)=>{
+          this.izvjestajiList=data;
+      }
+    );
+  }
+  key:string='datumKreiranja';
+  reverse:boolean=false;
+  sort(key) {
+    this.key=key;
+    this.reverse=!this.reverse;
+  }
+  obrisi(i:any)
+  {
 
+  }
+  detalji(i:any)
+  {
+
+  }
 }

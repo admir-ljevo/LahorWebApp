@@ -22,7 +22,6 @@ namespace LahorWebApp.Controllers
         }
 
         [HttpPost]
-
         public ResponseModel Add([FromBody] IzvjestajAddVM model)
         {
             try
@@ -46,6 +45,23 @@ namespace LahorWebApp.Controllers
                 dBContext.SaveChanges();
                 return new ResponseModel(ResponseCode.OK,
                     "Izvještaj uspješno dodan", newIzvjestaj);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " +
+                    ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet]
+
+        public ResponseModel GetAllIzvještaji()
+        {
+            try
+            {
+                var izvjestaji = dBContext.Izvjestaji.ToList();
+                    return new ResponseModel(ResponseCode.OK,
+                        "Uspješno preuzeti izvještaji", izvjestaji);
             }
             catch (Exception ex)
             {

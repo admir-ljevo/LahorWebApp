@@ -1,1 +1,28 @@
-<p>izvjestaji works!</p>
+<div class="page">
+  <table class="table table-striped">
+    <tr>
+      <th>Rb</th>
+      <th>Oznaka</th>
+      <th (click)="sort('datumKreiranja')">Datum kreiranja&nbsp;<i class="fa fa-sort"></i></th>
+      <th>Vrsta izvještaja</th>
+      <th>Datum modifikovanja</th>
+      <th>Autor</th>
+      <th>Akcija</th>
+    </tr>
+    <tbody>
+    <tr *ngFor="let i of izvjestajiList | orderBy:key:reverse | paginate: {itemsPerPage:10,currentPage:p}; let index=index">
+      <td>{{index+1}}</td>
+      <td>{{i.oznaka}}</td>
+      <td>{{i.datumKreiranja}}</td>
+      <td>{{i.vrstaIzvjestajaId}}</td>
+      <td>{{i.autorId}}</td>
+      <td>{{i.ukupnaCijena}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(i)">Obrisi</button>
+        <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent'" (click)="detalji(i)">Detalji</button>
+      </td>
+    </tr>
+    </tbody>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </table>
+</div>
