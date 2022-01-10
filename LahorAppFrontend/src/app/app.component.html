@@ -25,6 +25,9 @@
         </div>
       </li>
       <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
+        <a class="nav-link" routerLink="/izvjestaji">Izvještaji</a>
+      </li>
+      <li *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" class="nav-item">
         <a class="nav-link" routerLink="/cjenovnik">Cjenovnik</a>
       </li>
 

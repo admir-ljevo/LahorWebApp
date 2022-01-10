@@ -39,6 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { IzvjestajiComponent } from './Components/izvjestaji/izvjestaji.component';
 
 @NgModule({
 
@@ -62,7 +63,8 @@ import { MatListModule } from '@angular/material/list';
     CjenovnikComponent,
     OnlineNarudzbeKlijentComponent,
     DodavanjeOnlineNarudzbeComponent,
-    NavComponent
+    NavComponent,
+    IzvjestajiComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +89,7 @@ import { MatListModule } from '@angular/material/list';
       {path: 'cjenovnik', component: CjenovnikComponent},
       {path: 'onlineNarudzbeKlijent', component: OnlineNarudzbeKlijentComponent},
       {path: 'dodavanjeOnlineNarudzbe', component: DodavanjeOnlineNarudzbeComponent},
+      {path: 'izvjestaji', component: IzvjestajiComponent},
       {path: 'nav', component: NavComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
