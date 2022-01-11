@@ -26,21 +26,23 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                var autor = PronadjiAutoraIzvjestaja(model.AutorId);
+                //var autor = PronadjiAutoraIzvjestaja(model.AutorId);
                 Izvjestaj newIzvjestaj = new Izvjestaj
                 {
                     Oznaka = "I",
                     DatumKreiranja = DateTime.Now,
-                    VrstaIzvjestajaId = model.VrstaIzvjestajaId
+                    VrstaIzvjestajaId = model.VrstaIzvjestajaId,
+                    VrstaIzvjestaja = dBContext.VrsteIzvjestaja.Find(model.VrstaIzvjestajaId),
+                    Autor=dBContext.Radnici.Find(model.AutorId)
                 };
-                if(autor is UpravnoOsoblje)
-                {
-                    newIzvjestaj.AutorUpravnoOsoblje = autor as UpravnoOsoblje;
-                }
-                else if(autor is Uposlenik)
-                {
-                    newIzvjestaj.AutorUposlenik = autor as Uposlenik;
-                }
+                //if(autor is UpravnoOsoblje)
+                //{
+                //    newIzvjestaj.AutorUpravnoOsoblje = autor as UpravnoOsoblje;
+                //}
+                //else if(autor is Uposlenik)
+                //{
+                //    newIzvjestaj.AutorUposlenik = autor as Uposlenik;
+                //}
                 dBContext.Add(newIzvjestaj);
                 dBContext.SaveChanges();
                 return new ResponseModel(ResponseCode.OK,
@@ -58,7 +60,17 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                var izvjestaji = dBContext.Izvjestaji.ToList();
+                //List<IzvjestajGetVM> getIzvjestaji = new List<IzvjestajGetVM>();
+                var izvjestaji = dBContext.Izvjestaji.Select(i =>
+                new IzvjestajGetVM
+                {
+                    AutorId = i.Autor.Id,
+                    AutorNaziv = i.Autor.ToString(),
+                    Oznaka = i.Oznaka,
+                    VrstaIzvjestajaId=i.VrstaIzvjestajaId,
+                    NazivVrsteIzvjestaja=i.VrstaIzvjestaja.ToString(),
+                    DatumKreiranja=i.DatumKreiranja.Date.ToString("d.MM.yyyy")
+                });
                     return new ResponseModel(ResponseCode.OK,
                         "Uspješno preuzeti izvještaji", izvjestaji);
             }

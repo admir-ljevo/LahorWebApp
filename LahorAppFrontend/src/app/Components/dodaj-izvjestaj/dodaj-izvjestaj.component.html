@@ -1,5 +1,5 @@
-
-<div class="main">
+<div class="main" style="display: flex; flex-direction: column;">
+<div  style="display: flex; flex-direction: row">
   <form class="container">
     <div class="form-group">
       <br/>
@@ -23,4 +23,26 @@
 
     <button type="submit" class="btn btn-primary" (click)="dodajIzvjestaj()">Dodaj</button>
   </form>
+</div>
+  <div>
+    <table class="table table-striped">
+      <tr>
+        <th>Rb</th>
+        <th>Oznaka</th>
+        <th>UkupnaCijena</th>
+        <th>Akcija</th>
+      </tr>
+      <tbody>
+      <tr *ngFor="let n of listaNarudzbe; let i=index">
+        <td>{{i+1}}</td>
+        <td>{{n.naziv}}</td>
+        <td>{{n.ukupnaCijena}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(n)">Obrisi</button>
+          <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='UpravnoOsoblje' || loginInfo().role=='Uposlenik'" (click)="detalji(n)">Detalji</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -239,6 +239,24 @@ namespace LahorWebApp.Controllers
                     ex.Message + " " + ex.InnerException, null);
             }
         }
+
+        [HttpGet("{datumKreiranja}")]
+
+        public ResponseModel GetAllNarudzbe(DateTime datumKreiranja)
+        {
+            try
+            {
+                var narudzbe = dBContext.Narudzbe.Where(n => n.DatumNarudzbe.Date ==
+                  datumKreiranja).ToList();
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbe);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
     }
 
 }

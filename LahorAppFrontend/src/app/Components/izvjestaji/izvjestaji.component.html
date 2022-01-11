@@ -6,7 +6,7 @@
       <th>Oznaka</th>
       <th (click)="sort('datumKreiranja')">Datum kreiranja&nbsp;<i class="fa fa-sort"></i></th>
       <th>Vrsta izvještaja</th>
-      <th>Datum modifikovanja</th>
+      <!--<th>Datum modifikovanja</th>-->
       <th>Autor</th>
       <th>Akcija</th>
     </tr>
@@ -15,9 +15,8 @@
       <td>{{index+1}}</td>
       <td>{{i.oznaka}}</td>
       <td>{{i.datumKreiranja}}</td>
-      <td>{{i.vrstaIzvjestajaId}}</td>
-      <td>{{i.autorId}}</td>
-      <td>{{i.ukupnaCijena}}</td>
+      <td>{{i.nazivVrsteIzvjestaja}}</td>
+      <td>{{i.autorNaziv}}</td>
       <td>
         <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(i)">Obrisi</button>
         <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent' || loginInfo().role==

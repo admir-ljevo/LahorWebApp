@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {IzvjestajiService} from "../../services/IzvjestajiService";
+import {LoginInformation} from "../../_helpers/loginInformacije";
+import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
+import {NarudzbeService} from "../../services/NarudzbeService";
 
 @Component({
   selector: 'app-dodaj-izvjestaj',
@@ -12,12 +15,13 @@ export class DodajIzvjestajComponent implements OnInit {
   vrsteIzvjestaja:any;
   odabranaVrstaIzvjestaja:any;
   odabraniDatum:any;
+  listaNarudzbe:any;
 
   noviIzvjestaj={
     VrstaIzvjestajaId:0,
     AutorId:0
 }
-  constructor(private izvjestajiService:IzvjestajiService) { }
+  constructor(private izvjestajiService:IzvjestajiService,private narudzbeService:NarudzbeService) { }
 
   ngOnInit(): void {
     this.preuzmiVrsteIzvjestaja();
@@ -31,6 +35,19 @@ export class DodajIzvjestajComponent implements OnInit {
         }
       );
   }
+
+  preuzmiNarudzbe(d:any)
+  {
+      this.narudzbeService.getAllNarudzbe(d).subscribe(
+        (data:any)=>{
+          this.listaNarudzbe=data;
+        }
+      );
+  }
+  loginInfo():LoginInformation
+  {
+    return AutentifikacijaHelper.getLoginInfo();
+  }
   dodajIzvjestaj() {
 
   }
@@ -40,5 +57,14 @@ export class DodajIzvjestajComponent implements OnInit {
   }
   onSelectedDatum(d:any) {
     this.odabraniDatum=d;
+    this.preuzmiNarudzbe(d);
+  }
+
+  obrisi(o: any) {
+
+  }
+
+  detalji(o: any) {
+
   }
 }

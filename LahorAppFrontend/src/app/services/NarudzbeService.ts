@@ -5,6 +5,7 @@ import {Obavijest} from "../Model/Obavijest";
 import {ResponseModel} from "../Model/ResponseModel";
 import {MyConfig} from "../MyConfig";
 import {ResponseCode} from "../enum/ResponseCode";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,30 @@ export class NarudzbeService{
           console.log(data.ResponseMessage);
         }
       });
+  }
+
+  public getAllNarudzbe(d:any)
+  {
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Narudzba/GetAllNarudzbe/"+d).pipe(map(res=>{
+      let narudzbeList=new Array<any>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
+        {
+          res.dataSet.map((x:Obavijest)=>{
+            narudzbeList.push(x);
+          })
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+      }
+      else
+      {
+        console.log(res.responseCode);
+      }
+      return narudzbeList;
+    }));
   }
 }

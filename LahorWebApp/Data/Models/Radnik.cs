@@ -43,5 +43,9 @@ namespace Data.Models
         public DateTime DatumZaposlenja { get; set; }
         public float IznosPlate { get; set; }
         public bool Aktivan { get; set; }
+        public override string ToString()
+        {
+            return Ime + " " + Prezime;
+        }
     }
 }

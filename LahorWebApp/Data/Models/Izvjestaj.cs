@@ -18,8 +18,9 @@ namespace Data.Models
         public int VrstaIzvjestajaId { get; set; }
         public VrstaIzvjestaja VrstaIzvjestaja { get; set; }
         public DateTime DatumKreiranja { get; set; }
-        public Uposlenik AutorUposlenik { get; set; }
-        public UpravnoOsoblje AutorUpravnoOsoblje { get; set; }
+        //public Uposlenik AutorUposlenik { get; set; }
+        //public UpravnoOsoblje AutorUpravnoOsoblje { get; set; }
+        public Radnik Autor { get; set; }
         public IList<IzvjestajiNarudzbe> IzvjestajiNarudzbe { get; set; }
     }
 }

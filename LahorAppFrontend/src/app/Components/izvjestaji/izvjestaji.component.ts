@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LoginInformation} from "../../_helpers/loginInformacije";
 import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
 import {IzvjestajiService} from "../../services/IzvjestajiService";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-izvjestaji',
@@ -11,6 +12,7 @@ import {IzvjestajiService} from "../../services/IzvjestajiService";
 export class IzvjestajiComponent implements OnInit {
 
   izvjestajiList:any;
+  datePipe:DatePipe;
   constructor(private izvjestajiService:IzvjestajiService) { }
 
   ngOnInit(): void {
