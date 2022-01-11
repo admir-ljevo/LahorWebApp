@@ -54,7 +54,6 @@ namespace LahorWebApp.Controllers
         }
 
         [HttpGet]
-
         public ResponseModel GetAllIzvještaji()
         {
             try
@@ -65,6 +64,23 @@ namespace LahorWebApp.Controllers
             }
             catch (Exception ex)
             {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " +
+                    ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet]
+        public ResponseModel GetAllVrsteIzvjestaja()
+        {
+            try
+            {
+                var vrste = dBContext.VrsteIzvjestaja.ToList();
+                return new ResponseModel(ResponseCode.OK,
+                    "Vrste izvještaja uspješno preuzete", vrste);
+            }
+            catch (Exception ex)
+            {
+
                 return new ResponseModel(ResponseCode.Error, "Greška -> " +
                     ex.Message + " " + ex.InnerException, null);
             }

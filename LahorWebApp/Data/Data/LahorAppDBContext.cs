@@ -67,5 +67,6 @@ namespace Data.Data
         public DbSet<NarudzbeUslugeNivoIzvrsenja> NarudzbeUslugeNivoIzvrsenja { get; set; }
         public DbSet<Izvjestaj> Izvjestaji { get; set; }
         public DbSet<IzvjestajiNarudzbe> IzvjestajiNarudzbe { get; set; }
+        public DbSet<VrstaIzvjestaja> VrsteIzvjestaja { get; set; }
     }
 }

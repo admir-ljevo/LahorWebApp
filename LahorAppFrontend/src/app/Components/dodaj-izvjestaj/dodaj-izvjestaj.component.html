@@ -1,0 +1,26 @@
+
+<div class="main">
+  <form class="container">
+    <div class="form-group">
+      <br/>
+      <select class="cmb" [(ngModel)]="odabranaVrstaIzvjestaja" (ngModelChange)='onSelectedVrsta($event)' [ngModelOptions]="{standalone:true}">
+        <option *ngFor="let vi of vrsteIzvjestaja" [value]="vi.id">{{vi.naziv}}</option>
+      </select>
+    </div>
+    <br/>
+  <div class="cmb">
+      <label class="form-label">Datum kreiranja</label>
+      <input type="Date" class="form-control" [(ngModel)]="odabraniDatum" (ngModelChange)='onSelectedDatum($event)' [ngModelOptions]="{standalone:true}">
+    </div>
+    <!--<div class="form-group">
+      <label class="form-label">Sadrzaj</label>
+      <textarea class="form-control" [(ngModel)]="this.odabraniIzvjestaj.sadrzaj" name="sadrzaj"rows="4"></textarea>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="this.odabraniIzvjestaj.javnaObavijest" name="javnaObavijest">
+      <label class="form-check-label" >Javna obavijest</label>
+    </div>-->
+
+    <button type="submit" class="btn btn-primary" (click)="dodajIzvjestaj()">Dodaj</button>
+  </form>
+</div>

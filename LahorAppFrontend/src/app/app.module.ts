@@ -40,6 +40,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { IzvjestajiComponent } from './Components/izvjestaji/izvjestaji.component';
+import { DodajIzvjestajComponent } from './Components/dodaj-izvjestaj/dodaj-izvjestaj.component';
 
 @NgModule({
 
@@ -64,7 +65,8 @@ import { IzvjestajiComponent } from './Components/izvjestaji/izvjestaji.componen
     OnlineNarudzbeKlijentComponent,
     DodavanjeOnlineNarudzbeComponent,
     NavComponent,
-    IzvjestajiComponent
+    IzvjestajiComponent,
+    DodajIzvjestajComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +92,7 @@ import { IzvjestajiComponent } from './Components/izvjestaji/izvjestaji.componen
       {path: 'onlineNarudzbeKlijent', component: OnlineNarudzbeKlijentComponent},
       {path: 'dodavanjeOnlineNarudzbe', component: DodavanjeOnlineNarudzbeComponent},
       {path: 'izvjestaji', component: IzvjestajiComponent},
+      {path: 'dodajIzvjestaj', component: DodajIzvjestajComponent},
       {path: 'nav', component: NavComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),
