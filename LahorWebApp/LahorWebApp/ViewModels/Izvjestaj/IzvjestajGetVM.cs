@@ -7,6 +7,7 @@ namespace LahorWebApp.ViewModels.Izvjestaj
 {
     public class IzvjestajGetVM
     {
+        public int Id { get; set; }
         public string Oznaka { get; set; }
         public int VrstaIzvjestajaId { get; set; }
         public string NazivVrsteIzvjestaja { get; set; }

@@ -39,7 +39,11 @@ export class IzvjestajiComponent implements OnInit {
   }
   obrisi(i:any)
   {
-
+      this.izvjestajiService.DeleteIzvjestaj(i);
+    const index = this.izvjestajiList.indexOf(i);
+    if (index > -1) {
+      this.izvjestajiList.splice(index, 1);
+    }
   }
   detalji(i:any)
   {

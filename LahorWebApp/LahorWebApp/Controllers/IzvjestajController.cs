@@ -63,6 +63,7 @@ namespace LahorWebApp.Controllers
                 var izvjestaji = dBContext.Izvjestaji.Select(i =>
                 new IzvjestajGetVM
                 {
+                    Id=i.Id,
                     AutorId = i.Autor.Id,
                     AutorNaziv = i.Autor.ToString(),
                     Oznaka = i.Oznaka,
@@ -97,17 +98,27 @@ namespace LahorWebApp.Controllers
             }
         }
 
-        private object PronadjiAutoraIzvjestaja(int autorId)
+        [HttpPost("{id}")]
+        public ResponseModel DeleteIzvjestaj(int id)
         {
-            dynamic autor = dBContext.UpravnoOsoblje.Where(uo =>
-              uo.Id == autorId).FirstOrDefault();
-            if (autor == null)
+            try
             {
-                autor = dBContext.Uposlenici.Where(u =>
-              u.Id == autorId).FirstOrDefault();
+                var izvjestaj = dBContext.Izvjestaji.Where(
+                    i=>i.Id==id).FirstOrDefault();
+                if (izvjestaj != null)
+                {
+                    dBContext.Izvjestaji.Remove(izvjestaj);
+                    return new ResponseModel(ResponseCode.OK,
+                        "Izvještaj uspješno obrisan", izvjestaj);
+                }
+                return new ResponseModel(ResponseCode.Error,
+                    "Izvještaj nije pronađen", null);
             }
-            
-            return autor;
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
         }
     }
 }

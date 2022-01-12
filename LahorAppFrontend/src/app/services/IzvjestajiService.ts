@@ -79,4 +79,19 @@ export class IzvjestajiService
       return vrsteIzvjestajaList;
     }));
   }
+  public DeleteIzvjestaj(odabraniIzvjestaj:any)
+  {
+    return this.httpClient.post<ResponseModel>(MyConfig.adresa_servera+ "Izvjestaj/DeleteIzvjestaj/"+odabraniIzvjestaj.id,odabraniIzvjestaj)
+      .subscribe((data:any) =>{
+        if(data.responseCode==ResponseCode.OK)
+        {
+          console.log("Izvještaj uspješno obrisan,oznaka izvještaja ->"+data.dataSet.oznaka);
+          alert("Izvještaj uspješno obrisan,oznaka izvještaja ->"+data.dataSet.oznaka);
+        }
+        else
+        {
+          console.log(data.ResponseMessage);
+        }
+      });
+  }
 }
