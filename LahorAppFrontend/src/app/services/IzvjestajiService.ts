@@ -15,6 +15,21 @@ export class IzvjestajiService
   constructor(private httpClient: HttpClient, private router: Router) {
 
   }
+  public AddIzvjestaj(noviIzvjestaj:any)
+  {
+    return this.httpClient.post<ResponseModel>(MyConfig.adresa_servera+ "Izvjestaj/Add",noviIzvjestaj)
+      .subscribe((data:any) =>{
+        if(data.responseCode==ResponseCode.OK)
+        {
+          console.log("Izvještaj uspješno dodan ->"+data.dataSet)
+          this.router.navigateByUrl("/izvjestaji");
+        }
+        else
+        {
+          console.log(data.ResponseMessage);
+        }
+      });
+  }
   public GetAllIzvjestaji()
   {
     return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Izvjestaj/GetAllIzvještaji").pipe(map(res=>{

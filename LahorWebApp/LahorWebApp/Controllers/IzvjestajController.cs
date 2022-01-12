@@ -26,7 +26,6 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                //var autor = PronadjiAutoraIzvjestaja(model.AutorId);
                 Izvjestaj newIzvjestaj = new Izvjestaj
                 {
                     Oznaka = "I",
@@ -35,15 +34,16 @@ namespace LahorWebApp.Controllers
                     VrstaIzvjestaja = dBContext.VrsteIzvjestaja.Find(model.VrstaIzvjestajaId),
                     Autor=dBContext.Radnici.Find(model.AutorId)
                 };
-                //if(autor is UpravnoOsoblje)
-                //{
-                //    newIzvjestaj.AutorUpravnoOsoblje = autor as UpravnoOsoblje;
-                //}
-                //else if(autor is Uposlenik)
-                //{
-                //    newIzvjestaj.AutorUposlenik = autor as Uposlenik;
-                //}
                 dBContext.Add(newIzvjestaj);
+                dBContext.SaveChanges();
+                foreach (var n in model.Narudzbe)
+                {
+                    dBContext.Add(new IzvjestajiNarudzbe
+                    {
+                        IzvjestajId=newIzvjestaj.Id,
+                        NarudzbaId=n.Id
+                    });
+                }
                 dBContext.SaveChanges();
                 return new ResponseModel(ResponseCode.OK,
                     "Izvještaj uspješno dodan", newIzvjestaj);
@@ -60,7 +60,6 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                //List<IzvjestajGetVM> getIzvjestaji = new List<IzvjestajGetVM>();
                 var izvjestaji = dBContext.Izvjestaji.Select(i =>
                 new IzvjestajGetVM
                 {

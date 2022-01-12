@@ -3,6 +3,7 @@ import {IzvjestajiService} from "../../services/IzvjestajiService";
 import {LoginInformation} from "../../_helpers/loginInformacije";
 import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
 import {NarudzbeService} from "../../services/NarudzbeService";
+import {UslugaNivoIzvrsenja} from "../../Model/UslugaNivoIzvrsenja";
 
 @Component({
   selector: 'app-dodaj-izvjestaj',
@@ -15,11 +16,12 @@ export class DodajIzvjestajComponent implements OnInit {
   vrsteIzvjestaja:any;
   odabranaVrstaIzvjestaja:any;
   odabraniDatum:any;
-  listaNarudzbe:any;
+  listaNarudzbe:Array<any> = [];
 
   noviIzvjestaj={
     VrstaIzvjestajaId:0,
-    AutorId:0
+    AutorId:this.loginInfo().id,
+    Narudzbe:this.listaNarudzbe
 }
   constructor(private izvjestajiService:IzvjestajiService,private narudzbeService:NarudzbeService) { }
 
@@ -49,7 +51,9 @@ export class DodajIzvjestajComponent implements OnInit {
     return AutentifikacijaHelper.getLoginInfo();
   }
   dodajIzvjestaj() {
-
+    this.noviIzvjestaj.VrstaIzvjestajaId=this.odabranaVrstaIzvjestaja;
+    this.noviIzvjestaj.Narudzbe=this.listaNarudzbe;
+      this.izvjestajiService.AddIzvjestaj(this.noviIzvjestaj);
   }
   onSelectedVrsta(vi: any) {
     this.odabranaVrstaIzvjestaja=vi;
