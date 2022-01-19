@@ -1,4 +1,4 @@
-<div class="page">
+<div class="klasa">
   <button class="btn btn-primary" routerLink="/dodajIzvjestaj">Kreiraj izvještaj</button>
   <table class="table table-striped">
     <tr>
@@ -20,10 +20,12 @@
       <td>
         <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(i)">Obrisi</button>
         <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent' || loginInfo().role==
-            'UpravnoOsoblje'" (click)="detalji(i)">Detalji</button>
+            'UpravnoOsoblje'" (click)="detalji(i.id)">Detalji</button>
       </td>
     </tr>
     </tbody>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </table>
 </div>
+<!--<app-pregled-izvjestaja [id]= "id"></app-pregled-izvjestaja>-->
+

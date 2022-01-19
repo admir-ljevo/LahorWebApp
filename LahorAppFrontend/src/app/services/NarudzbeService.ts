@@ -38,7 +38,79 @@ export class NarudzbeService{
       {
         if(res.dataSet!=null)
         {
-          res.dataSet.map((x:Obavijest)=>{
+          res.dataSet.map((x:any)=>{
+            narudzbeList.push(x);
+          })
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+      }
+      else
+      {
+        console.log(res.responseCode);
+      }
+      return narudzbeList;
+    }));
+  }
+  public getAllNarudzbeOdDo(OD:any,DO:any)
+  {
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Narudzba/GetAllNarudzbeOdDo/"+OD+","+DO).pipe(map(res=>{
+      let narudzbeList=new Array<any>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
+        {
+          res.dataSet.map((x:any)=>{
+            narudzbeList.push(x);
+          })
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+      }
+      else
+      {
+        console.log(res.responseCode);
+      }
+      return narudzbeList;
+    }));
+  }
+  public getAllNarudzbeMjesec(datum:any)
+  {
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Narudzba/GetAllNarudzbeMjesec/"+datum).pipe(map(res=>{
+      let narudzbeList=new Array<any>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
+        {
+          res.dataSet.map((x:any)=>{
+            narudzbeList.push(x);
+          })
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+      }
+      else
+      {
+        console.log(res.responseCode);
+      }
+      return narudzbeList;
+    }));
+  }
+  public getAllNarudzbeByIzvjestajId(izvjestajId:any)
+  {
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Narudzba/GetNarudzbeByIzvjestajId/"+izvjestajId).pipe(map(res=>{
+      let narudzbeList=new Array<any>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
+        {
+          res.dataSet.map((x:any)=>{
             narudzbeList.push(x);
           })
         }

@@ -257,6 +257,100 @@ namespace LahorWebApp.Controllers
                     "Greška -> " + ex.Message + " " + ex.InnerException, null);
             }
         }
+
+        [HttpGet("{OD},{DO}")]
+
+        public ResponseModel GetAllNarudzbeOdDo(DateTime OD,DateTime DO)
+        {
+            try
+            {
+                var narudzbe = dBContext.Narudzbe.Where(n => n.DatumNarudzbe.Date >=
+                  OD.Date && n.DatumNarudzbe.Date<=DO.Date).ToList();
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbe);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet("{datum}")]
+
+        public ResponseModel GetAllNarudzbeMjesec(DateTime datum)
+        {
+            try
+            {
+                var narudzbe = dBContext.Narudzbe.Where(n => n.DatumNarudzbe.Date.Month ==
+                  datum.Month && n.DatumNarudzbe.Year==datum.Year).ToList();
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbe);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
+        [HttpGet("{godina}")]
+
+        public ResponseModel GetAllNarudzbeGodina(int godina)
+        {
+            try
+            {
+                var narudzbe = dBContext.Narudzbe.Where(n => n.DatumNarudzbe.Year==
+                godina).ToList();
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbe);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet]
+        public ResponseModel GetIzvjestajiNarudzbe()
+        {
+            try
+            {
+                var narudzbe = dBContext.IzvjestajiNarudzbe.ToList();
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbe);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ResponseModel GetNarudzbeByIzvjestajId(int id)
+        {
+            try
+            {
+                var narudzbeIzvjestaji = dBContext.IzvjestajiNarudzbe.ToList()
+                    .Where(ni => ni.IzvjestajId ==
+                id).ToList();
+
+                List<Narudzba> narudzbeList = new List<Narudzba>();
+                foreach (var ni in narudzbeIzvjestaji)
+                {
+                    narudzbeList.Add(dBContext.Narudzbe.Where(n=>n.Id==ni.NarudzbaId).FirstOrDefault());
+                }
+                return new ResponseModel(ResponseCode.OK, "Uspješno preuzete narudžbe", narudzbeList);
+            }
+            catch (Exception ex)
+
+            {
+
+                return new ResponseModel(ResponseCode.Error,
+                    "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
     }
 
 }

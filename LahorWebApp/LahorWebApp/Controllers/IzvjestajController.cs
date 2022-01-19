@@ -41,7 +41,9 @@ namespace LahorWebApp.Controllers
                     dBContext.Add(new IzvjestajiNarudzbe
                     {
                         IzvjestajId=newIzvjestaj.Id,
-                        NarudzbaId=n.Id
+                        Izvjestaj=dBContext.Izvjestaji.Find(newIzvjestaj.Id),
+                        NarudzbaId=n.Id,
+                        Narudzba=dBContext.Narudzbe.Find(n.Id)
                     });
                 }
                 dBContext.SaveChanges();
@@ -118,6 +120,38 @@ namespace LahorWebApp.Controllers
             {
                 return new ResponseModel(ResponseCode.Error,
                     "Greška -> " + ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ResponseModel GetIzvjestajById(int id)
+        {
+            try
+            {
+                var izvjestaj = dBContext.Izvjestaji.Where(i => i.Id == id).Select(i =>
+                new IzvjestajGetVM
+                {
+                    Id = i.Id,
+                    AutorId = i.Autor.Id,
+                    AutorNaziv = i.Autor.ToString(),
+                    Oznaka = i.Oznaka,
+                    VrstaIzvjestajaId = i.VrstaIzvjestajaId,
+                    NazivVrsteIzvjestaja = i.VrstaIzvjestaja.ToString(),
+                    DatumKreiranja = i.DatumKreiranja.Date.ToString("d.MM.yyyy")
+                }).FirstOrDefault();
+
+                if(izvjestaj!=null)
+                {
+                    return new ResponseModel(ResponseCode.OK, "Uspješno preuzet izvještaj",
+                        izvjestaj);
+                }
+                return new ResponseModel(ResponseCode.Error, "Ne postoji izvještaj", null);
+            }
+            catch (Exception ex)
+            {
+
+                return new ResponseModel(ResponseCode.Error, "Greška -> " +
+                    ex.Message + " " + ex.InnerException, null);
             }
         }
     }

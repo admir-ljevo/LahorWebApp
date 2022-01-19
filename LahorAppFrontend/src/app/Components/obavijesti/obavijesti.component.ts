@@ -5,9 +5,6 @@ import {ObavijestiServices} from "../../services/obavijesti-services";
 import {Obavijest} from "../../Model/Obavijest";
 import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
 import {LoginInformation} from "../../_helpers/loginInformacije";
-import {ResponseModel} from "../../Model/ResponseModel";
-import {MyConfig} from "../../MyConfig";
-import {ResponseCode} from "../../enum/ResponseCode";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -22,11 +19,9 @@ export class ObavijestiComponent implements OnInit {
   filterObavList:any;
   odabranaObavijest:any;
   naslovPretraga:any;
-  /*listaBracniStatusi:any;*/
   p:number=1;
   ngOnInit():void {
        this.PreuzmiSveObavjesti();
-       /*this.PreuzmiBracneStatuse();*/
   }
   PreuzmiSveObavjesti()
   {
@@ -73,12 +68,4 @@ export class ObavijestiComponent implements OnInit {
     this.key=key;
     this.reverse=!this.reverse;
   }
-
-  /*PreuzmiBracneStatuse() {
-    this.httpClient.get(MyConfig.adresa_servera+"BracniStatusi/GetAllCmb",MyConfig.http_opcije).subscribe(
-      (data:any)=>{
-        this.listaBracniStatusi=data;
-        }
-      );
-  }*/
 }

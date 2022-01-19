@@ -11,11 +11,13 @@ import {UslugaNivoIzvrsenja} from "../../Model/UslugaNivoIzvrsenja";
   styleUrls: ['./dodaj-izvjestaj.component.css']
 })
 export class DodajIzvjestajComponent implements OnInit {
-
-  odabraniIzvjestaj:any;
   vrsteIzvjestaja:any;
   odabranaVrstaIzvjestaja:any;
-  odabraniDatum:any;
+  odabranaVrstaNaziv:any;
+  odabraniDatum:any=new Date().toISOString();
+  odabraniDatumOD:any=new Date().toISOString();
+  odabraniDatumDO:any=new Date().toISOString();
+  odabraniDatumMjesec:any=new Date().toISOString();
   listaNarudzbe:Array<any> = [];
 
   noviIzvjestaj={
@@ -34,6 +36,7 @@ export class DodajIzvjestajComponent implements OnInit {
         (data:any)=>{
           this.vrsteIzvjestaja=data;
           this.odabranaVrstaIzvjestaja=this.vrsteIzvjestaja[0].id;
+          this.odabranaVrstaNaziv=this.vrsteIzvjestaja[0].naziv;
         }
       );
   }
@@ -46,6 +49,23 @@ export class DodajIzvjestajComponent implements OnInit {
         }
       );
   }
+  preuzmiNarudzbeOdDo(datumOD,datumDO)
+  {
+    this.narudzbeService.getAllNarudzbeOdDo(datumOD,datumDO).subscribe(
+      (data:any)=>{
+        this.listaNarudzbe=data;
+      }
+    );
+  }
+
+  preuzmiNarudzbeMjesec(datumMjesec)
+  {
+    this.narudzbeService.getAllNarudzbeMjesec(datumMjesec).subscribe(
+      (data:any)=>{
+        this.listaNarudzbe=data;
+      }
+    );
+  }
   loginInfo():LoginInformation
   {
     return AutentifikacijaHelper.getLoginInfo();
@@ -57,6 +77,26 @@ export class DodajIzvjestajComponent implements OnInit {
   }
   onSelectedVrsta(vi: any) {
     this.odabranaVrstaIzvjestaja=vi;
+    for (let v of this.vrsteIzvjestaja)
+    {
+      if(v.id==vi)
+      {
+        this.odabranaVrstaNaziv=v.naziv;
+        if(this.odabranaVrstaNaziv=="Dnevni")
+        {
+          this.preuzmiNarudzbe(this.odabraniDatum);
+        }
+        else if(this.odabranaVrstaNaziv=="Sedmični")
+        {
+          this.preuzmiNarudzbeOdDo(this.odabraniDatumOD,this.odabraniDatumDO);
+        }
+        else if(this.odabranaVrstaNaziv=="Mjesečni")
+        {
+          this.preuzmiNarudzbeMjesec(this.odabraniDatumMjesec);
+        }
+        return;
+      }
+    }
 
   }
   onSelectedDatum(d:any) {
@@ -70,5 +110,21 @@ export class DodajIzvjestajComponent implements OnInit {
 
   detalji(o: any) {
 
+  }
+
+  onSelectedDatumOD(datumOD: any) {
+
+    this.odabraniDatumOD=datumOD;
+    this.preuzmiNarudzbeOdDo(this.odabraniDatumOD,this.odabraniDatumDO);
+  }
+
+  onSelectedDatumDO(datumDO: any) {
+    this.odabraniDatumDO=datumDO;
+    this.preuzmiNarudzbeOdDo(this.odabraniDatumOD,this.odabraniDatumDO);
+  }
+
+  onSelectedDatumMjesec(datumMjesec: any) {
+    this.odabraniDatumMjesec=datumMjesec;
+    this.preuzmiNarudzbeMjesec(this.odabraniDatumMjesec);
   }
 }

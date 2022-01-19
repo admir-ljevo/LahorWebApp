@@ -72,7 +72,7 @@ export class IzvjestajiService
           console.log(res.responseCode);
         }
       }
-      else
+    else
       {
         console.log(res.responseCode);
       }
@@ -91,6 +91,22 @@ export class IzvjestajiService
         else
         {
           console.log(data.ResponseMessage);
+        }
+      });
+  }
+  public getIzvjestajById(id:Number) {
+    this.httpClient.get(MyConfig.adresa_servera+"Izvjestaj/GetIzvjestajById/"+id
+    ).subscribe(
+      (data:any)=>{
+        if(data.responseCode==ResponseCode.OK)
+        {
+          console.log(data.dataSet);
+         return data.dataSet;
+        }
+        else
+        {
+          console.log(data.responseCode);
+          return null;
         }
       });
   }

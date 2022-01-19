@@ -2,24 +2,31 @@
 <div  style="display: flex; flex-direction: row">
   <form class="container">
     <div class="form-group">
+      <label class="form-label">Vrsta izvještaja</label>
       <br/>
       <select class="cmb" [(ngModel)]="odabranaVrstaIzvjestaja" (ngModelChange)='onSelectedVrsta($event)' [ngModelOptions]="{standalone:true}">
         <option *ngFor="let vi of vrsteIzvjestaja" [value]="vi.id">{{vi.naziv}}</option>
       </select>
     </div>
     <br/>
-  <div class="cmb">
-      <label class="form-label">Datum kreiranja</label>
-      <input type="Date" class="form-control" [(ngModel)]="odabraniDatum" (ngModelChange)='onSelectedDatum($event)' [ngModelOptions]="{standalone:true}">
+    <div class="cmb" *ngIf="odabranaVrstaNaziv=='Dnevni'">
+        <label class="form-label">Datum Kreiranja</label>
+        <input type="Date" value="" class="form-control"[(ngModel)]="odabraniDatum" (ngModelChange)='onSelectedDatum($event)' [ngModelOptions]="{standalone:true}">
+      </div>
+  <div *ngIf="odabranaVrstaNaziv=='Sedmični'" style=" width:90%; display: flex; flex-direction: row">
+    <div style="width: 50%;">
+      <label class="form-label">Datum OD</label>
+      <input type="Date" class="form-control" [(ngModel)]="odabraniDatumOD" (ngModelChange)='onSelectedDatumOD($event)' [ngModelOptions]="{standalone:true}">
     </div>
-    <!--<div class="form-group">
-      <label class="form-label">Sadrzaj</label>
-      <textarea class="form-control" [(ngModel)]="this.odabraniIzvjestaj.sadrzaj" name="sadrzaj"rows="4"></textarea>
+    <div style="width: 50%;">
+      <label class="form-label">Datum DO</label>
+      <input type="Date" class="form-control" [(ngModel)]="odabraniDatumDO" (ngModelChange)='onSelectedDatumDO($event)' [ngModelOptions]="{standalone:true}">
     </div>
-    <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" [(ngModel)]="this.odabraniIzvjestaj.javnaObavijest" name="javnaObavijest">
-      <label class="form-check-label" >Javna obavijest</label>
-    </div>-->
+    </div>
+    <div class="cmb" *ngIf="odabranaVrstaNaziv=='Mjesečni'">
+      <label class="form-label">Odaberite mjesec</label>
+      <input type="Date" class="form-control" [(ngModel)]="odabraniDatumMjesec" (ngModelChange)='onSelectedDatumMjesec($event)' [ngModelOptions]="{standalone:true}">
+    </div>
     <br>
     <button type="submit" class="btn btn-primary" (click)="dodajIzvjestaj()">Dodaj</button>
   </form>

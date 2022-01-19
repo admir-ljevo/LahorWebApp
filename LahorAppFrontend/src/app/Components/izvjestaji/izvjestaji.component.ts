@@ -3,6 +3,9 @@ import {LoginInformation} from "../../_helpers/loginInformacije";
 import {AutentifikacijaHelper} from "../../_helpers/autentifikacijaHelper";
 import {IzvjestajiService} from "../../services/IzvjestajiService";
 import {DatePipe} from "@angular/common";
+import {NarudzbeService} from "../../services/NarudzbeService";
+import {Router} from "@angular/router";
+import {Izvjestaj} from "../../Model/Izvjestaj";
 
 @Component({
   selector: 'app-izvjestaji',
@@ -12,13 +15,28 @@ import {DatePipe} from "@angular/common";
 export class IzvjestajiComponent implements OnInit {
 
   izvjestajiList:any;
+  private poruka:string="Hello world";
+  private Id:Number=0;
   datePipe:DatePipe;
-  constructor(private izvjestajiService:IzvjestajiService) { }
+  urediIzvjestaj={
+    id:0,
+    oznaka:"",
+    vrstaIzvjestajaId:0,
+    datumKreiranja:"2003-10-01",
+    nazivVrsteIzvjestaja:"",
+    autorId:0,
+    autorNaziv:0,
+    listaNarudzbe:[],
+    prikazi:false
+  };
+  constructor(private izvjestajiService:IzvjestajiService,private narudzbeService:NarudzbeService,
+              private router:Router) { }
 
   ngOnInit(): void {
     this.preuzmiIzvjestaje();
   }
   p:number=1;
+  IzvjId:Number;
   loginInfo():LoginInformation
   {
     return AutentifikacijaHelper.getLoginInfo();
@@ -45,8 +63,16 @@ export class IzvjestajiComponent implements OnInit {
       this.izvjestajiList.splice(index, 1);
     }
   }
-  detalji(i:any)
+  detalji(id:Number)
   {
-
+   /* this.router.navigateByUrl("pregledIzvjestaja");*/
+    this.Id=id;
+    this.router.navigate(["pregledIzvjestaja"],{state:{data:this.Id}})
+    /*  this.narudzbeService.getAllNarudzbeByIzvjestajId(i.id).subscribe(
+        (data:any)=> {
+          this.urediIzvjestaj.listaNarudzbe = data;
+        });
+    this.urediIzvjestaj=i;
+    this.urediIzvjestaj.prikazi=true;*/
   }
 }
