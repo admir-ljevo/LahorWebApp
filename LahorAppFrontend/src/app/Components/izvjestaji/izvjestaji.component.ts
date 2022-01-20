@@ -10,16 +10,20 @@ import {Izvjestaj} from "../../Model/Izvjestaj";
 @Component({
   selector: 'app-izvjestaji',
   templateUrl: './izvjestaji.component.html',
-  styleUrls: ['./izvjestaji.component.css']
+  styleUrls: ['./izvjestaji.component.css'],
+  providers: [DatePipe]
 })
 export class IzvjestajiComponent implements OnInit {
 
   izvjestajiList:any;
-  naslovPretraga:any;
+  naslovPretraga:string=null;
   filterIzvjestaji:any;
+  vrsteIzvjestaja:any;
+  odabranaVrstaIzvjestaja:any=null;
+  odabranaVrstaNaziv:any;
+  odabraniDatum:any;
   private poruka:string="Hello world";
   private Id:Number=0;
-  datePipe:DatePipe;
   urediIzvjestaj={
     id:0,
     oznaka:"",
@@ -32,10 +36,13 @@ export class IzvjestajiComponent implements OnInit {
     prikazi:false
   };
   constructor(private izvjestajiService:IzvjestajiService,private narudzbeService:NarudzbeService,
-              private router:Router) { }
+              private router:Router,private datePipe:DatePipe) {
+    this.odabraniDatum= this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  }
 
   ngOnInit(): void {
     this.preuzmiIzvjestaje();
+    this.preuzmiVrsteIzvjestaja();
   }
   p:number=1;
   IzvjId:Number;
@@ -68,28 +75,44 @@ export class IzvjestajiComponent implements OnInit {
   }
   detalji(id:Number)
   {
-   /* this.router.navigateByUrl("pregledIzvjestaja");*/
     this.Id=id;
-    //this.router.navigate(["pregledIzvjestaja"],{state:{data:this.Id}})
     this.router.navigate(['pregledIzvjestaja/',id])
-    /*  this.narudzbeService.getAllNarudzbeByIzvjestajId(i.id).subscribe(
-        (data:any)=> {
-          this.urediIzvjestaj.listaNarudzbe = data;
-        });
-    this.urediIzvjestaj=i;
-    this.urediIzvjestaj.prikazi=true;*/
   }
 
-  filterNaslov() {
-    if(this.naslovPretraga!="")
+  filtriranje() {
+    this.izvjestajiService.FilitriranjeIzvjestaja(this.naslovPretraga,this.odabraniDatum,this.odabranaVrstaIzvjestaja).subscribe(
+      (data:any)=>{
+        this.filterIzvjestaji=data;
+      }
+    )
+  }
+
+  private preuzmiVrsteIzvjestaja() {
+    this.izvjestajiService.GetVrsteIzvjestaja().subscribe(
+      (data:any)=>{
+        this.vrsteIzvjestaja=data;
+        this.odabranaVrstaIzvjestaja=this.vrsteIzvjestaja[0].id;
+        this.odabranaVrstaNaziv=this.vrsteIzvjestaja[0].naziv;
+      }
+    );
+  }
+
+  onSelectedVrsta(vi: any) {
+    this.odabranaVrstaIzvjestaja=vi;
+    for (let v of this.vrsteIzvjestaja)
     {
-      this.filterIzvjestaji= this.izvjestajiList.filter((x:any)=>{
-        return x.oznaka.toLocaleLowerCase().match(this.naslovPretraga.toLocaleLowerCase());
-      });
+      if(v.id==vi)
+      {
+        this.odabranaVrstaNaziv=v.naziv;
+      }
     }
-    else if(this.naslovPretraga=="")
-    {
-      this.ngOnInit();
+
+    this.filtriranje();
+
     }
+
+  onSelectedDatum(d: any) {
+    this.odabraniDatum=d;
+    this.filtriranje();
   }
 }

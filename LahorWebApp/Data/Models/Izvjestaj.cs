@@ -16,11 +16,14 @@ namespace Data.Models
 
         [ForeignKey(nameof(VrstaIzvjestaja))]
         public int VrstaIzvjestajaId { get; set; }
-        public VrstaIzvjestaja VrstaIzvjestaja { get; set; }
+        public virtual VrstaIzvjestaja VrstaIzvjestaja { get; set; }
         public DateTime DatumKreiranja { get; set; }
         //public Uposlenik AutorUposlenik { get; set; }
         //public UpravnoOsoblje AutorUpravnoOsoblje { get; set; }
-        public Radnik Autor { get; set; }
+
+        [ForeignKey(nameof(Autor))]
+        public int AutorId { get; set; }
+        public virtual Radnik Autor { get; set; }
         public IList<IzvjestajiNarudzbe> IzvjestajiNarudzbe { get; set; }
     }
 }

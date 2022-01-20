@@ -111,4 +111,55 @@ export class IzvjestajiService
         }
       });
   }
+  public FilitriranjeIzvjestaja(oznaka:any,datum:any,odabranaVrstaId:any)
+  {
+    if(oznaka!=null)
+    {
+    return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Izvjestaj/Filtriranje/"+datum+","+odabranaVrstaId+"?oznaka="+oznaka).pipe(map(res=>{
+      let listIzvjestaja=new Array<any>();
+      if(res.responseCode==ResponseCode.OK)
+      {
+        if(res.dataSet!=null)
+        {
+          res.dataSet.map((x:any)=>{
+            listIzvjestaja.push(x);
+          })
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+      }
+      else
+      {
+        console.log(res.responseCode);
+      }
+      return listIzvjestaja;
+    }));
+    }
+    else
+    {
+      return this.httpClient.get<ResponseModel>(MyConfig.adresa_servera+"Izvjestaj/Filtriranje/"+datum+","+odabranaVrstaId).pipe(map(res=>{
+        let listIzvjestaja=new Array<any>();
+        if(res.responseCode==ResponseCode.OK)
+        {
+          if(res.dataSet!=null)
+          {
+            res.dataSet.map((x:any)=>{
+              listIzvjestaja.push(x);
+            })
+          }
+          else
+          {
+            console.log(res.responseCode);
+          }
+        }
+        else
+        {
+          console.log(res.responseCode);
+        }
+        return listIzvjestaja;
+      }));
+    }
+  }
 }

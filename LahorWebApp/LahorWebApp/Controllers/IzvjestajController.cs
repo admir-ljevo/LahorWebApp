@@ -32,6 +32,7 @@ namespace LahorWebApp.Controllers
                     DatumKreiranja = DateTime.Now,
                     VrstaIzvjestajaId = model.VrstaIzvjestajaId,
                     VrstaIzvjestaja = dBContext.VrsteIzvjestaja.Find(model.VrstaIzvjestajaId),
+                    AutorId=model.AutorId,
                     Autor=dBContext.Radnici.Find(model.AutorId)
                 };
                 dBContext.Add(newIzvjestaj);
@@ -71,7 +72,7 @@ namespace LahorWebApp.Controllers
                     Oznaka = i.Oznaka,
                     VrstaIzvjestajaId=i.VrstaIzvjestajaId,
                     NazivVrsteIzvjestaja=i.VrstaIzvjestaja.ToString(),
-                    DatumKreiranja=i.DatumKreiranja.Date.ToString("d.MM.yyyy")
+                    DatumKreiranja=i.DatumKreiranja.Date.ToString("dd.MM.yyyy")
                 });
                     return new ResponseModel(ResponseCode.OK,
                         "Uspješno preuzeti izvještaji", izvjestaji);
@@ -137,7 +138,7 @@ namespace LahorWebApp.Controllers
                     Oznaka = i.Oznaka,
                     VrstaIzvjestajaId = i.VrstaIzvjestajaId,
                     NazivVrsteIzvjestaja = i.VrstaIzvjestaja.ToString(),
-                    DatumKreiranja = i.DatumKreiranja.Date.ToString("d.MM.yyyy")
+                    DatumKreiranja = i.DatumKreiranja.Date.ToString("dd.MM.yyyy")
                 }).FirstOrDefault();
 
                 if(izvjestaj!=null)
@@ -152,6 +153,45 @@ namespace LahorWebApp.Controllers
 
                 return new ResponseModel(ResponseCode.Error, "Greška -> " +
                     ex.Message + " " + ex.InnerException, null);
+            }
+        }
+
+        [HttpGet("{datum},{odabranaVrstaId}")]
+
+        public ResponseModel Filtriranje(string oznaka,DateTime datum,int odabranaVrstaId)
+        {
+            try
+            {
+                var izvjestaji = dBContext.Izvjestaji.ToList().Where(i =>
+                  (i.Oznaka.ToLower() == oznaka?.ToLower() || oznaka == null) && i.DatumKreiranja.Date == datum.Date &&
+                  i.VrstaIzvjestajaId == odabranaVrstaId).ToList();
+             var SviIzvjestaji = dBContext.Izvjestaji.Select(i =>
+             new IzvjestajGetVM
+             {
+                 Id = i.Id,
+                 AutorId = i.Autor.Id,
+                 AutorNaziv = i.Autor.ToString(),
+                 Oznaka = i.Oznaka,
+                 VrstaIzvjestajaId = i.VrstaIzvjestajaId,
+                 NazivVrsteIzvjestaja = i.VrstaIzvjestaja.ToString(),
+                 DatumKreiranja = i.DatumKreiranja.Date.ToString("dd.MM.yyyy")
+             });
+
+                List<IzvjestajGetVM> listaIzvjestaja = new List<IzvjestajGetVM>();
+                foreach (var i in SviIzvjestaji)
+                {
+                    if (izvjestaji.Where(iz => iz.Id == i.Id).Count() > 0)
+                    {
+                        listaIzvjestaja.Add(i);
+                    }
+                }
+
+                return new ResponseModel(ResponseCode.OK, "Filtrirana lista izvjestaja", listaIzvjestaja);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel(ResponseCode.Error, "Greška -> " + ex.Message + " " +
+                    ex.InnerException,null);
             }
         }
     }
