@@ -96,7 +96,7 @@ import { PregledIzvjestajaComponent } from './Components/pregled-izvjestaja/preg
       {path: 'dodavanjeOnlineNarudzbe', component: DodavanjeOnlineNarudzbeComponent},
       {path: 'izvjestaji', component: IzvjestajiComponent},
       {path: 'dodajIzvjestaj', component: DodajIzvjestajComponent},
-      {path: 'pregledIzvjestaja', component: PregledIzvjestajaComponent},
+      {path: 'pregledIzvjestaja/:id', component: PregledIzvjestajaComponent},
       {path: 'nav', component: NavComponent},
       {path: '**', component: HomePageComponent, canActivate: [AutorizacijaLogin]}
     ]),

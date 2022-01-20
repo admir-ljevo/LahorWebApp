@@ -1,21 +1,19 @@
 <div class="page">
   <div *ngIf="izvjestaj!=null" style="display: flex; flex-direction: row; width: 100%; height: 40%;">
 
-    <div id="left" style="width:50%; height: 100%;">
-      <label class="form-label">Oznaka izvještaja--- {{izvjestaj.oznaka}}</label>
+    <div id="left" style="width:40%; height: 100%;">
+      <label class="form-label">Oznaka izvještaja</label>
       <input class="form-control" [(ngModel)]="this.izvjestaj.oznaka">
 
       <label class="form-label">Vrsta izvještaja</label>
       <input class="form-control" [(ngModel)]="izvjestaj.nazivVrsteIzvjestaja"  >
-
+    </div>
+    <div id="right" style="width:40%; height: 100%; margin-left:20%;">
       <label class="form-label">Autor izvještaja</label>
       <input class="form-control" [(ngModel)]="izvjestaj.autorNaziv" >
 
       <label class="form-label">Datum kreiranja izvještaja</label>
       <input class="form-control" [(ngModel)]="izvjestaj.datumKreiranja" >
-    </div>
-    <div id="right" style="width:50%; height: 100%;">
-
     </div>
   </div>
   <table class="table table-striped">
@@ -25,20 +23,14 @@
       <th (click)="sort('datumKreiranja')">Datum kreiranja&nbsp;<i class="fa fa-sort"></i></th>
       <th>Datum isporuke</th>
       <th>Autor</th>
-      <th>Akcija</th>
     </tr>
     <tbody>
-    <tr *ngFor="let i of listaNarudzbe | orderBy:key:reverse | paginate: {itemsPerPage:10, currentPage:p}; let index=index">
+    <tr *ngFor="let n of listaNarudzbe | orderBy:key:reverse | paginate: {itemsPerPage:10, currentPage:p}; let index=index">
       <td>{{index+1}}</td>
-      <td>{{i.naziv}}</td>
-      <td>{{i.datumNarudzbe}}</td>
-      <td>{{i.datumIsporuke}}</td>
-      <td>{{i.autorId}}</td>
-      <td>
-        <button type="button" class="btn btn-danger" *ngIf="loginInfo().role=='UpravnoOsoblje'" (click)="obrisi(i)">Obrisi</button>
-        <button type="button" class="btn btn-info" *ngIf="loginInfo().role=='Klijent' || loginInfo().role==
-            'UpravnoOsoblje'" (click)="detalji(i)">Detalji</button>
-      </td>
+      <td>{{n.naziv}}</td>
+      <td>{{n.datumNarudzbe}}</td>
+      <td>{{n.datumIsporuke}}</td>
+      <td>{{n.autorNaziv}}</td>
     </tr>
     </tbody>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>

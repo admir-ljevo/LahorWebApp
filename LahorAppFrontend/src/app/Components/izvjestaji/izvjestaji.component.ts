@@ -15,6 +15,8 @@ import {Izvjestaj} from "../../Model/Izvjestaj";
 export class IzvjestajiComponent implements OnInit {
 
   izvjestajiList:any;
+  naslovPretraga:any;
+  filterIzvjestaji:any;
   private poruka:string="Hello world";
   private Id:Number=0;
   datePipe:DatePipe;
@@ -46,6 +48,7 @@ export class IzvjestajiComponent implements OnInit {
     this.izvjestajiService.GetAllIzvjestaji().subscribe(
       (data:any)=>{
           this.izvjestajiList=data;
+          this.filterIzvjestaji=this.izvjestajiList;
       }
     );
   }
@@ -67,12 +70,26 @@ export class IzvjestajiComponent implements OnInit {
   {
    /* this.router.navigateByUrl("pregledIzvjestaja");*/
     this.Id=id;
-    this.router.navigate(["pregledIzvjestaja"],{state:{data:this.Id}})
+    //this.router.navigate(["pregledIzvjestaja"],{state:{data:this.Id}})
+    this.router.navigate(['pregledIzvjestaja/',id])
     /*  this.narudzbeService.getAllNarudzbeByIzvjestajId(i.id).subscribe(
         (data:any)=> {
           this.urediIzvjestaj.listaNarudzbe = data;
         });
     this.urediIzvjestaj=i;
     this.urediIzvjestaj.prikazi=true;*/
+  }
+
+  filterNaslov() {
+    if(this.naslovPretraga!="")
+    {
+      this.filterIzvjestaji= this.izvjestajiList.filter((x:any)=>{
+        return x.oznaka.toLocaleLowerCase().match(this.naslovPretraga.toLocaleLowerCase());
+      });
+    }
+    else if(this.naslovPretraga=="")
+    {
+      this.ngOnInit();
+    }
   }
 }

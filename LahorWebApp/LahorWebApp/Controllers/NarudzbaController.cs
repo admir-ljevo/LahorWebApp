@@ -27,9 +27,9 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                var klijent = PronadjiKlijenta(model.KlijentId);
-                if (klijent != null)
-                {
+                //var klijent = PronadjiKlijenta(model.KlijentId);
+                //if (klijent != null)
+                //{
                     Narudzba novaNarudzba = new Narudzba
                     {
                         Naziv = "N",
@@ -39,12 +39,14 @@ namespace LahorWebApp.Controllers
                         Kolicina = 0,
                         Opis = model.Opis,
                         NazivKlijenta = "",
-                        isOnline = true
+                        isOnline = true,
+                        KlijentId=model.KlijentId,
+                        Klijent=dBContext.Klijenti.Find(model.KlijentId)
                     };
-                    if (klijent is KlijentFizickoLice)
-                        novaNarudzba.KlijentFizickoLice = klijent as KlijentFizickoLice;
-                    else
-                        novaNarudzba.KlijentPravnoLice = klijent as KlijentPravnoLice;
+                    //if (klijent is KlijentFizickoLice)
+                    //    novaNarudzba.KlijentFizickoLice = klijent as KlijentFizickoLice;
+                    //else
+                    //    novaNarudzba.KlijentPravnoLice = klijent as KlijentPravnoLice;
                     if (novaNarudzba != null)
                     {
                         dBContext.Add(novaNarudzba);
@@ -61,7 +63,7 @@ namespace LahorWebApp.Controllers
                         dBContext.SaveChanges();
                         return new ResponseModel(ResponseCode.OK, "Narudžba uspješno dodana.", novaNarudzba);
                     }
-                }
+                //}
 
                 return new ResponseModel(ResponseCode.Error, "Ne postoji klijent", null);
             }
@@ -77,10 +79,10 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                var klijent = PronadjiKlijenta(model.KlijentId);
-                var autor = PronadjiAutor(model.AutorId);
-                if (klijent != null || autor != null)
-                {
+                //var klijent = PronadjiKlijenta(model.KlijentId);
+                //var autor = PronadjiAutor(model.AutorId);
+                //if (klijent != null || autor != null)
+                //{
                     Narudzba novaNarudzba = new Narudzba
                     {
                         Naziv = model.Naziv,
@@ -90,29 +92,33 @@ namespace LahorWebApp.Controllers
                         Kolicina = model.Kolicina,
                         Opis = model.Opis,
                         NazivKlijenta = "",
-                        isNarudzbaAutor = true
+                        isNarudzbaAutor = true,
+                        //RadnikId=model.AutorId,
+                        Radnik=dBContext.Radnici.Find(model.AutorId),
+                        KlijentId=model.KlijentId,
+                        Klijent=dBContext.Klijenti.Find(model.KlijentId)
                     };
 
-                    if (klijent is KlijentFizickoLice)
-                        novaNarudzba.KlijentFizickoLice = klijent as KlijentFizickoLice;
-                    else
-                        novaNarudzba.KlijentPravnoLice = klijent as KlijentPravnoLice;
+                    //if (klijent is KlijentFizickoLice)
+                    //    novaNarudzba.KlijentFizickoLice = klijent as KlijentFizickoLice;
+                    //else
+                    //    novaNarudzba.KlijentPravnoLice = klijent as KlijentPravnoLice;
 
-                    if (autor is UpravnoOsoblje)
-                    {
-                        novaNarudzba.AutorUpravno = autor as UpravnoOsoblje;
-                    }
-                    else
-                    {
-                        novaNarudzba.AutorUposlenik = autor as Uposlenik;
-                    }
+                    //if (autor is UpravnoOsoblje)
+                    //{
+                    //    novaNarudzba.AutorUpravno = autor as UpravnoOsoblje;
+                    //}
+                    //else
+                    //{
+                    //    novaNarudzba.AutorUposlenik = autor as Uposlenik;
+                    //}
                     if (novaNarudzba != null)
                     {
                         dBContext.Add(novaNarudzba);
                         dBContext.SaveChanges();
                         return new ResponseModel(ResponseCode.OK, "Narudžba uspješno dodana.", novaNarudzba);
                     }
-                }
+                //}
 
                 return new ResponseModel(ResponseCode.Error, "Klijent ili autor nisu pronađeni", null);
             }
@@ -128,36 +134,38 @@ namespace LahorWebApp.Controllers
         {
             try
             {
-                var autor = PronadjiAutor(model.AutorId);
-                if (autor != null)
+                //var autor = PronadjiAutor(model.AutorId);
+                //if (autor != null)
+                //{
+                Narudzba novaNarudzba = new Narudzba
                 {
-                    Narudzba novaNarudzba = new Narudzba
-                    {
-                        Naziv = model.Naziv,
-                        DatumNarudzbe = DateTime.Now.Date,
-                        DatumIsporuke = model.DatumIsporuke,
-                        UkupnaCijena = model.Cijena,
-                        Kolicina = model.Kolicina,
-                        Opis = model.Opis,
-                        NazivKlijenta = model.NazivKlijenta,
-                        isGuest = true
+                    Naziv = model.Naziv,
+                    DatumNarudzbe = DateTime.Now.Date,
+                    DatumIsporuke = model.DatumIsporuke,
+                    UkupnaCijena = model.Cijena,
+                    Kolicina = model.Kolicina,
+                    Opis = model.Opis,
+                    NazivKlijenta = model.NazivKlijenta,
+                    isGuest = true,
+                    //RadnikId = model.AutorId,
+                    Radnik = dBContext.Radnici.Find(model.AutorId)
                     };
 
-                    if (autor is UpravnoOsoblje)
-                    {
-                        novaNarudzba.AutorUpravno = autor as UpravnoOsoblje;
-                    }
-                    else
-                    {
-                        novaNarudzba.AutorUposlenik = autor as Uposlenik;
-                    }
+                    //if (autor is UpravnoOsoblje)
+                    //{
+                    //    novaNarudzba.AutorUpravno = autor as UpravnoOsoblje;
+                    //}
+                    //else
+                    //{
+                    //    novaNarudzba.AutorUposlenik = autor as Uposlenik;
+                    //}
                     if (novaNarudzba != null)
                     {
                         dBContext.Add(novaNarudzba);
                         dBContext.SaveChanges();
                         return new ResponseModel(ResponseCode.OK, "Narudžba uspješno dodana.", novaNarudzba);
                     }
-                }
+                //}
 
                 return new ResponseModel(ResponseCode.Error, "Klijent ili autor nisu pronađeni", null);
             }
@@ -168,23 +176,23 @@ namespace LahorWebApp.Controllers
             }
         }
 
-        private object PronadjiAutor(int autorId)
-        {
-            dynamic klijent = dBContext.UpravnoOsoblje.Where(k => k.Id == autorId).FirstOrDefault();
-            if (klijent != null)
-                return klijent;
-            klijent = dBContext.Uposlenici.Where(k => k.Id == autorId).FirstOrDefault();
-            return klijent;
-        }
+        //private object PronadjiAutor(int autorId)
+        //{
+        //    dynamic klijent = dBContext.UpravnoOsoblje.Where(k => k.Id == autorId).FirstOrDefault();
+        //    if (klijent != null)
+        //        return klijent;
+        //    klijent = dBContext.Uposlenici.Where(k => k.Id == autorId).FirstOrDefault();
+        //    return klijent;
+        //}
 
-        private object PronadjiKlijenta(int klijentId)
-        {
-            dynamic klijent = dBContext.KlijentiFizickoLice.Where(k => k.Id == klijentId).FirstOrDefault();
-            if (klijent != null)
-                return klijent;
-            klijent = dBContext.KlijentiPravnoLice.Where(k => k.Id == klijentId).FirstOrDefault();
-            return klijent;
-        }
+        //private object PronadjiKlijenta(int klijentId)
+        //{
+        //    dynamic klijent = dBContext.KlijentiFizickoLice.Where(k => k.Id == klijentId).FirstOrDefault();
+        //    if (klijent != null)
+        //        return klijent;
+        //    klijent = dBContext.KlijentiPravnoLice.Where(k => k.Id == klijentId).FirstOrDefault();
+        //    return klijent;
+        //}
 
         [HttpGet("{klijentId}")]
         public ResponseModel GetNarudzbeOnline(int klijentId)
@@ -194,23 +202,24 @@ namespace LahorWebApp.Controllers
                 //var klijent = dBContext.KlijentiPravnoLice.Where(k =>
                 //   k.Id == klijentId).FirstOrDefault();
 
-                var klijent = PronadjiKlijenta(klijentId);
-                dynamic onlineNarudzbe=null;
-                if (klijent != null)
-                {
-                    if (klijent is KlijentFizickoLice)
-                    {
-                        onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
-                     n.isOnline && n.KlijentFizickoLice ==
-                     klijent).ToList();
-                    }
-                    else if (klijent is KlijentPravnoLice)
-                    {
-                        onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
-                          n.isOnline && n.KlijentPravnoLice ==
-                          klijent).ToList();
-                    }
-                }
+                //var klijent = PronadjiKlijenta(klijentId);
+                //dynamic onlineNarudzbe=null;
+                //if (klijent != null)
+                //{
+                //    //if (klijent is KlijentFizickoLice)
+                //    //{
+                //    //    onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                //    // n.isOnline && n.KlijentFizickoLice ==
+                //    // klijent).ToList();
+                //    //}
+                //    //else if (klijent is KlijentPravnoLice)
+                //    //{
+                //    //    onlineNarudzbe = dBContext.Narudzbe.ToList().Where(n =>
+                //    //      n.isOnline && n.KlijentPravnoLice ==
+                //    //      klijent).ToList();
+                //    //}
+                //}
+                var onlineNarudzbe = dBContext.Narudzbe.Where(n => n.KlijentId == klijentId).ToList();
                 return new ResponseModel(ResponseCode.OK,
                     "Online narudzbe za klijenta uspješno preuzete", onlineNarudzbe);
             }

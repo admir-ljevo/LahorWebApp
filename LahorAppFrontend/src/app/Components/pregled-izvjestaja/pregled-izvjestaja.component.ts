@@ -5,6 +5,7 @@ import {NarudzbeService} from "../../services/NarudzbeService";
 import {IzvjestajiService} from "../../services/IzvjestajiService";
 import {MyConfig} from "../../MyConfig";
 import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router";
 
 
 
@@ -16,20 +17,22 @@ import {HttpClient} from "@angular/common/http";
 export class PregledIzvjestajaComponent implements OnInit {
   izvjestaj:any=null;
   listaNarudzbe:any;
-  id:Number;
-  constructor(private service:NarudzbeService,private izvjestajService:IzvjestajiService,private httpClient:HttpClient) {
+  id:any;
+  constructor(private service:NarudzbeService,private izvjestajService:IzvjestajiService,private httpClient:HttpClient,
+              private route:ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    var id=history.state.data;
-   this.httpClient.get(MyConfig.adresa_servera+"Izvjestaj/GetIzvjestajById/"+id
-    ).subscribe(
-      (data:any)=>{
-        this.izvjestaj=data.dataSet;
-      });
-   /* this.getIzvjestajPodaci(id);*/
-    this.getNarudzbe(id);
+    this.id = this.route.params.subscribe(params => {
+      this.id = +params['id']; // (+) converts string 'id' to a number
+    this.getNarudzbe();
+    this.getIzvjestajPodaci();
+    });
+
+      /*var id=history.state.data;
+   /!* this.getIzvjestajPodaci(id);*!/*/
+    /*this.getNarudzbe(id);*/
   }
 
   loginInfo():LoginInformation
@@ -52,14 +55,20 @@ export class PregledIzvjestajaComponent implements OnInit {
 
   }
 
-  private getNarudzbe(id: Number) {
-    this.service.getAllNarudzbeByIzvjestajId(id).subscribe(
+  private getNarudzbe() {
+    this.service.getAllNarudzbeByIzvjestajId(this.id).subscribe(
       (data:any)=>{
         this.listaNarudzbe=data;
       });
   }
 
-  private getIzvjestajPodaci(id: any) {
-   this.izvjestaj=this.izvjestajService.getIzvjestajById(id);
+  private getIzvjestajPodaci() {
+    this.httpClient.get(MyConfig.adresa_servera+"Izvjestaj/GetIzvjestajById/"+this.id
+    ).subscribe(
+      (data:any)=>{
+        this.izvjestaj=data.dataSet;
+      });
+
+
   }
 }

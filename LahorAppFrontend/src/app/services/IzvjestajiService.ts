@@ -95,9 +95,10 @@ export class IzvjestajiService
       });
   }
   public getIzvjestajById(id:Number) {
-    this.httpClient.get(MyConfig.adresa_servera+"Izvjestaj/GetIzvjestajById/"+id
+     this.httpClient.get(MyConfig.adresa_servera+"Izvjestaj/GetIzvjestajById/"+id
     ).subscribe(
       (data:any)=>{
+
         if(data.responseCode==ResponseCode.OK)
         {
           console.log(data.dataSet);
