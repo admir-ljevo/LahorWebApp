@@ -1,8 +1,7 @@
-import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {MyConfig} from "../_metronic/shared/MyConfig";
+import {MyConfig} from "../shared/MyConfig";
 
 export class BaseService {
 
@@ -21,6 +20,10 @@ export class BaseService {
 
    post(data:any){
     return this.httpClient.post<any>(MyConfig.address_server + "api/" + this.controllerName+ "/",data,MyConfig.http_options);
+  }
+
+  delete(data:any){
+    return this.httpClient.delete<any>(MyConfig.address_server + "api/" + this.controllerName+ "/"+data.id,MyConfig.http_options);
   }
 
   update(data:any){

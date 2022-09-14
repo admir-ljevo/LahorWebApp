@@ -1,58 +1,44 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { ClipboardModule } from 'ngx-clipboard';
-import { TranslateModule } from '@ngx-translate/core';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthService } from './modules/auth/services/auth.service';
-import { environment } from 'src/environments/environment';
-// #fake-start#
-import { FakeAPIService } from './_fake/fake-api.service';
-import { NewsAddComponent } from './pages/news/news-add/news-add.component';
-import { NewsEditComponent } from './pages/news/news-edit/news-edit.component';
-// #fake-end#
 
-function appInitializer(authService: AuthService) {
-  return () => {
-    return new Promise((resolve) => {
-      authService.getUserByToken().subscribe().add(resolve);
-    });
-  };
-}
+import { AppRoutingModule } from './app-routing.module';
+
+import { LayoutModule } from './views/layout/layout.module';
+import { AuthGuard } from './core/guard/auth.guard';
+
+import { AppComponent } from './app.component';
+import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+
+import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-  declarations:[AppComponent, NewsAddComponent, NewsEditComponent],
+  declarations: [
+    AppComponent,
+    ErrorPageComponent,
+  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    TranslateModule.forRoot(),
-    HttpClientModule,
-    ClipboardModule,
-    // #fake-start#
-    environment.isMockEnabled
-      ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
-          passThruUnknownUrl: true,
-          dataEncapsulation: false,
-        })
-      : [],
-    // #fake-end#
     AppRoutingModule,
-    InlineSVGModule.forRoot(),
-    NgbModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    HttpClientModule
   ],
   providers: [
+    AuthGuard,
     {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializer,
-      multi: true,
-      deps: [AuthService],
-    },
+      provide: HIGHLIGHT_OPTIONS, // https://www.npmjs.com/package/ngx-highlightjs
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          xml: () => import('highlight.js/lib/languages/xml'),
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          scss: () => import('highlight.js/lib/languages/scss'),
+        }
+      }
+    }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

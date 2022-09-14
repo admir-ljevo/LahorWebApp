@@ -43,5 +43,12 @@ namespace Lahor.API.Controllers
             return await BaseService.UpdateAsync(Mapper.Map<dtoEntity>(updateEntity));
         }
 
+        [HttpDelete("{id}")]
+        public virtual async Task<IActionResult> Delete(int id)
+        {
+            await BaseService.RemoveByIdAsync(id);
+            return Ok();
+        }
+
     }
 }

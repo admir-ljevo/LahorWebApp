@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NewsService } from 'src/app/services/NewsService';
+import {NewsService} from "../../../services/NewsService";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-news',
@@ -13,24 +13,41 @@ export class NewsListsComponent implements OnInit {
 
   news$!:Observable<any[]>;
   selectedNew:any=null;
-  constructor(private newsService:NewsService,private httpClient:HttpClient,private router:Router) { }
+  basicModalCloseResult:string='';
+  constructor(private newsService:NewsService,private router:Router,private modalService:NgbModal) { }
 
   ngOnInit() {
-     this.news$=this.newsService.getAll();
-      this.news$.subscribe(data=>{
-        console.log(data);
-      });
+     this.getAll();
   }
 
-  editNew(x:any)
+  openBasicModal(content: TemplateRef<any>,x:any) {
+    this.selectedNew=x;
+    this.modalService.open(content, {}).result.then((result:any) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res:any)=>console.log(res));
+  }
+
+  getAll()
   {
-    this.router.navigate(['/news-edit',x.id]);
+    this.news$=this.newsService.getAll();
   }
 
   addNew()
   {
-    debugger;
-    this.router.navigateByUrl("/news-add");
+    this.router.navigateByUrl("/news/news-add");
+  }
+
+  editNew(x:any)
+  {
+    this.router.navigate(['/news/news-edit',x.id]);
+  }
+
+  deleteNew(modal:any)
+  {
+    modal.close('by: save button');
+    this.newsService.delete(this.selectedNew).subscribe(data=>{
+      this.getAll();
+    })
   }
 
 }
