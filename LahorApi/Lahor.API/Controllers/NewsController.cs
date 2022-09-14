@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Lahor.API.Services.UserManager;
 using Lahor.Core.Dto.New;
 using Lahor.Services.NewsService;
 

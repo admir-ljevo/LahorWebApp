@@ -27,7 +27,7 @@ namespace Lahor.Infrastructure.Repositories.NewsRepository
 
         public async new Task<List<NewDto>> GetAllAsync()
         {
-            return await ProjectToListAsync<NewDto>(DatabaseContext.News);
+            return await ProjectToListAsync<NewDto>(DatabaseContext.News.Where(x=>x.IsDeleted==false));
         }
     }
 }

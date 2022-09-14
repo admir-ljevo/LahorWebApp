@@ -1,146 +1,59 @@
-<!-- begin::Header -->
-<!--end::Image input-->
-<div class="card-header border-0 pt-5">
-  <h3 class="card-title align-items-start flex-column">
-    <span class="card-label fw-bolder fs-3 mb-1">News </span>
-    <span class="text-muted mt-1 fw-bold fs-7">Over 500 members</span>
-  </h3>
-  <div
-    class="card-toolbar"
-    data-bs-toggle="tooltip"
-    data-bs-placement="top"
-    data-bs-trigger="hover"
-    title="Click to add a user"
-  >
-    <a href="#" class="btn btn-sm btn-light-primary">
-      <span
-        [inlineSVG]="'./assets/media/icons/duotune/arrows/arr075.svg'"
-        class="svg-icon svg-icon-3"
-      ></span>
-      New Member
-    </a>
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Tables</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">News</h6>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DATE CREATED</th>
+              <th>USER</th>
+              <th>PUBLIC</th>
+              <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of news$|async">
+              <th>{{new.name}}</th>
+              <td>{{new.createdAt}}</td>
+              <td>{{new.user.person.firstName}} {{new.user.person.lastName}}</td>
+              <td *ngIf="new.public">DA</td>
+              <td *ngIf="!new.public">NE</td>
+              <td>
+                <button class="btn btn-primary" (click)="addNew()">Add</button>
+                <button class="btn btn-warning" (click)="editNew(new)">Edit</button>
+                <button class="btn btn-danger" (click)="openBasicModal(basicModal,new)">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<!-- end::Header -->
-<!-- begin::Body -->
-<div class="card-body py-3">
-  <!-- begin::Table container -->
-  <div class="table-responsive">
-    <!-- begin::Table -->
-    <table
-      class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
-    >
-      <!-- begin::Table head -->
-      <thead>
-      <tr class="fw-bolder text-muted">
-        <th class="w-25px">
-          <div
-            class="
-                form-check form-check-sm form-check-custom form-check-solid
-              "
-          >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="1"
-              data-kt-check="true"
-              data-kt-check-target=".widget-9-check"
-            />
-          </div>
-        </th>
-        <th class="min-w-150px">Name</th>
-        <th class="min-w-140px">Author</th>
-        <th class="min-w-120px">Date created</th>
-        <th class="min-w-100px text-end">Actions</th>
-      </tr>
-      </thead>
-      <!-- end::Table head -->
-      <!-- begin::Table body -->
-      <tbody>
-      <tr *ngFor="let new of news$|async">
-        <td>
-          <div
-            class="
-                form-check form-check-sm form-check-custom form-check-solid
-              "
-          >
-            <input
-              class="form-check-input widget-9-check"
-              type="checkbox"
-              value="1"
-            />
-          </div>
-        </td>
-        <td>
-          <div class="d-flex align-items-center">
-             <span class="text-muted fw-bold text-muted d-block fs-7">
-                  {{new.name}}
-                </span>
-          </div>
-        </td>
-        <td>
-          <span class="text-muted fw-bold text-muted d-block fs-7">
-             {{new.user.person.firstName}} {{new.user.person.lastName}}
-            </span>
-        </td>
-        <td class="d-flex align-items-center">
-  <div class="d-flex justify-content-start flex-column">
-    <span class="text-muted fw-bold text-muted d-block fs-7">
-      {{new.createdAt | date:'dd.MM.yyyy hh:mm'}}
-    </span>
-  </div>
-        </td>
-        <td>
-          <div class="d-flex justify-content-end flex-shrink-0">
-            <a
-              href="#"
-              class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                "
-            >
-                <span
-                  [inlineSVG]="
-                    './assets/media/icons/duotune/general/gen019.svg'
-                  "
-                  class="svg-icon svg-icon-3"
-                ></span>
-            </a>
-            <a
-              href="#"
-              class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                  me-1
-                "
-            >
-                <span
-                  [inlineSVG]="'./assets/media/icons/duotune/art/art005.svg'"
-                  class="svg-icon svg-icon-3"
-                ></span>
-            </a>
-            <a
-              href="#"
-              class="
-                  btn btn-icon btn-bg-light btn-active-color-primary btn-sm
-                "
-            >
-                <span
-                  [inlineSVG]="
-                    './assets/media/icons/duotune/general/gen027.svg'
-                  "
-                  class="svg-icon svg-icon-3"
-                ></span>
-            </a>
-          </div>
-        </td>
-      </tr>
 
-      </tbody>
-      <!-- end::Table body -->
-    </table>
-    <!-- end::Table -->
+<!-- Modal -->
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Brisanje obavijesti</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
-  <!-- end::Table container -->
-</div>
-<!-- begin::Body -->
-
+  <div class="modal-body">
+    <p>Da li ste sigurni da želite obrisati obavijest?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="deleteNew(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Deleted is succesfully', icon: 'success'}">Da</button>
+  </div>
+</ng-template>

@@ -7,7 +7,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "noImplicitReturns": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
@@ -18,7 +20,7 @@
     "target": "es2017",
     "module": "es2020",
     "lib": [
-      "es2018",
+      "es2020",
       "dom"
     ]
   },
@@ -26,7 +28,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
-    "enableIvy": true
+    "strictTemplates": true
   }
 }
