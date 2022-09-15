@@ -44,10 +44,10 @@ export class NewsListsComponent implements OnInit {
 
   deleteNew(modal:any)
   {
-    modal.close('by: save button');
     this.newsService.delete(this.selectedNew).subscribe(data=>{
       this.getAll();
     })
+    modal.close('by: save button');
   }
 
 }

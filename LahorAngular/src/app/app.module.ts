@@ -1,29 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
-
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
-
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import {HttpClientModule} from "@angular/common/http";
+import {NewsAddComponent} from "./pages/news/news-add/news-add.component";
+import {FormsModule} from "@angular/forms";
+import {NewsEditComponent} from "./pages/news/news-edit/news-edit.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
+    NewsAddComponent,
+    NewsEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     AuthGuard,
