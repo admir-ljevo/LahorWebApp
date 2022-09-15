@@ -10,7 +10,7 @@ export class NewModel{
 
 this.id=0;
 this.name="";
-this.userId=+localStorage.getItem("user-id");
+this.userId=+localStorage.getItem("user-id")!;
 this.image="";
 this.text="";
 this.public=false;

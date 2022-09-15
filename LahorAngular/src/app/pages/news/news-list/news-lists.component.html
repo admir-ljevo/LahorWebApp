@@ -1,7 +1,6 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink=".">Tables</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
+    <li class="breadcrumb-item active" aria-current="page">News</li>
   </ol>
 </nav>
 
@@ -9,8 +8,12 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">News</h6>
-
+        <div class="row">
+        <h6 class="card-title col-sm-10">Obavijesti</h6>
+          <div class="col-sm-2">
+        <button class="btn btn-primary" (click)="addNew()">Dodaj obavijest</button>
+          </div>
+        </div>
         <div class="table-responsive">
           <table class="table">
             <thead>
@@ -25,12 +28,11 @@
             <tbody>
             <tr *ngFor="let new of news$|async">
               <th>{{new.name}}</th>
-              <td>{{new.createdAt}}</td>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
               <td>{{new.user.person.firstName}} {{new.user.person.lastName}}</td>
               <td *ngIf="new.public">DA</td>
               <td *ngIf="!new.public">NE</td>
               <td>
-                <button class="btn btn-primary" (click)="addNew()">Add</button>
                 <button class="btn btn-warning" (click)="editNew(new)">Edit</button>
                 <button class="btn btn-danger" (click)="openBasicModal(basicModal,new)">Delete</button>
               </td>
