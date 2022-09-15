@@ -9,24 +9,32 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import {HttpClientModule} from "@angular/common/http";
 import {NewsAddComponent} from "./pages/news/news-add/news-add.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NewsEditComponent} from "./pages/news/news-edit/news-edit.component";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {AuthComponent} from "./views/pages/auth/auth.component";
+import {CommonModule} from "@angular/common";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
     NewsAddComponent,
-    NewsEditComponent
+    NewsEditComponent,
+    AuthComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    LayoutModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
-    FormsModule
+    NgbModule,
+    RouterModule,
+    AppRoutingModule
   ],
+  exports:[FormsModule],
   providers: [
     AuthGuard,
     {
