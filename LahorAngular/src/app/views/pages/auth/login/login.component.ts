@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {LoginService} from "../../../../services/LoginService";
+import {NewModel} from "../../../../models/new-model";
 
 @Component({
   selector: 'app-login',
@@ -9,20 +11,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   returnUrl: any;
+  email:string;
+  password:string;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute,private loginService:LoginService) { }
 
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  onLoggedin(e: Event) {
-    e.preventDefault();
-    localStorage.setItem('isLoggedin', 'true');
-    if (localStorage.getItem('isLoggedin')) {
-      this.router.navigate([this.returnUrl]);
-    }
+  signIn() {
+    debugger;
+    this.loginService.login(this.email,this.password);
   }
 
 }
