@@ -25,7 +25,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     ErrorPageComponent,
     NewsAddComponent,
     NewsEditComponent,
-    AuthComponent
+    AuthComponent,
     ServicesEditComponent,
     ServicesAddComponent,
   ],
@@ -37,7 +37,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     HttpClientModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
     FormsModule,
     NgSelectModule
   ],
