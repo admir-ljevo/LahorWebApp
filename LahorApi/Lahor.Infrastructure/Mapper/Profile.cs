@@ -3,6 +3,8 @@ using Lahor.Core.Dto;
 using Lahor.Core.Dto.New;
 using Lahor.Core.Dto.Note;
 using Lahor.Core.Dto.OrderDto;
+using Lahor.Core.Dto.Service;
+using Lahor.Core.Dto.TypeOfService;
 using Lahor.Core.Entities;
 using Lahor.Core.Entities.Identity;
 
@@ -69,10 +71,24 @@ namespace Lahor.Infrastructure.Mapper
             CreateMap<NewDto, NewInsertDto>().ReverseMap();
             CreateMap<NewDto, NewUpdateDto>().ReverseMap();
             #endregion
-            #region New
+
+            #region Person
 
             CreateMap<Person, PersonDto>().ReverseMap();
             #endregion
+
+            #region Service
+
+            CreateMap<Service, ServiceDto>().ReverseMap();
+            CreateMap<ServiceDto, ServiceUpsertDto>().ReverseMap();
+            #endregion
+
+            #region TypeOfService
+
+            CreateMap<TypeOfService, TypeOfServiceDto>().ReverseMap();
+            CreateMap<TypeOfServiceDto, TypeOfServiceUpsertDto>().ReverseMap();
+            #endregion
+
 
 
         }

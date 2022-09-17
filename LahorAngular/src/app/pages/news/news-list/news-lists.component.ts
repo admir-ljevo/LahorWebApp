@@ -34,12 +34,12 @@ export class NewsListsComponent implements OnInit {
 
   addNew()
   {
-    this.router.navigateByUrl("/news/news-add");
+    this.router.navigateByUrl("/news/services-add");
   }
 
   editNew(x:any)
   {
-    this.router.navigate(['/news/news-edit',x.id]);
+    this.router.navigate(['/news/services-edit',x.id]);
   }
 
   deleteNew(modal:any)

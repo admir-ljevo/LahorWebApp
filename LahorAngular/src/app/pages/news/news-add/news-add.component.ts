@@ -4,7 +4,7 @@ import {NewsService} from "../../../services/NewsService";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-news-add',
+  selector: 'app-services-add',
   templateUrl: './news-add.component.html',
   styleUrls: ['./news-add.component.scss']
 })

@@ -15,6 +15,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {AuthComponent} from "./views/pages/auth/auth.component";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
+import {ServicesAddComponent} from "./pages/services/services-add/services-add.component";
+import {ServicesEditComponent} from "./pages/services/services-edit/services-edit.component";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import {RouterModule} from "@angular/router";
     ErrorPageComponent,
     NewsAddComponent,
     NewsEditComponent,
-    AuthComponent
+    AuthComponent,
+    ServicesEditComponent,
+    ServicesAddComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -32,7 +37,9 @@ import {RouterModule} from "@angular/router";
     HttpClientModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    NgSelectModule
   ],
   exports:[FormsModule],
   providers: [

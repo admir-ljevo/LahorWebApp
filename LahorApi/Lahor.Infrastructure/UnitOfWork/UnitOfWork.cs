@@ -5,6 +5,8 @@ using Lahor.Infrastructure.Repositories.LogsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
 using Lahor.Infrastructure.Repositories.NotesRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
+using Lahor.Infrastructure.Repositories.ServicesRepository;
+using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Lahor.Infrastructure.UnitOfWork
@@ -19,7 +21,10 @@ namespace Lahor.Infrastructure.UnitOfWork
         public readonly INotesRepository NotesRepository;
         public readonly IOrdersRepository OrdersRepository;
         public readonly INewsRepository NewsRepository;
-        public UnitOfWork(DatabaseContext databaseContext,IApplicationUserRolesRepository applicationUserRolesRepository,IApplicationUsersRepository applicationUsersRepository,ILogsRepository logsRepository,INotesRepository notesRepository,IOrdersRepository ordersRepository,INewsRepository newsRepository)
+        public readonly IServicesRepository ServicesRepository;
+        public readonly ITypeOfServicesRepository TypeOfServicesRepository;
+        public UnitOfWork(DatabaseContext databaseContext,IApplicationUserRolesRepository applicationUserRolesRepository,IApplicationUsersRepository applicationUsersRepository,ILogsRepository logsRepository,INotesRepository notesRepository,IOrdersRepository ordersRepository,INewsRepository newsRepository,
+            IServicesRepository servicesRepository,ITypeOfServicesRepository typeOfServicesRepository)
         {
             _databaseContext = databaseContext;
             ApplicationUserRolesRepository=applicationUserRolesRepository;
@@ -28,6 +33,8 @@ namespace Lahor.Infrastructure.UnitOfWork
             NotesRepository = notesRepository;
             OrdersRepository = ordersRepository;
             NewsRepository = newsRepository;
+            ServicesRepository = servicesRepository;
+            TypeOfServicesRepository = typeOfServicesRepository;
         }
         public async Task<int> Execute(Action action)
         {

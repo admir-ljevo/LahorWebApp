@@ -3,7 +3,7 @@ import {NewsService} from "../../../services/NewsService";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-news-edit',
+  selector: 'app-services-edit',
   templateUrl: './news-edit.component.html',
   styleUrls: ['./news-edit.component.scss']
 })

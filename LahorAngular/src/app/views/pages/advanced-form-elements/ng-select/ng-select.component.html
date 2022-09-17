@@ -44,7 +44,7 @@
           [(ngModel)]="selectedPersonId">
         </ng-select>
         <p class="mt-2 text-muted">Selected item: <span class="fw-bolder">{{selectedPersonId}}</span></p>
-        
+
       </div>
     </div>
   </div> <!-- col -->
@@ -55,12 +55,12 @@
 
         <ng-select [items]="people"
           bindLabel="name"
-          bindValue="id"
+          bindValue="index"
           placeholder="type to search"
           [(ngModel)]="selectedSearchPersonId">
         </ng-select>
         <p class="mt-2 text-muted">Selected item: <span class="fw-bolder">{{selectedSearchPersonId}}</span></p>
-        
+
       </div>
     </div>
   </div> <!-- col -->
@@ -84,7 +84,7 @@
             <li *ngFor="let item of selectedPeople">{{item.name}}</li>
           </ul>
         </div>
-        
+
       </div>
     </div>
   </div> <!-- col -->
@@ -116,7 +116,7 @@
             <li *ngFor="let item of groupedMultiSelectedPeople">{{item}}</li>
           </ul>
         </div>
-        
+
       </div>
     </div>
   </div> <!-- col -->
@@ -125,19 +125,19 @@
       <div class="card-body">
         <h6 class="card-title">Custom selected item template</h6>
 
-        <ng-select 
-          [items]="people" 
+        <ng-select
+          [items]="people"
           [multiple]=true
           bindLabel="name"
           bindValue="id"
           [hideSelected]="true"
           [(ngModel)]="customTemplateSelectedPeople">
-          
+
           <ng-template ng-label-tmp let-item="item" let-clear="clear">
             <span class="ng-value-label"><img [src]="item.picture" width="20px" height="20px"> {{item.name}}</span>
             <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
           </ng-template>
-      
+
           <ng-template ng-option-tmp let-item="item">
             <img [src]="item.picture" width="20px" height="20px"> {{item.name}}
           </ng-template>
@@ -149,7 +149,7 @@
             <li *ngFor="let item of customTemplateSelectedPeople">{{item}}</li>
           </ul>
         </div>
-        
+
       </div>
     </div>
   </div> <!-- col -->

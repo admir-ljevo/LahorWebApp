@@ -32,6 +32,7 @@ export class NgSelectComponent implements OnInit {
 
     // array of objects
     this.people = PeoplesData.peoples;
+    console.log(this.people);
 
   }
 

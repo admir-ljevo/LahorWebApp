@@ -1,5 +1,4 @@
-﻿using Lahor.Core.Entities.Identity;
-
+﻿
 namespace Lahor.Core.Dto.New
 {
     public class NewUpdateDto:BaseDto
