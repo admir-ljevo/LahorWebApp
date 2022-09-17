@@ -49,6 +49,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/news/news-list/news.module').then(m => m.NewsModule)
       },
       {
+        path: 'services',
+        loadChildren: () => import('./pages/services/services.module').then(m => m.ServicesModule)
+      },
+      {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
       },

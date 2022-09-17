@@ -23,7 +23,7 @@
                 <label for="inputForNewName" class="form-label">Naziv obavijesti</label>
                 <div style="display: flex; flex-direction: row;">
                   <p class="text-danger mt-1" style="margin-right: 5px;" *ngIf="requried?.errors?.required">*</p>
-                  <input class="form-control" type="text" [(ngModel)]="new.name" placeholder="Unesite naziv obavijesti" ngModel name="requried" #requried="ngModel" required/>
+                  <input id="inputForNewName" class="form-control" type="text" [(ngModel)]="new.name" placeholder="Unesite naziv obavijesti" ngModel name="requried" #requried="ngModel" required/>
                 </div>
               </div>
             </div><!-- Col -->

@@ -1,33 +1,33 @@
 import {RouterModule, Routes} from "@angular/router";
-import {NewsListsComponent} from "./news-lists.component";
+import {ServicesListsComponent} from "./services-list/services-lists.component";
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {NewsAddComponent} from "../news-add/news-add.component";
-import {NewsEditComponent} from "../news-edit/news-edit.component";
+import {ServicesAddComponent} from "./services-add/services-add.component";
+import {ServicesEditComponent} from "./services-edit/services-edit.component";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 const routes: Routes = [
   {
     path: '',
-    component: NewsListsComponent,
+    component: ServicesListsComponent,
   },
   {
     path: 'services-add',
-    component: NewsAddComponent
+    component: ServicesAddComponent
   },
   {
     path: 'services-edit/:id',
-    component: NewsEditComponent
+    component: ServicesEditComponent
   },
 ]
 
 @NgModule({
-  declarations: [NewsListsComponent],
+  declarations: [ServicesListsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SweetAlert2Module.forRoot(),
   ]
 })
-export class NewsModule { }
+export class ServicesModule { }
 

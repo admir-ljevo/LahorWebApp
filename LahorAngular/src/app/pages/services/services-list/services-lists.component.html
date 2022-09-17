@@ -1,0 +1,58 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Services</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+        <h6 class="card-title col-sm-10">Usluge</h6>
+          <div class="col-sm-2">
+        <button class="btn btn-primary" (click)="addService()">Dodaj uslugu</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DATE CREATED</th>
+              <th>DATE MODIFIED</th>
+              <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let service of services$|async">
+              <th>{{service.name}}</th>
+              <td>{{service.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{service.updatedAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>
+                <button class="btn btn-warning" (click)="editService(service)">Edit</button>
+                <button class="btn btn-danger" (click)="openBasicModal(basicModal,service)">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Brisanje usluge</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Da li ste sigurni da želite obrisati obavijest?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="deleteService(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Deleted is succesfully', icon: 'success'}">Da</button>
+  </div>
+</ng-template>

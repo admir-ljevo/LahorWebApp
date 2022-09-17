@@ -1,7 +1,5 @@
 ﻿using Lahor.Core.Dto.New;
 using Lahor.Infrastructure.UnitOfWork;
-using Lahor.Services.NewsService;
-using Lahor.Shared.LoggedUserData;
 
 namespace Lahor.Services.NewsService
 {

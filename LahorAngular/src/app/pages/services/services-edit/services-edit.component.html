@@ -1,0 +1,44 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/services">Services</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Service Edit</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Editovanje usluge</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputForServiceName" class="form-label">Naziv usluge</label>
+                <div style="display: flex; flex-direction: row;">
+                  <p class="text-danger mt-1" style="margin-right: 5px;" *ngIf="requried?.errors?.required">*</p>
+                  <input id="inputForServiceName" class="form-control" type="text" [(ngModel)]="service.name" placeholder="Unesite naziv usluge" ngModel name="requried" #requried="ngModel" required/>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Tip usluge</label>
+                <ng-select [items]="typeOfServices"
+                           bindLabel="name"
+                           bindValue="id"
+                           placeholder="type to search"
+                           [(ngModel)]="service.typeOfServiceId"
+                           [ngModelOptions]="{standalone:true}"
+                           (change)="changeTypeOfService($event)">
+                </ng-select>
+              </div>
+            </div> <!-- col -->
+          </div>
+          <!-- Col -->
+        </form>
+        <button type="submit" class="btn btn-primary submit" (click)="updateService()">Spasi promjene</button>
+      </div>
+    </div>
+  </div>
+</div>

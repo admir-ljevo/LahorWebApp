@@ -9,12 +9,16 @@ using Lahor.Infrastructure.Repositories.LogsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
 using Lahor.Infrastructure.Repositories.NotesRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
+using Lahor.Infrastructure.Repositories.ServicesRepository;
+using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Lahor.Infrastructure.UnitOfWork;
 using Lahor.Services.ApplicationUserRolesService;
 using Lahor.Services.ApplicationUsersService;
 using Lahor.Services.NewsService;
 using Lahor.Services.NotesServices;
 using Lahor.Services.OrdersService;
+using Lahor.Services.ServicesService;
+using Lahor.Services.TypeOfServicesService;
 using Lahor.Shared.LoggedUserData;
 using Lahor.Shared.Models;
 using Lahor.Shared.Services.Crypto;
@@ -74,6 +78,8 @@ builder.Services.AddScoped<IApplicationUserRolesRepository, ApplicationUserRoles
 builder.Services.AddScoped<INotesRepository, NotesRepository>();
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
+builder.Services.AddScoped<ITypeOfServicesRepository, TypeOfServicesRepository>();
 
 #endregion
 
@@ -84,6 +90,8 @@ builder.Services.AddScoped<IApplicationUserRolesService, ApplicationUserRolesSer
 builder.Services.AddScoped<INotesService, NotesService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IServicesService, ServicesService>();
+builder.Services.AddScoped<ITypeOfServicesService, TypeOfServicesServices>();
 
 #endregion
 
