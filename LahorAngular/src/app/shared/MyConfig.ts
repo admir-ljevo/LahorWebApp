@@ -7,4 +7,9 @@ export class MyConfig{
       "Content-Type":"application/json"
     })
   };
+  static http_options2= {
+    headers: new HttpHeaders({
+      "Content-Type":"multipart/form-data"
+    })
+  };
 }

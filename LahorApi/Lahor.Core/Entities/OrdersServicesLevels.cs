@@ -2,7 +2,7 @@
 
 namespace Lahor.Core.Entities
 {
-    public class OrdersServicesLevels:BaseEntity
+    public class OrdersServicesLevels : BaseEntity
     {
         public Order Order { get; set; }
         public int OrderId { get; set; }

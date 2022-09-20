@@ -53,6 +53,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/services/services.module').then(m => m.ServicesModule)
       },
       {
+        path: 'price-list-preview',
+        loadChildren: () => import('./pages/priceList/priceList.module').then(m => m.PriceListModule)
+      },
+      {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
       },

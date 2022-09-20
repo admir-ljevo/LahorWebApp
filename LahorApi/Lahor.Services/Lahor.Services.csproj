@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lahor.Infrastructure\Lahor.Infrastructure.csproj" />
     <ProjectReference Include="..\Lahor.Shared\Lahor.Shared.csproj" />
   </ItemGroup>

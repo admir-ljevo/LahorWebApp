@@ -29,6 +29,7 @@ export class NewsEditComponent implements OnInit {
   {
     this.new=this.newsService.getById(this.id).subscribe((data:any)=>{
       this.new=data;
+      console.log(this.new);
     });
   }
 

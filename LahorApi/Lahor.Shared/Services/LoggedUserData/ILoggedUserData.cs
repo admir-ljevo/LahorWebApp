@@ -1,5 +1,4 @@
-﻿
-using Lahor.Shared.Models;
+﻿using Lahor.Shared.Models;
 using System.Security.Claims;
 
 namespace Lahor.Shared.LoggedUserData

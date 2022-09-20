@@ -1,5 +1,4 @@
-﻿using Lahor.Core.Dto.Service;
-using Lahor.Core.Dto.TypeOfService;
+﻿using Lahor.Core.Dto.TypeOfService;
 using Lahor.Core.Entities;
 using Lahor.Infrastructure.Repositories.BaseRepository;
 

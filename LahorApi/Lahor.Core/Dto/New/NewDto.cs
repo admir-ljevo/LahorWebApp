@@ -1,4 +1,5 @@
 ﻿using Lahor.Core.Entities.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace Lahor.Core.Dto.New
 {

@@ -1,6 +1,7 @@
 ﻿using Lahor.Shared.Constants;
 using Lahor.Shared.Extensions;
 using Lahor.Shared.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Lahor.Shared.LoggedUserData
@@ -40,6 +41,7 @@ namespace Lahor.Shared.LoggedUserData
                 ProfilePhoto = profilePhoto,
             };
         }
+
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lahor.API.Services.UserManager;
+using Lahor.Core.SearchObjects;
 using Lahor.Services.BaseService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +7,7 @@ namespace Lahor.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController<dtoEntity, dtoInsertEntity, dtoUpdateEntity> : ControllerBase where dtoEntity : class
+    public class BaseController<dtoEntity, dtoInsertEntity, dtoUpdateEntity,dtoSearchObject> : ControllerBase where dtoEntity : class
     {
         private readonly IMapper Mapper;
 
@@ -29,6 +29,12 @@ namespace Lahor.API.Controllers
         public virtual async Task<dtoEntity> Get(int id)
         {
             return await BaseService.GetByIdAsync(id);
+        }
+
+        [HttpGet("{page}/{pageSize}")]
+        public virtual async Task<List<dtoEntity>> Get(int page, int pageSize, [FromQuery] dtoSearchObject search)
+        {
+            return await ((IPaginationBaseService<dtoEntity>)BaseService).GetForPaginationAsync(search as BaseSearchObject, pageSize, (page - 1) * pageSize);
         }
 
         [HttpPost]
