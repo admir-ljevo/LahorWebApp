@@ -1,10 +1,12 @@
 ﻿
 using Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository;
 using Lahor.Infrastructure.Repositories.ApplicationUsersRepository;
+using Lahor.Infrastructure.Repositories.LevelOfServiceExecutionsRepository;
 using Lahor.Infrastructure.Repositories.LogsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
 using Lahor.Infrastructure.Repositories.NotesRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
+using Lahor.Infrastructure.Repositories.ServicesLevelsPriceRepository;
 using Lahor.Infrastructure.Repositories.ServicesRepository;
 using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -23,8 +25,14 @@ namespace Lahor.Infrastructure.UnitOfWork
         public readonly INewsRepository NewsRepository;
         public readonly IServicesRepository ServicesRepository;
         public readonly ITypeOfServicesRepository TypeOfServicesRepository;
-        public UnitOfWork(DatabaseContext databaseContext,IApplicationUserRolesRepository applicationUserRolesRepository,IApplicationUsersRepository applicationUsersRepository,ILogsRepository logsRepository,INotesRepository notesRepository,IOrdersRepository ordersRepository,INewsRepository newsRepository,
-            IServicesRepository servicesRepository,ITypeOfServicesRepository typeOfServicesRepository)
+        public readonly ILevelOfServiceExecutionsRepository LevelOfServiceExecutionsRepository;
+        public readonly IServicesLevelsPriceRepository ServicesLevelsPriceRepository;
+        public UnitOfWork(DatabaseContext databaseContext,IApplicationUserRolesRepository applicationUserRolesRepository,IApplicationUsersRepository applicationUsersRepository,
+            ILogsRepository logsRepository,INotesRepository notesRepository,
+            IOrdersRepository ordersRepository,INewsRepository newsRepository,
+            IServicesRepository servicesRepository,ITypeOfServicesRepository typeOfServicesRepository,
+            ILevelOfServiceExecutionsRepository levelOfServiceExecutionsRepository
+            ,IServicesLevelsPriceRepository servicesLevelsPriceRepository)
         {
             _databaseContext = databaseContext;
             ApplicationUserRolesRepository=applicationUserRolesRepository;
@@ -35,6 +43,8 @@ namespace Lahor.Infrastructure.UnitOfWork
             NewsRepository = newsRepository;
             ServicesRepository = servicesRepository;
             TypeOfServicesRepository = typeOfServicesRepository;
+            LevelOfServiceExecutionsRepository = levelOfServiceExecutionsRepository;
+            ServicesLevelsPriceRepository = servicesLevelsPriceRepository;
         }
         public async Task<int> Execute(Action action)
         {

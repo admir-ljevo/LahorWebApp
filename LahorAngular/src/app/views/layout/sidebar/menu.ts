@@ -21,6 +21,11 @@ export const MENU: MenuItem[] = [
     link:'/services'
   },
   {
+    label: 'Price List',
+    icon: 'home',
+    link:'/price-list-preview'
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

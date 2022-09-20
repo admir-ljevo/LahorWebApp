@@ -7,7 +7,7 @@ export class BaseService {
 
   news:any;
   controllerName:string;
-  constructor(private httpClient: HttpClient, private router: Router,ControllerName:string) {
+  constructor(protected httpClient: HttpClient, protected router: Router,ControllerName:string) {
     this.controllerName=ControllerName;
   }
   getAll():Observable<any[]> {

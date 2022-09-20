@@ -12,7 +12,7 @@ import {Observable} from "rxjs";
 })
 export class ServicesAddComponent implements OnInit {
 
-  new:ServiceModel=new ServiceModel();
+  service:ServiceModel=new ServiceModel();
   typeOfServices$!:Observable<any[]>;
   typeOfServices:any;
   selectedSearchTypeOfServiceId:Number;
@@ -23,9 +23,10 @@ export class ServicesAddComponent implements OnInit {
     this.getTypesOfService();
   }
 
-  addNew(){
-    this.new.typeOfServiceId=this.selectedSearchTypeOfServiceId;
-      this.servicesService.post(this.new).subscribe(data=>{
+  addService(){
+    debugger;
+    this.service.typeOfServiceId=this.selectedSearchTypeOfServiceId;
+      this.servicesService.post(this.service).subscribe(data=>{
         this.router.navigateByUrl("/services");
       })
   }

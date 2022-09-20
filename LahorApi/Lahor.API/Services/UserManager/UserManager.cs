@@ -167,6 +167,7 @@ namespace Lahor.API.Services.UserManager
             {
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email,user.Email),
+                new System.Security.Claims.Claim(JwtRegisteredClaimNames.Name,user.Person.FirstName + " " +user.Person.LastName),
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
                 //new System.Security.Claims.Claim(ClaimTypes.Role,role),
             }),

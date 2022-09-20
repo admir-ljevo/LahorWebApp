@@ -11,7 +11,10 @@
         <div class="row">
         <h6 class="card-title col-sm-10">Usluge</h6>
           <div class="col-sm-2">
-        <button class="btn btn-primary" (click)="addService()">Dodaj uslugu</button>
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addService()">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj uslugu
+            </button>
           </div>
         </div>
         <div class="table-responsive">
@@ -25,22 +28,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let service of services$|async">
+            <tr *ngFor="let service of services">
               <th>{{service.name}}</th>
               <td>{{service.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
               <td>{{service.updatedAt | date:'dd.MM.yyyy hh:mm'}}</td>
               <td>
-                <button class="btn btn-warning" (click)="editService(service)">Edit</button>
-                <button class="btn btn-danger" (click)="openBasicModal(basicModal,service)">Delete</button>
+                <i type="button" class="feather icon-edit" (click)="editService(service)" style="margin-right: 10px;" placement="top" ngbTooltip="Edit"></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal,service)" placement="top" ngbTooltip="Delete"></i>
               </td>
             </tr>
             </tbody>
           </table>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="currentPage" (pageChange)="changePage()" aria-label="Default pagination"></ngb-pagination>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Modal -->
 <ng-template #basicModal let-modal>
@@ -49,7 +54,7 @@
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <p>Da li ste sigurni da želite obrisati obavijest?</p>
+    <p>Da li ste sigurni da želite obrisati uslugu?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>

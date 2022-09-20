@@ -18,6 +18,8 @@ namespace Lahor.Infrastructure
         public DbSet<Service> Services { get; set; }
         public DbSet<TypeOfService> TypeOfServices { get; set; }
         public DbSet<New> News { get; set; }
+        public DbSet<ServicesLevelsPrice> ServicesLevelsPrice { get; set; }
+        public DbSet<LevelOfServiceExecution> LevelOfServiceExecution { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {

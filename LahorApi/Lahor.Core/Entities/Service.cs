@@ -7,5 +7,6 @@ namespace Lahor.Core.Entities
         public string Name { get; set; }
         public TypeOfService TypeOfService { get; set; }
         public int TypeOfServiceId { get; set; }
+        public ICollection<ServicesLevelsPrice> LevelsPrices { get; set; }
     }
 }

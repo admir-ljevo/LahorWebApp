@@ -1,10 +1,9 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a routerLink="/services">Services</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Service Edit</li>
+    <li class="breadcrumb-item active" aria-current="page">Service Add</li>
   </ol>
 </nav>
-
 <div class="row">
   <div class="col-md-12 stretch-card">
     <div class="card">
@@ -33,7 +32,48 @@
                            (change)="changeTypeOfService($event)">
                 </ng-select>
               </div>
-            </div> <!-- col -->
+            </div>
+          </div>
+          <h6 class="card-title">Unos cijena usluge</h6>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice1" class="form-label">Pranje</label>
+                <input id="inputPrice1" class="form-control" type="number" [(ngModel)]="service.price1" name="inputPrice1" />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice2" class="form-label">Sušenje</label>
+                <input type="number" class="form-control" id="inputPrice2" [(ngModel)]="service.price2" name="inputPrice2">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice3" class="form-label">Peglanje</label>
+                <input type="number" class="form-control" id="inputPrice3" [(ngModel)]="service.price3" name="inputPrice3">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice4" class="form-label">Pranje,sušenje</label>
+                <input type="number" class="form-control" id="inputPrice4" [(ngModel)]="service.price4" name="inputPrice4">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice5" class="form-label">Sušenje,peglanje</label>
+                <input type="number" class="form-control" id="inputPrice5" [(ngModel)]="service.price5" name="inputPrice5">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice6" class="form-label">Pranje,sušenje,peglanje</label>
+                <input type="number" class="form-control" id="inputPrice6" [(ngModel)]="service.price6" name="inputPrice6">
+              </div>
+            </div>
           </div>
           <!-- Col -->
         </form>
@@ -42,3 +82,4 @@
     </div>
   </div>
 </div>
+

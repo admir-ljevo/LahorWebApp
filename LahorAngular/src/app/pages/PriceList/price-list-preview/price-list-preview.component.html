@@ -1,0 +1,37 @@
+  <div class="row">
+<div class="col-md-12
+ grid-margin stretch-card" *ngFor="let typeOfService of typeOfServices; let i=index" style="float:right;">
+  <div class="card" style="display:inline">
+    <div class="card-body d-flex flex-column align-items-center">
+      <h4>{{typeOfService.name}}</h4>
+    </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>NAZIV</th>
+            <th>PRANJE</th>
+            <th>SUŠENJE</th>
+            <th>PEGLANJE</th>
+            <th>PRANJE,SUŠENJE</th>
+            <th>SUŠENJE,PEGLANJE</th>
+            <th>PEGLANJE,SUŠENJE,PEGLANJE</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let service of typeOfService.services">
+            <th>{{service.name}}</th>
+            <th>{{service.levelsPrices[0]?.price!=null?service.levelsPrices[0]?.price+" KM":"/"}}</th>
+            <th>{{service.levelsPrices[1]?.price!=null?service.levelsPrices[1]?.price+" KM":"/"}}</th>
+            <th>{{service.levelsPrices[2]?.price!=null?service.levelsPrices[2]?.price+" KM":"/"}}</th>
+            <th>{{service.levelsPrices[3]?.price!=null?service.levelsPrices[3]?.price+" KM":"/"}}</th>
+            <th>{{service.levelsPrices[4]?.price!=null?service.levelsPrices[4]?.price+" KM":"/"}}</th>
+            <th>{{service.levelsPrices[5]?.price!=null?service.levelsPrices[5]?.price+" KM":"/"}}</th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+

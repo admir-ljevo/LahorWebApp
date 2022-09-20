@@ -1,14 +1,17 @@
 using Lahor.API.Services.ActivityLogger;
+using Lahor.API.Services.FileManager;
 using Lahor.API.Services.UserManager;
 using Lahor.Core.Entities.Identity;
 using Lahor.Infrastructure;
 using Lahor.Infrastructure.Mapper;
 using Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository;
 using Lahor.Infrastructure.Repositories.ApplicationUsersRepository;
+using Lahor.Infrastructure.Repositories.LevelOfServiceExecutionsRepository;
 using Lahor.Infrastructure.Repositories.LogsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
 using Lahor.Infrastructure.Repositories.NotesRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
+using Lahor.Infrastructure.Repositories.ServicesLevelsPriceRepository;
 using Lahor.Infrastructure.Repositories.ServicesRepository;
 using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Lahor.Infrastructure.UnitOfWork;
@@ -65,6 +68,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IActivityLogger, ActivityLogger>();
 builder.Services.AddSingleton<ICrypto, Crypto>();
+builder.Services.AddScoped<IFileManager, FileManager>();
 
 
 #endregion
@@ -80,6 +84,8 @@ builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
 builder.Services.AddScoped<ITypeOfServicesRepository, TypeOfServicesRepository>();
+builder.Services.AddTransient<IServicesLevelsPriceRepository, ServicesLevelsPriceRepository>();
+builder.Services.AddTransient<ILevelOfServiceExecutionsRepository, LevelOfServiceExecutionsRepository>();
 
 #endregion
 

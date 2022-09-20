@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 import {ServicesAddComponent} from "./services-add/services-add.component";
 import {ServicesEditComponent} from "./services-edit/services-edit.component";
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {NgbAlertModule, NgbPaginationModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SweetAlert2Module.forRoot(),
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbTooltipModule,
   ]
 })
 export class ServicesModule { }

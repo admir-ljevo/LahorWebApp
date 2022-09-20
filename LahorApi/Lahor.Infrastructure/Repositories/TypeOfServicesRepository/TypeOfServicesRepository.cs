@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Lahor.Core.Dto.Service;
 using Lahor.Core.Dto.TypeOfService;
 using Lahor.Core.Entities;
 using Lahor.Infrastructure.Repositories.BaseRepository;
@@ -25,7 +26,16 @@ namespace Lahor.Infrastructure.Repositories.TypeOfServicesRepository
 
         public async new Task<List<TypeOfServiceDto>> GetAllAsync()
         {
-            return await ProjectToListAsync<TypeOfServiceDto>(DatabaseContext.TypeOfServices.Where(x=>x.IsDeleted==false));
+            var typeOfServices= await ProjectToListAsync<TypeOfServiceDto>(DatabaseContext.TypeOfServices.Where(x=>x.IsDeleted==false));
+
+            foreach (var item in typeOfServices)
+            {
+                var services = await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false && x.TypeOfServiceId==item.Id));
+                item.Services = null;
+                item.Services=services;
+            }
+
+            return typeOfServices;
         }
     }
 }

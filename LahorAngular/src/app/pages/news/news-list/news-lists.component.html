@@ -11,7 +11,10 @@
         <div class="row">
         <h6 class="card-title col-sm-10">Obavijesti</h6>
           <div class="col-sm-2">
-        <button class="btn btn-primary" (click)="addNew()">Dodaj obavijest</button>
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addNew()">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj obavijest
+            </button>
           </div>
         </div>
         <div class="table-responsive">
@@ -33,8 +36,8 @@
               <td *ngIf="new.public">DA</td>
               <td *ngIf="!new.public">NE</td>
               <td>
-                <button class="btn btn-warning" (click)="editNew(new)">Edit</button>
-                <button class="btn btn-danger" (click)="openBasicModal(basicModal,new)">Delete</button>
+                  <i type="button" class="feather icon-edit" (click)="editNew(new)" style="margin-right: 10px;"></i>
+                  <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal,new)"></i>
               </td>
             </tr>
             </tbody>
