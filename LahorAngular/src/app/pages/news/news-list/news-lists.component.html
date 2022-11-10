@@ -4,14 +4,18 @@
   </ol>
 </nav>
 
-<div class="row">
+<div class="row" *ngIf="news$ != null">
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <div class="row">
-        <h6 class="card-title col-sm-10">Obavijesti</h6>
+          <h6 class="card-title col-sm-10">Obavijesti</h6>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-primary btn-icon-text" (click)="addNew()">
+            <button
+              type="button"
+              class="btn btn-primary btn-icon-text"
+              (click)="addNew()"
+            >
               <i class="feather icon-check-square btn-icon-prepend"></i>
               Dodaj obavijest
             </button>
@@ -20,26 +24,39 @@
         <div class="table-responsive">
           <table class="table">
             <thead>
-            <tr>
-              <th>NAME</th>
-              <th>DATE CREATED</th>
-              <th>USER</th>
-              <th>PUBLIC</th>
-              <th>ACTIONS</th>
-            </tr>
+              <tr>
+                <th>NAME</th>
+                <th>DATE CREATED</th>
+                <th>DATE UPDATED</th>
+                <th>USER</th>
+                <th>PUBLIC</th>
+                <th>ACTIONS</th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let new of news$|async">
-              <th>{{new.name}}</th>
-              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
-              <td>{{new.user.person.firstName}} {{new.user.person.lastName}}</td>
-              <td *ngIf="new.public">DA</td>
-              <td *ngIf="!new.public">NE</td>
-              <td>
-                  <i type="button" class="feather icon-edit" (click)="editNew(new)" style="margin-right: 10px;"></i>
-                  <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal,new)"></i>
-              </td>
-            </tr>
+              <tr *ngFor="let new of news$ | async">
+                <th (click)="editNew(new)">{{ new.name }}</th>
+                <td>{{ new.createdAt | date: "dd.MM.yyyy hh:mm" }}</td>
+                <td>{{ new.modifiedAt | date: "dd.MM.yyyy hh:mm" }}</td>
+                <td>
+                  {{ new.user.person.firstName }} {{ new.user.person.lastName }}
+                </td>
+                <td *ngIf="new.public">DA</td>
+                <td *ngIf="!new.public">NE</td>
+                <td>
+                  <i
+                    type="button"
+                    class="feather icon-edit"
+                    (click)="editNew(new)"
+                    style="margin-right: 10px"
+                  ></i>
+                  <i
+                    type="button"
+                    class="feather icon-delete"
+                    (click)="openBasicModal(basicModal, new)"
+                  ></i>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -52,13 +69,26 @@
 <ng-template #basicModal let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Brisanje obavijesti</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
   </div>
   <div class="modal-body">
     <p>Da li ste sigurni da želite obrisati obavijest?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="deleteNew(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Deleted is succesfully', icon: 'success'}">Da</button>
+    <button type="button" class="btn btn-danger" (click)="deleteNew(modal)">
+      Da
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('by: close button')"
+    >
+      Ne
+    </button>
   </div>
 </ng-template>

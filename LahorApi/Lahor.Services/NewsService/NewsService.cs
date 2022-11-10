@@ -14,7 +14,6 @@ namespace Lahor.Services.NewsService
 
         public async Task<NewDto> AddAsync(NewDto note)
         {
-            note=
             note = await _unitOfWork.NewsRepository.AddAsync(note);
             await _unitOfWork.SaveChangesAsync();
             return note;

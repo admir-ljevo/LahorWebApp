@@ -1,5 +1,4 @@
-﻿
-namespace Lahor.Core.SearchObjects
+﻿namespace Lahor.Core.SearchObjects
 {
     public class BaseSearchObject
     {

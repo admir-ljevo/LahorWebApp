@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<!-- /Creative Commons Public Domain -->
+<!--
+
+-->
+<svg
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="svg609"
+    viewBox="0 0 1000 500"
+    version="1.0"
+    y="0"
+    x="0"
+  >
+  <g
+      id="g579"
+      transform="scale(0.5)"
+    >
+    <g
+        id="g617"
+      >
+      <rect
+          id="rect614"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#000099"
+          height="1e3"
+          width="2e3"
+          y="0"
+          x="0"
+      />
+      <path
+          id="path615"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffcc00"
+          d="m530 0l1e3 1e3v-1e3h-1e3z"
+      />
+    </g
+    >
+    <g
+        id="g629"
+        transform="translate(15.458 2.7615)"
+      >
+      <polygon
+          id="polygon621"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+      />
+      <polygon
+          id="polygon622"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(125 125)"
+      />
+      <polygon
+          id="polygon616"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(250 250)"
+      />
+      <polygon
+          id="polygon623"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(375 375)"
+      />
+      <polygon
+          id="polygon624"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(500 500)"
+      />
+      <polygon
+          id="polygon625"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(625 625)"
+      />
+      <polygon
+          id="polygon626"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(750 750)"
+      />
+      <polygon
+          id="polygon627"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(875 875)"
+      />
+      <polygon
+          id="polygon628"
+          style="fill-rule:evenodd;stroke-width:1pt;fill:#ffffff"
+          points="326 -109 347.33 -43.357 416.35 -43.357 360.51 -2.7868 381.84 62.857 326 22.287 270.16 62.857 291.49 -2.7868 235.65 -43.357 304.67 -43.357"
+          transform="translate(1e3 1e3)"
+      />
+    </g
+    >
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >bosnia and herzegovina</dc:title
+        >
+        <dc:date
+          >2011-01-31T00:50:54</dc:date
+        >
+        <dc:description
+          >Originally uploaded by Daniel McRae for OCAL 0.18</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/110845/bosnia-and-herzegovina-by-anonymous</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >Anonymous</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >Bosnia</rdf:li
+            >
+            <rdf:li
+              >Flag</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>

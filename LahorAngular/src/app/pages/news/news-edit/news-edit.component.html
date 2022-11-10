@@ -4,59 +4,134 @@
     <li class="breadcrumb-item active" aria-current="page">News Edit</li>
   </ol>
 </nav>
-
-<div class="row">
+<div class="row" *ngIf="form != null">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Editovanje obavijesti</h6>
-        <form>
-          <div class="row">
-            <div class="form-check form-switch mb-4 col-sm-12">
-              <input type="checkbox" class="form-check-input" id="publicNewSwitch"
-                     (change)="onChanged($event)"
-                     [(ngModel)]="new.public"
-                     [checked]="new.public">
-              <label class="form-check-label" for="publicNewSwitch">Javna obavijest</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
+        <h6 class="card-title">
+          {{ "NEW.EDIT.NEW_TITLE" | translate }}
+        </h6>
+        <form [formGroup]="form">
+          <div class="row"></div>
+          <div class="row" style="justify-content: space-between">
+            <div class="col-sm-8">
               <div class="mb-3">
-                <label class="form-label">Naziv obavijesti</label>
-                <div style="display: flex; flex-direction: row;">
-                  <p class="text-danger mt-1" style="margin-right: 5px;" *ngIf="requried?.errors?.required">*</p>
-                  <input class="form-control" type="text" [(ngModel)]="new.name" placeholder="Unesite naziv obavijesti" ngModel name="requried" #requried="ngModel" required/>
+                <div class="form-check form-switch">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="publicNewSwitch"
+                    (change)="onChanged($event)"
+                    formControlName="public"
+                  />
+                  <label
+                    class="form-check-label font-bold"
+                    for="publicNewSwitch"
+                    >{{ "NEW.PUBLIC" | translate }}</label
+                  >
                 </div>
               </div>
-            </div><!-- Col -->
-            <div class="col-sm-6">
               <div class="mb-3">
-                <label class="form-label">Korisnik</label>
-                <input type="text" class="form-control" disabled>
+                <label for="inputForNewName" class="form-label font-bold">{{
+                  "NEW.NAME" | translate
+                }}</label>
+                <span class="warning">*</span>
+                <input
+                  id="inputForNewName"
+                  class="form-control"
+                  type="text"
+                  placeholder="{{ 'NEW.ENTER_NAME' | translate }}"
+                  formControlName="name"
+                  required
+                />
+                <div
+                  *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="name?.errors?.['required']">
+                    Naziv je obavezan.
+                  </div>
+                </div>
               </div>
-            </div><!-- Col -->
-          </div><!-- Row -->
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="mb-12">
-                <label class="form-label">Slika</label>
-                <img width="100%" height="500"/>
-              </div>
-            </div><!-- Col -->
-          </div><!-- Row -->
-          <div class="row">
-            <div class="col-sm-12">
               <div class="mb-3">
-                <p><label class="form-label" for="newText">Tekst</label></p>
-                <textarea name="newText" id="newText" placeholder="Unesite tekst obavijesti" style="width: 100%;" rows="10"
-                          [(ngModel)]="new.text">
+                <label class="form-label font-bold" for="text">{{
+                  "NEW.TEXT" | translate
+                }}</label>
+                <span class="warning">*</span>
+                <textarea
+                  name="text"
+                  id="newText"
+                  placeholder="{{ 'NEW.ENTER_TEXT' | translate }}"
+                  style="width: 100%; border-radius: 5px"
+                  rows="15"
+                  formControlName="text"
+                >
                 </textarea>
+                <div
+                  *ngIf="text?.invalid && (text?.dirty || text?.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="text?.errors?.['required']">
+                    Tekst je obavezan.
+                  </div>
+                </div>
               </div>
             </div>
+            <!-- Col -->
+            <div class="col-sm-4" style="margin-right: 0px">
+              <div class="mb-3">
+                <label class="form-label font-bold" for="file">{{
+                  "NEW.IMAGE" | translate
+                }}</label>
+                <input
+                  class="form-control"
+                  type="file"
+                  id="file"
+                  #file
+                  (change)="onFileSelected($event)"
+                  formControlName="file"
+                  style="display: none"
+                />
+                <img
+                  [src]="imgUrl"
+                  style="
+                    border: 1px solid black;
+                    border-radius: 5px;
+                    width: 100%;
+                    height: 390px;
+                    aspect-ratio: 1/1;
+                  "
+                />
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  (click)="file.click()"
+                  style="margin-top: 10px; width: 100%"
+                >
+                  {{ "NEW.ADD_IMAGE" | translate }}
+                </button>
+              </div>
+            </div>
+            <!-- Col -->
+          </div>
+          <!-- Row -->
+          <div class="row">
+            <div class="col-sm-12"></div>
+            <!-- Col -->
+          </div>
+          <!-- Row -->
+          <div class="row">
+            <div class="col-sm-12"></div>
           </div>
         </form>
-        <button type="submit" class="btn btn-primary submit" (click)="updateNew()">Spasi promjene</button>
+        <button
+          type="submit"
+          (click)="updateNew()"
+          class="btn btn-primary submit"
+          [disabled]="form.invalid"
+        >
+          Spasi promjene
+        </button>
       </div>
     </div>
   </div>
