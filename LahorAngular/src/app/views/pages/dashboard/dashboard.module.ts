@@ -4,23 +4,27 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { FeahterIconModule } from 'src/app/core/feather-icon/feather-icon.module';
-import { NgbDropdownModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDropdownModule,
+  NgbDatepickerModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 // Ng-ApexCharts
-import { NgApexchartsModule } from "ng-apexcharts";
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { DashboardComponent } from './dashboard.component';
-import {BasicTableComponent} from "../tables/basic-table/basic-table.component";
-import {DataTableComponent} from "../tables/data-table/data-table.component";
-import {NewsAddComponent} from "../../../pages/news/news-add/news-add.component";
-import {NewsEditComponent} from "../../../pages/news/news-edit/news-edit.component";
+import { BasicTableComponent } from '../tables/basic-table/basic-table.component';
+import { DataTableComponent } from '../tables/data-table/data-table.component';
+import { NewsAddComponent } from '../../../pages/news/news-add/news-add.component';
+import { NewsEditComponent } from '../../../pages/news/news-edit/news-edit.component';
+import { TranslationModule } from 'src/app/shared/i18n';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent
-  }
-]
+    component: DashboardComponent,
+  },
+];
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -31,7 +35,8 @@ const routes: Routes = [
     FeahterIconModule,
     NgbDropdownModule,
     NgbDatepickerModule,
-    NgApexchartsModule
-  ]
+    NgApexchartsModule,
+    TranslationModule,
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}

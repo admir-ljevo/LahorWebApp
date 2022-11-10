@@ -4,6 +4,7 @@ using Lahor.Core.Dto.New;
 using Lahor.Core.SearchObjects;
 using Lahor.Services.NewsService;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 
 namespace Lahor.API.Controllers
 {
@@ -22,11 +23,23 @@ namespace Lahor.API.Controllers
         [HttpPost("Add")]
         public async Task<NewDto> Add([FromForm] NewInsertDto newDto)
         {
-            if (newDto.File != null)
+            var file = newDto.File;
+            if (file != null)
             {
-                newDto.Image = await _fileManager.UploadFile(newDto.File);
+                newDto.Image = await _fileManager.UploadFile(file);
             }
             return await newsService.AddAsync(Mapper.Map<NewDto>(newDto));
+        }
+
+        [HttpPut("Edit/{id}")]
+        public async Task<NewDto> Put(int id,[FromForm] NewUpdateDto newDto)
+        {
+            var file = newDto.File;
+            if (file != null)
+            {
+                newDto.Image = await _fileManager.UploadFile(file);
+            }
+            return await newsService.UpdateAsync(Mapper.Map<NewDto>(newDto));
         }
 
     }

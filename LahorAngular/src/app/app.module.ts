@@ -1,23 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import {HttpClientModule} from "@angular/common/http";
-import {NewsAddComponent} from "./pages/news/news-add/news-add.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NewsEditComponent} from "./pages/news/news-edit/news-edit.component";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {AuthComponent} from "./views/pages/auth/auth.component";
-import {CommonModule} from "@angular/common";
-import {RouterModule} from "@angular/router";
-import {ServicesAddComponent} from "./pages/services/services-add/services-add.component";
-import {ServicesEditComponent} from "./pages/services/services-edit/services-edit.component";
-import {NgSelectModule} from "@ng-select/ng-select";
+import { HttpClientModule } from '@angular/common/http';
+import { NewsAddComponent } from './pages/news/news-add/news-add.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewsEditComponent } from './pages/news/news-edit/news-edit.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthComponent } from './views/pages/auth/auth.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ServicesAddComponent } from './pages/services/services-add/services-add.component';
+import { ServicesEditComponent } from './pages/services/services-edit/services-edit.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,18 +32,19 @@ import {NgSelectModule} from "@ng-select/ng-select";
     ServicesAddComponent,
   ],
   imports: [
-    BrowserAnimationsModule,
     CommonModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     NgbModule,
     RouterModule,
     AppRoutingModule,
-    FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    TranslateModule.forRoot(),
+    ToastrModule.forRoot(),
   ],
-  exports:[FormsModule],
+  exports: [FormsModule],
   providers: [
     AuthGuard,
     {
@@ -52,10 +55,10 @@ import {NgSelectModule} from "@ng-select/ng-select";
           xml: () => import('highlight.js/lib/languages/xml'),
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),
-        }
-      }
-    }
+        },
+      },
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
