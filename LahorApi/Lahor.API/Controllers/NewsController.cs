@@ -3,11 +3,13 @@ using Lahor.API.Services.FileManager;
 using Lahor.Core.Dto.New;
 using Lahor.Core.SearchObjects;
 using Lahor.Services.NewsService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace Lahor.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class NewsController : BaseController<NewDto, NewInsertDto, NewUpdateDto, BaseSearchObject>
     {
         private readonly IFileManager _fileManager;
@@ -23,6 +25,10 @@ namespace Lahor.API.Controllers
         [HttpPost("Add")]
         public async Task<NewDto> Add([FromForm] NewInsertDto newDto)
         {
+            if (User.Claims != null)
+            {
+                newDto.UserId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "Id").Value);
+            }
             var file = newDto.File;
             if (file != null)
             {
@@ -30,6 +36,7 @@ namespace Lahor.API.Controllers
             }
             return await newsService.AddAsync(Mapper.Map<NewDto>(newDto));
         }
+
 
         [HttpPut("Edit/{id}")]
         public async Task<NewDto> Put(int id,[FromForm] NewUpdateDto newDto)
@@ -42,5 +49,10 @@ namespace Lahor.API.Controllers
             return await newsService.UpdateAsync(Mapper.Map<NewDto>(newDto));
         }
 
+        [HttpGet("GetLastFiveNews")]
+        public async Task<IActionResult> GetLastFiveNews(bool isPublic)
+        {
+            return Ok(await newsService.GetLastFiveNews(isPublic));
+        }
     }
 }

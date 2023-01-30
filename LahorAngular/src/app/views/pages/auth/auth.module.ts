@@ -4,8 +4,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth.component';
-import {FormsModule} from "@angular/forms";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InputMaskComponent } from '../advanced-form-elements/input-mask/input-mask.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const routes: Routes = [
   {
@@ -15,26 +17,27 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
       },
       {
         path: 'register',
-        component: RegisterComponent
-      }
-    ]
+        component: RegisterComponent,
+      },
+    ],
   },
-]
+];
 
 @NgModule({
-  declarations: [LoginComponent,RegisterComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        FormsModule,
-    ],
+  declarations: [],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormsModule,
+    NgxMaskModule.forRoot({ validation: true }),
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

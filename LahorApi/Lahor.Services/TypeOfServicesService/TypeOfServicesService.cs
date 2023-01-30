@@ -1,4 +1,5 @@
 ﻿using Lahor.Core.Dto.TypeOfService;
+using Lahor.Core.SearchObjects;
 using Lahor.Infrastructure.UnitOfWork;
 
 namespace Lahor.Services.TypeOfServicesService
@@ -29,11 +30,16 @@ namespace Lahor.Services.TypeOfServicesService
             return _unitOfWork.TypeOfServicesRepository.GetAllAsync();
         }
 
+        public async Task<List<TypeOfServiceDto>> GetReportData(ReportSearchObject reportSearchObject)
+        {
+            return await _unitOfWork.TypeOfServicesRepository.GetReportData(reportSearchObject);
+        }
+
         public Task<List<TypeOfServiceDto>> GetByNameAsync(string name)
         {
             return _unitOfWork.TypeOfServicesRepository.GetByName(name);
         }
-        public Task<List<TypeOfServiceDto>> GetForPaginationAsync(string searchFilter, int pageSize, int offeset)
+        public Task<List<TypeOfServiceDto>> GetForPaginationAsync(BaseSearchObject searchFilter, int pageSize, int offeset)
         {
             return _unitOfWork.TypeOfServicesRepository.GetForPaginationAsync(searchFilter, pageSize, offeset);
         }
@@ -52,7 +58,7 @@ namespace Lahor.Services.TypeOfServicesService
 
         public async Task<TypeOfServiceDto> UpdateAsync(TypeOfServiceDto entity)
         {
-            _unitOfWork.NewsRepository.Update(entity);
+            _unitOfWork.TypeOfServicesRepository.Update(entity);
             await _unitOfWork.SaveChangesAsync();
             return entity;
         }

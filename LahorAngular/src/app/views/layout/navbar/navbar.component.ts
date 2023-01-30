@@ -9,6 +9,14 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/shared/i18n';
+import { AuthentificationHelper } from 'src/app/helpers/authentification-helper';
+import { MyConfig } from 'src/app/shared/MyConfig';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SignalRService } from 'src/app/services/signalRService';
+import { NotificationsService } from 'src/app/services/NotificationsService';
+import { AuthEmployeeGuard } from 'src/app/core/guard/authEmployee.guard';
+import { AuthCompanyOwnerGuard } from 'src/app/core/guard/authCompanyOwner.guard';
+import { AuthAdminGuard } from 'src/app/core/guard/authAdmin.guard';
 
 @Component({
   selector: 'app-navbar',
@@ -18,22 +26,62 @@ import { TranslationService } from 'src/app/shared/i18n';
 export class NavbarComponent implements OnInit {
   language: LanguageFlag;
   langs = languages;
-
+  userName: any;
+  email: any;
+  profilePhoto: any;
+  notifications: any;
+  sidebarComponent: SidebarComponent = new SidebarComponent(
+    this.document,
+    this.renderer,
+    this.router,
+    this.translationService
+  );
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    public signalRService: SignalRService,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit(): void {
+    this.signalRService.startConnection();
+    this.signalRService.notifications();
+    this.getUnreadNotifications();
     this.setLanguage(this.translationService.getSelectedLanguage());
+    this.userName =
+      localStorage.getItem('user-firstName') +
+      ' ' +
+      localStorage.getItem('user-lastName');
+    this.email = localStorage.getItem('user-email');
+    this.profilePhoto =
+      MyConfig.address_server_base + localStorage.getItem('user-profilePhoto');
+  }
+
+  getUnreadNotifications() {
+    this.notificationsService
+      .getUnreadNotifications()
+      .subscribe((data: any) => {
+        this.signalRService.unreadNotifications = data;
+        if (data.length === 0) {
+          this.signalRService.hasUnreadNotifications = false;
+        } else {
+          this.signalRService.hasUnreadNotifications = true;
+        }
+      });
+  }
+
+  markAllNotificationAsRead() {
+    this.notificationsService.MarkAllAsRead().subscribe((data: any) => {
+      this.getUnreadNotifications();
+    });
   }
 
   selectLanguage(lang: string) {
     this.translationService.setLanguage(lang);
     this.setLanguage(lang);
-    // document.location.reload();
+    this.sidebarComponent.setLabelMenuItems();
   }
 
   setLanguage(lang: string) {
@@ -47,22 +95,29 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  /**
-   * Sidebar toggle on hamburger button click
-   */
+  get isAdmin() {
+    return AuthAdminGuard.isActive();
+  }
+
+  get isCompanyOwner() {
+    return AuthCompanyOwnerGuard.isActive();
+  }
+
+  get isEmployee() {
+    return AuthEmployeeGuard.isActive();
+  }
+
   toggleSidebar(e: Event) {
     e.preventDefault();
     this.document.body.classList.toggle('sidebar-open');
   }
 
-  /**
-   * Logout
-   */
   onLogout(e: Event) {
     e.preventDefault();
-    localStorage.removeItem('isLoggedin');
+    localStorage.removeItem('auth-token');
+    localStorage.clear();
 
-    if (!localStorage.getItem('isLoggedin')) {
+    if (!localStorage.getItem('auth-token')) {
       this.router.navigate(['/auth/login']);
     }
   }
@@ -78,27 +133,27 @@ interface LanguageFlag {
 const languages = [
   {
     lang: 'bs',
-    name: 'Bosnian',
+    name: 'LANGUAGE.BOSNIAN',
     flag: 'assets/images/flags/bs.svg',
   },
   {
     lang: 'en',
-    name: 'English',
+    name: 'LANGUAGE.ENGLISH',
     flag: 'assets/images/flags/us.svg',
   },
   {
     lang: 'de',
-    name: 'German',
+    name: 'LANGUAGE.GERMAN',
     flag: 'assets/images/flags/de.svg',
   },
   {
     lang: 'es',
-    name: 'Spanish',
+    name: 'LANGUAGE.SPANISH',
     flag: 'assets/images/flags/es.svg',
   },
   {
     lang: 'fr',
-    name: 'French',
+    name: 'LANGUAGE.FRANCE',
     flag: 'assets/images/flags/fr.svg',
   },
 ];

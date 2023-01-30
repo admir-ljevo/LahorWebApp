@@ -30,11 +30,18 @@ namespace Lahor.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Abrv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -50,7 +57,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Country", b =>
@@ -61,8 +68,15 @@ namespace Lahor.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Abrv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Favorite")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -76,7 +90,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Identity.ApplicationRole", b =>
@@ -169,7 +183,6 @@ namespace Lahor.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -187,10 +200,21 @@ namespace Lahor.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("IdentificationNumberCompany")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAdministrator")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsClient")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompanyOwner")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEmployee")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -394,7 +418,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LevelOfServiceExecution", (string)null);
+                    b.ToTable("LevelOfServiceExecution");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Log", b =>
@@ -457,33 +481,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logs", (string)null);
-                });
-
-            modelBuilder.Entity("Lahor.Core.Entities.MarriageStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MarriageStatus", (string)null);
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.New", b =>
@@ -498,7 +496,6 @@ namespace Lahor.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -525,7 +522,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("News", (string)null);
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Note", b =>
@@ -567,7 +564,36 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notes", (string)null);
+                    b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Order", b =>
@@ -626,7 +652,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.OrdersServicesLevels", b =>
@@ -669,7 +695,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("OrdersServicesLevels", (string)null);
+                    b.ToTable("OrdersServicesLevels");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Person", b =>
@@ -680,11 +706,14 @@ namespace Lahor.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ApplicationUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Biography")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
@@ -694,38 +723,35 @@ namespace Lahor.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Citizenship")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateOfEmployment")
+                    b.Property<DateTime?>("DateOfEmployment")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DrivingLicence")
+                    b.Property<int?>("DrivingLicence")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JMBG")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MarriageStatusId")
+                    b.Property<int?>("MarriageStatus")
                         .HasColumnType("int");
 
                     b.Property<bool>("MembershipCard")
@@ -735,28 +761,28 @@ namespace Lahor.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Pay")
+                    b.Property<float?>("Pay")
                         .HasColumnType("real");
 
                     b.Property<int?>("PlaceOfResidenceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Position")
+                    b.Property<int?>("Position")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfilePhoto")
+                    b.Property<string>("PostCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePhoto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePhotoThumbnail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Qualifications")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("WorkExperience")
@@ -769,11 +795,9 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("BirthPlaceId");
 
-                    b.HasIndex("MarriageStatusId");
-
                     b.HasIndex("PlaceOfResidenceId");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
@@ -804,7 +828,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("TypeOfServiceId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.ServicesLevelsPrice", b =>
@@ -839,7 +863,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServicesLevelsPrice", (string)null);
+                    b.ToTable("ServicesLevelsPrice");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.TypeOfService", b =>
@@ -865,7 +889,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeOfServices", (string)null);
+                    b.ToTable("TypeOfServices");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.City", b =>
@@ -1012,17 +1036,11 @@ namespace Lahor.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("BirthPlaceId");
 
-                    b.HasOne("Lahor.Core.Entities.MarriageStatus", "MarriageStatus")
-                        .WithMany()
-                        .HasForeignKey("MarriageStatusId");
-
                     b.HasOne("Lahor.Core.Entities.City", "PlaceOfResidence")
                         .WithMany()
                         .HasForeignKey("PlaceOfResidenceId");
 
                     b.Navigation("BirthPlace");
-
-                    b.Navigation("MarriageStatus");
 
                     b.Navigation("PlaceOfResidence");
                 });
@@ -1030,7 +1048,7 @@ namespace Lahor.Infrastructure.Migrations
             modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
                 {
                     b.HasOne("Lahor.Core.Entities.TypeOfService", "TypeOfService")
-                        .WithMany()
+                        .WithMany("Services")
                         .HasForeignKey("TypeOfServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1041,13 +1059,13 @@ namespace Lahor.Infrastructure.Migrations
             modelBuilder.Entity("Lahor.Core.Entities.ServicesLevelsPrice", b =>
                 {
                     b.HasOne("Lahor.Core.Entities.LevelOfServiceExecution", "LevelOfServiceExecution")
-                        .WithMany()
+                        .WithMany("LevelsPrices")
                         .HasForeignKey("LevelOfServiceExecutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Lahor.Core.Entities.Service", "Service")
-                        .WithMany()
+                        .WithMany("LevelsPrices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1068,6 +1086,21 @@ namespace Lahor.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.LevelOfServiceExecution", b =>
+                {
+                    b.Navigation("LevelsPrices");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
+                {
+                    b.Navigation("LevelsPrices");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.TypeOfService", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

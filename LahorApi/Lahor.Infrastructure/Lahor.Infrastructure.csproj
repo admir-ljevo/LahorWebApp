@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lahor.Core\Lahor.Core.csproj" />
+    <ProjectReference Include="..\Lahor.Reporting\Lahor.Reporting.csproj" />
     <ProjectReference Include="..\Lahor.Shared\Lahor.Shared.csproj" />
   </ItemGroup>
 

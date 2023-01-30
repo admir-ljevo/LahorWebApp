@@ -4,6 +4,8 @@ using Lahor.Core.Dto.ServicesLevelsPrices;
 using Lahor.Infrastructure.UnitOfWork;
 using Lahor.Core.Dto.TypeOfService;
 using Lahor.Core.SearchObjects;
+using Lahor.Core.Model;
+using System.Globalization;
 
 namespace Lahor.Services.ServicesService
 {
@@ -66,6 +68,11 @@ namespace Lahor.Services.ServicesService
         {
             return _unitOfWork.ServicesRepository.GetAllAsync();
         }
+        public async Task<List<ServiceDto>> GetReportData(ReportSearchObject reportSearchObject)
+        {
+            return await _unitOfWork.ServicesRepository.GetReportData(reportSearchObject);
+        }
+
 
         public async Task<List<TypeOfServiceDto>> GetPriceList()
         {
@@ -165,6 +172,26 @@ namespace Lahor.Services.ServicesService
             }
             await _unitOfWork.SaveChangesAsync();
             return service;
+        }
+
+        public async Task<ServicesDashboard> GetServicesDashboard()
+        {
+            var servicesDashboard = new ServicesDashboard();
+
+            servicesDashboard.ServicesCountByMonth = await _unitOfWork.ServicesRepository.GetServicesCountByMonth();
+            servicesDashboard.Count = (await _unitOfWork.ServicesRepository.GetAllAsync()).Count();
+            NumberFormatInfo setPrecision = new NumberFormatInfo();
+            setPrecision.NumberDecimalDigits = 2;
+            if (servicesDashboard.Count==0)
+            {
+                servicesDashboard.AverageServices = "0";
+            }
+            else
+            {
+                servicesDashboard.AverageServices = (servicesDashboard.ServicesCountByMonth.Last() / (servicesDashboard.Count*1.00)).ToString("N",setPrecision);
+            }
+
+            return servicesDashboard;
         }
 
         public Task<List<ServiceDto>> GetForPaginationAsync(BaseSearchObject baseSearchObject, int pageSize, int offeset)

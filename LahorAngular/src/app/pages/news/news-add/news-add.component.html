@@ -12,9 +12,8 @@
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">{{ "NEW.CREATE.ADD_NEW_TITLE" | translate }}</h6>
+        <h6 class="card-title">{{ "NEW.CREATE.TITLE" | translate }}</h6>
         <form [formGroup]="form">
-          <div class="row"></div>
           <div class="row" style="justify-content: space-between">
             <div class="col-sm-8">
               <div class="mb-3">
@@ -43,13 +42,17 @@
                   class="form-control"
                   type="text"
                   placeholder="{{ 'NEW.ENTER_NAME' | translate }}"
+                  [ngClass]="{
+                    'is-invalid':
+                      name?.invalid && (name?.dirty || name?.touched)
+                  }"
                   formControlName="name"
                   style="margin-bottom: 5px"
                   required
                 />
                 <div
                   *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-                  class="alert alert-danger"
+                  class="invalid-feedback"
                 >
                   <div *ngIf="name?.errors?.['required']">
                     {{ "NEW.VALIDATORS.NAME" | translate }}
@@ -62,17 +65,22 @@
                 }}</label>
                 <span class="warning">*</span>
                 <textarea
+                  class="form-control"
                   name="text"
                   id="newText"
                   placeholder="{{ 'NEW.ENTER_TEXT' | translate }}"
-                  style="width: 100%; border-radius: 5px"
-                  rows="15"
+                  style="width: 100%"
+                  rows="12"
+                  [ngClass]="{
+                    'is-invalid':
+                      text?.invalid && (text?.dirty || text?.touched)
+                  }"
                   formControlName="text"
                 >
                 </textarea>
                 <div
                   *ngIf="text?.invalid && (text?.dirty || text?.touched)"
-                  class="alert alert-danger"
+                  class="invalid-feedback"
                 >
                   <div *ngIf="text?.errors?.['required']">
                     {{ "NEW.VALIDATORS.TEXT" | translate }}
@@ -98,7 +106,6 @@
                 <img
                   [src]="imgSrc"
                   style="
-                    border: 1px solid black;
                     border-radius: 5px;
                     width: 100%;
                     height: 390px;
@@ -106,12 +113,26 @@
                   "
                 />
                 <button
+                  *ngIf="
+                    imgSrc == '../../../assets/images/others/default_new.webp'
+                  "
                   type="button"
                   class="btn btn-success"
                   (click)="file.click()"
                   style="margin-top: 10px; width: 100%"
                 >
-                  {{ "NEW.ADD_IMAGE" | translate }}
+                  {{ "SHARED.ADD_IMAGE" | translate }}
+                </button>
+                <button
+                  *ngIf="
+                    imgSrc != '../../../assets/images/others/default_new.webp'
+                  "
+                  type="button"
+                  class="btn btn-success"
+                  (click)="file.click()"
+                  style="margin-top: 10px; width: 100%"
+                >
+                  {{ "SHARED.CHANGE_IMAGE" | translate }}
                 </button>
               </div>
             </div>

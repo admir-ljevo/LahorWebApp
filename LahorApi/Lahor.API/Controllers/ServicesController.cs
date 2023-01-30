@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lahor.API.Controllers
 {
-    public class ServicesController : BaseController<ServiceDto, ServiceUpsertDto, ServiceUpsertDto,BaseSearchObject>
+    public class ServicesController : BaseController<ServiceDto, ServiceUpsertDto, ServiceUpsertDto,ServicesSearchObject>
     {
         private readonly IServicesService ServicesService;
         public ServicesController(IServicesService baseService, IMapper mapper) : base(baseService, mapper)

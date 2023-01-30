@@ -1,0 +1,257 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <th>{{ "COUNTRY.TITLE" | translate }}</th>
+    </li>
+  </ol>
+</nav>
+
+<div class="row" *ngIf="countries != null">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" style="margin-bottom: 40px">
+          <h6 class="card-title col-sm-10">
+            {{ "COUNTRY.TITLE" | translate }}
+          </h6>
+          <div class="col-sm-10 height d-flex justify-content-left">
+            <div class="col-md-6">
+              <div class="search">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="search.searchFilter"
+                  (ngModelChange)="getAll()"
+                  placeholder="{{ 'SHARED.SEARCH' | translate }}"
+                />
+              </div>
+            </div>
+            <button class="btn btn-primary" (click)="getAll()">
+              {{ "SHARED.SEARCH" | translate }}
+              <i class="mdi mdi-magnify"></i>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button
+              type="button"
+              class="btn btn-primary btn-icon-text"
+              (click)="openAddEditModal(modalAddEditCountry, null)"
+            >
+              <i class="feather icon-plus btn-icon-prepend"></i>
+              {{ "COUNTRY.CREATE.ADD_COUNTRY" | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ "SHARED.COLUMNS.NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.ABRV" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.FAVORITE" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_CREATED" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_MODIFIED" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.ACTIONS" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let country of countries">
+                <th>{{ country.name }}</th>
+                <th>{{ country.abrv }}</th>
+                <th>
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="country.favorite"
+                    disabled
+                  />
+                </th>
+                <td>{{ country.createdAt | date : "dd.MM.yyyy" }}</td>
+                <td>{{ country.modifiedAt | date : "dd.MM.yyyy" }}</td>
+                <td>
+                  <i
+                    type="button"
+                    class="feather icon-edit"
+                    (click)="openAddEditModal(modalAddEditCountry, country)"
+                    style="margin-right: 10px"
+                    placement="top"
+                    ngbTooltip="Edit"
+                  ></i>
+                  <i
+                    type="button"
+                    class="feather icon-trash"
+                    (click)="openDeleteModal(modalDeleteCountry, country)"
+                    placement="top"
+                    ngbTooltip="Delete"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-8 pagination">
+            <ngb-pagination
+              class="pagination-rounded"
+              [collectionSize]="collectionSize"
+              [(page)]="currentPage"
+              [boundaryLinks]="true"
+              [maxSize]="3"
+              [rotate]="true"
+              (pageChange)="getAll()"
+              aria-label="Default pagination"
+            ></ngb-pagination>
+            <ng-select
+              class="col-sm-1"
+              style="margin-left: 30px"
+              [items]="itemsPerPage"
+              [searchable]="false"
+              [(ngModel)]="pageSize"
+              [clearable]="false"
+              (change)="getAll()"
+            >
+            </ng-select>
+            <span style="margin-top: 5px; margin-left: 10px"
+              ><th>{{ "SHARED.ITEMS_PER_PAGE" | translate }}</th></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 1 -->
+<ng-template #modalDeleteCountry let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      <th>{{ "COUNTRY.DELETE.TITLE" | translate }}</th>
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>{{ "COUNTRY.DELETE.QUESTION" | translate }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteCountry(modal)">
+      {{ "SHARED.YES" | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('by: close button')"
+    >
+      {{ "SHARED.NO" | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<!-- Modal 2 -->
+<ng-template #modalAddEditCountry let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" *ngIf="country != null">
+      {{ "COUNTRY.EDIT.TITLE" | translate }}
+    </h5>
+    <h5 class="modal-title" *ngIf="country == null">
+      {{ "COUNTRY.CREATE.TITLE" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="form != null">
+      <form [formGroup]="form" (ngSubmit)="addEditCountry(modal, form.value)">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="name" class="form-label font-bold">{{
+              "COUNTRY.NAME" | translate
+            }}</label>
+            <span class="warning">*</span>
+            <input
+              id="name"
+              class="form-control"
+              type="text"
+              placeholder="{{ 'COUNTRY.ENTER_NAME' | translate }}"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': name?.invalid && (name?.dirty || name?.touched)
+              }"
+            />
+            <div
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="name?.errors?.['required']">
+                {{ "COUNTRY.VALIDATORS.NAME" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label font-bold" for="text">{{
+              "COUNTRY.ABRV" | translate
+            }}</label>
+            <span class="warning">*</span>
+            <input
+              id="abrv"
+              class="form-control"
+              name="abrv"
+              type="text"
+              placeholder="{{ 'COUNTRY.ENTER_ABRV' | translate }}"
+              formControlName="abrv"
+              [ngClass]="{
+                'is-invalid': abrv?.invalid && (abrv?.dirty || abrv?.touched)
+              }"
+            />
+            <div
+              *ngIf="abrv?.invalid && (abrv?.dirty || abrv?.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="abrv?.errors?.['required']">
+                {{ "COUNTRY.VALIDATORS.ABRV" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              id="favorite"
+              name="favorite"
+              type="checkbox"
+              value="favorite"
+              formControlName="favorite"
+            />
+            <label class="form-check-label font-bold" for="favorite">
+              {{ "COUNTRY.FAVORITE" | translate }}
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            *ngIf="country != null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "COUNTRY.EDIT.EDIT_COUNTRY" | translate }}
+          </button>
+          <button
+            *ngIf="country == null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "COUNTRY.CREATE.ADD_COUNTRY" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

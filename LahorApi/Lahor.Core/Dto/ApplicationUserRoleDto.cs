@@ -1,15 +1,12 @@
-﻿
-using Lahor.Core.Entities.Identity;
+﻿using Lahor.Core.Dto.ApplicationRole;
 
 namespace Lahor.Core.Dto
 {
     public class ApplicationUserRoleDto:BaseDto
     {
-        public int Id { get; set; }
-        public ApplicationUser User { get; set; }
-        public ApplicationRole Role { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? ModifiedAt { get; set; }
-        public bool IsDeleted { get; set; }
+        public ApplicationUserDto User { get; set; }
+        public ApplicationRoleDto Role { get; set; }
+        public int UserId { get; set; }
+        public int RoleId { get; set; }
     }
 }

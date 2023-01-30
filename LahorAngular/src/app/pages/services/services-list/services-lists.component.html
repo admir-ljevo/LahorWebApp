@@ -1,63 +1,402 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Services</li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "SERVICE.TITLE" | translate }}
+    </li>
   </ol>
 </nav>
 
-<div class="row">
+<div class="row" *ngIf="typeOfServices != null">
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-        <h6 class="card-title col-sm-10">Usluge</h6>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-primary btn-icon-text" (click)="addService()">
-              <i class="feather icon-check-square btn-icon-prepend"></i>
-              Dodaj uslugu
+        <div class="row" style="margin-bottom: 40px">
+          <ngb-accordion [closeOthers]="true" activeIds="static-1">
+            <ngb-panel
+              id="static-1"
+              title="{{ 'TYPE_OF_SERVICE.ACCORDION_TITLE' | translate }}"
+            >
+              <ng-template ngbPanelContent>
+                <div class="row" style="margin-bottom: 40px">
+                  <h6 class="card-title col-sm-10">
+                    {{ "TYPE_OF_SERVICE.TITLE" | translate }}
+                  </h6>
+                  <div class="col-sm-9 height d-flex justify-content-left">
+                    <div class="col-md-5">
+                      <div class="search">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="baseSearch.searchFilter"
+                          placeholder="{{ 'SHARED.SEARCH' | translate }}"
+                          (ngModelChange)="getTypeOfServices()"
+                        />
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-primary"
+                      (click)="getTypeOfServices()"
+                    >
+                      {{ "SHARED.SEARCH" | translate }}
+                      <i class="mdi mdi-magnify"></i>
+                    </button>
+                  </div>
+                  <div class="col-sm-3" *ngIf="isAdmin || isCompanyOwner">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-icon-text"
+                      (click)="
+                        openAddEditModalTypeOfService(
+                          modalAddEditTypeOfService,
+                          null
+                        )
+                      "
+                    >
+                      <i class="feather icon-plus btn-icon-prepend"></i>
+                      {{
+                        "TYPE_OF_SERVICE.CREATE.ADD_TYPE_OF_SERVICE" | translate
+                      }}
+                    </button>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>{{ "SHARED.COLUMNS.NAME" | translate }}</th>
+                        <th>{{ "SHARED.COLUMNS.DATE_CREATED" | translate }}</th>
+                        <th>
+                          {{ "SHARED.COLUMNS.DATE_MODIFIED" | translate }}
+                        </th>
+                        <th *ngIf="isAdmin || isCompanyOwner">
+                          {{ "SHARED.COLUMNS.ACTIONS" | translate }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let typeOfService of typeOfServices">
+                        <th>{{ typeOfService.name }}</th>
+                        <td>
+                          {{ typeOfService.createdAt | date : "dd.MM.yyyy" }}
+                        </td>
+                        <td>
+                          {{ typeOfService.modifiedAt | date : "dd.MM.yyyy" }}
+                        </td>
+                        <td *ngIf="isAdmin || isCompanyOwner">
+                          <i
+                            type="button"
+                            class="feather icon-edit"
+                            (click)="
+                              openAddEditModalTypeOfService(
+                                modalAddEditTypeOfService,
+                                typeOfService
+                              )
+                            "
+                            style="margin-right: 10px"
+                            placement="top"
+                            ngbTooltip="Edit"
+                          ></i>
+                          <i
+                            type="button"
+                            class="feather icon-trash"
+                            (click)="
+                              openDeleteModalTypeOfService(
+                                modalDeleteTypeOfService,
+                                typeOfService
+                              )
+                            "
+                            placement="top"
+                            ngbTooltip="Delete"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8 pagination">
+                    <ngb-pagination
+                      class="pagination-rounded"
+                      [collectionSize]="collectionSizeTypeOfServices"
+                      [(page)]="currentPageTypeOfServices"
+                      [boundaryLinks]="true"
+                      [maxSize]="3"
+                      [rotate]="true"
+                      (pageChange)="getTypeOfServices()"
+                      aria-label="Default pagination"
+                    ></ngb-pagination>
+                    <ng-select
+                      class="col-sm-1"
+                      style="margin-left: 30px"
+                      [items]="itemsPerPage"
+                      [searchable]="false"
+                      [(ngModel)]="pageSizeTypeOfServices"
+                      [clearable]="false"
+                      (change)="getTypeOfServices()"
+                    >
+                    </ng-select>
+                    <span style="margin-top: 5px; margin-left: 10px">{{
+                      "SHARED.ITEMS_PER_PAGE" | translate
+                    }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="services != null">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" style="margin-bottom: 40px">
+          <h6 class="card-title col-sm-10">
+            {{ "SERVICE.TITLE" | translate }}
+          </h6>
+          <div class="col-sm-10 height d-flex justify-content-left">
+            <div class="col-md-3">
+              <div class="search">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="search.searchFilter"
+                  placeholder="{{ 'SHARED.SEARCH' | translate }}"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <ng-select
+                class="searchDropdown"
+                [items]="typeOfServices"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="false"
+                [(ngModel)]="selectedTypeOfServiceId"
+                placeholder="{{ 'SHARED.SEARCH' | translate }}"
+              >
+              </ng-select>
+            </div>
+            <button class="btn btn-primary" (click)="getAll()">
+              {{ "SHARED.SEARCH" | translate }}
+              <i class="mdi mdi-magnify"></i>
+            </button>
+          </div>
+          <div class="col-sm-2" *ngIf="isAdmin || isCompanyOwner">
+            <button
+              type="button"
+              class="btn btn-primary btn-icon-text"
+              (click)="addService()"
+            >
+              <i class="feather icon-plus btn-icon-prepend"></i>
+              {{ "SERVICE.CREATE.ADD_SERVICE" | translate }}
             </button>
           </div>
         </div>
         <div class="table-responsive">
           <table class="table">
             <thead>
-            <tr>
-              <th>NAME</th>
-              <th>DATE CREATED</th>
-              <th>DATE MODIFIED</th>
-              <th>ACTIONS</th>
-            </tr>
+              <tr>
+                <th>{{ "SHARED.COLUMNS.NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.TYPE_OF_SERVICE" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_CREATED" | translate }}</th>
+                <th>
+                  {{ "SHARED.COLUMNS.DATE_MODIFIED" | translate }}
+                </th>
+                <th *ngIf="isAdmin || isCompanyOwner">
+                  {{ "SHARED.COLUMNS.ACTIONS" | translate }}
+                </th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let service of services">
-              <th>{{service.name}}</th>
-              <td>{{service.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
-              <td>{{service.updatedAt | date:'dd.MM.yyyy hh:mm'}}</td>
-              <td>
-                <i type="button" class="feather icon-edit" (click)="editService(service)" style="margin-right: 10px;" placement="top" ngbTooltip="Edit"></i>
-                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal,service)" placement="top" ngbTooltip="Delete"></i>
-              </td>
-            </tr>
+              <tr *ngFor="let service of services">
+                <th>{{ service.name }}</th>
+                <th>{{ service.typeOfService.name }}</th>
+                <td>{{ service.createdAt | date : "dd.MM.yyyy" }}</td>
+                <td>{{ service.modifiedAt | date : "dd.MM.yyyy" }}</td>
+                <td *ngIf="isAdmin || isCompanyOwner">
+                  <i
+                    type="button"
+                    class="feather icon-edit"
+                    (click)="editService(service)"
+                    style="margin-right: 10px"
+                    placement="top"
+                    ngbTooltip="Edit"
+                  ></i>
+                  <i
+                    type="button"
+                    class="feather icon-trash"
+                    (click)="openBasicModal(basicModal, service)"
+                    placement="top"
+                    ngbTooltip="Delete"
+                  ></i>
+                </td>
+              </tr>
             </tbody>
           </table>
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="currentPage" (pageChange)="changePage()" aria-label="Default pagination"></ngb-pagination>
+        </div>
+        <div class="row">
+          <div class="col-sm-8 pagination">
+            <ngb-pagination
+              class="pagination-rounded"
+              [collectionSize]="collectionSize"
+              [(page)]="currentPage"
+              [boundaryLinks]="true"
+              [maxSize]="3"
+              [rotate]="true"
+              (pageChange)="getAll()"
+              aria-label="Default pagination"
+            ></ngb-pagination>
+            <ng-select
+              class="col-sm-1"
+              style="margin-left: 30px"
+              [items]="itemsPerPage"
+              [searchable]="false"
+              [(ngModel)]="pageSize"
+              [clearable]="false"
+              (change)="getAll()"
+            >
+            </ng-select>
+            <span style="margin-top: 5px; margin-left: 10px">{{
+              "SHARED.ITEMS_PER_PAGE" | translate
+            }}</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<!-- Modal -->
 <ng-template #basicModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Brisanje usluge</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    <h5 class="modal-title" id="exampleModalLabel">
+      {{ "SERVICE.DELETE.TITLE" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
   </div>
   <div class="modal-body">
-    <p>Da li ste sigurni da želite obrisati uslugu?</p>
+    <p>{{ "SERVICE.DELETE.QUESTION" | translate }}</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="deleteService(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Deleted is succesfully', icon: 'success'}">Da</button>
+    <button type="button" class="btn btn-danger" (click)="deleteService(modal)">
+      {{ "SHARED.YES" | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('by: close button')"
+    >
+      {{ "SHARED.NO" | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalDeleteTypeOfService let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      {{ "TYPE_OF_SERVICE.DELETE.TITLE" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>{{ "TYPE_OF_SERVICE.DELETE.QUESTION" | translate }}</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="deleteTypeOfService(modal)"
+    >
+      {{ "SHARED.YES" | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('by: close button')"
+    >
+      {{ "SHARED.NO" | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalAddEditTypeOfService let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" *ngIf="typeOfServiceAddEdit != null">
+      {{ "TYPE_OF_SERVICE.EDIT.TITLE" | translate }}
+    </h5>
+    <h5 class="modal-title" *ngIf="typeOfServiceAddEdit == null">
+      {{ "TYPE_OF_SERVICE.CREATE.TITLE" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="form != null">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="addEditTypeOfService(modal, form.value)"
+      >
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="inputForTypeOfService" class="form-label font-bold">{{
+              "TYPE_OF_SERVICE.NAME" | translate
+            }}</label>
+            <span class="warning">*</span>
+            <input
+              id="inputForTypeOfService"
+              class="form-control"
+              type="text"
+              placeholder="{{ 'NEW.ENTER_NAME' | translate }}"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': name?.invalid && (name?.dirty || name?.touched)
+              }"
+            />
+            <div
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="name?.errors?.['required']">
+                {{ "TYPE_OF_SERVICE.VALIDATORS.NAME" | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            *ngIf="typeOfServiceAddEdit != null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "TYPE_OF_SERVICE.EDIT.EDIT_TYPE_OF_SERVICE" | translate }}
+          </button>
+          <button
+            *ngIf="typeOfServiceAddEdit == null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "TYPE_OF_SERVICE.CREATE.ADD_TYPE_OF_SERVICE" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </ng-template>

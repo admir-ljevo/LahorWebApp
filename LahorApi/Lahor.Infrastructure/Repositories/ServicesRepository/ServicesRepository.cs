@@ -60,23 +60,42 @@ namespace Lahor.Infrastructure.Repositories.ServicesRepository
 
         public async new Task<List<ServiceDto>> GetAllAsync()
         {
-            var servicesList = await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false).Skip(5).Take(5));
+            return await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false));
 
-            //var servicesLevelsList= await ProjectToListAsync<ServicesLevelsPriceDto>(DatabaseContext.ServicesLevelsPrice.Include(x=>x.LevelOfServiceExecution).Where(x => x.IsDeleted == false));
+        }
 
-            //servicesList = servicesList.Select(x =>
-            //{
-            //    x.LevelsPrices=servicesLevelsList.Where(sl=>sl.ServiceId==x.Id).ToList();
-            //    return x;
-            //}).ToList();
-
-            return servicesList;
-
+        public async new Task<List<ServiceDto>> GetReportData(ReportSearchObject search)
+        {
+                return await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false  && x.CreatedAt >= search.DateFrom && x.CreatedAt <= search.DateTo));
         }
 
         public async Task<List<ServiceDto>> GetForPaginationAsync(BaseSearchObject searchObject, int pageSize, int offeset)
         {
-            return await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false).Skip(offeset).Take(pageSize));
+            var search = searchObject as ServicesSearchObject;
+            var list= await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false && (search.SearchFilter==null || x.Name.ToLower().Contains(search.SearchFilter.ToLower())) && (search.TypeOfServiceId==0 || search.TypeOfServiceId==x.TypeOfServiceId)).Skip(offeset).Take(pageSize));
+            if (list.Count > 0)
+            { 
+                list.First().TotalRecordsCount = DatabaseContext.Services.Where(x => x.IsDeleted == false).Count();
+            }
+            return list;
+        }
+
+        public async Task<List<int>> GetServicesCountByMonth()
+        {
+            int currentMonth = DateTime.Now.Month;
+            int month;
+            var listServicesCount = new List<int>();
+            for (int i = currentMonth - 11; i <= currentMonth; i++)
+            {
+                month = i;
+                if (i <= 0)
+                {
+                    month += 12;
+                }
+                listServicesCount.Add(DatabaseContext.Services.Where(x => x.IsDeleted == false && x.CreatedAt.Month == month).Count());
+
+            }
+            return listServicesCount;
         }
     }
 }

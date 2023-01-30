@@ -13,7 +13,6 @@ namespace Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository
         }
         public async Task<IEnumerable<ApplicationUserRoleDto>> GetByUserId(int pUserId)
         {
-            //return DbConnection.QueryFunctionAsync<ApplicationUserRoleDto>("fn_userroles_getbyuserid", new { pUserId });
             return await ProjectToListAsync<ApplicationUserRoleDto>(DatabaseContext.UserRoles.Where(c => c.UserId == pUserId));
         }
 

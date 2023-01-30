@@ -1,0 +1,74 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "REPORTING.TITLE" | translate }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row flex-grow-1">
+  <div class="col-md-4 grid-margin stretch-card" (click)="serviceReport()">
+    <div class="card" type="button">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h6 class="card-title mb-0">
+            {{ "REPORTING.ACTIVE_SERVICES" | translate }}
+          </h6>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6 col-md-12 col-xl-12">
+            <div class="d-flex align-items-baseline">
+              <p class="text-muted tx-13 mb-3 mb-md-0">
+                {{ "REPORTING.ACTIVE_SERVICES_TEXT" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="isAdmin || isCompanyOwner"
+    class="col-md-4 grid-margin stretch-card"
+    (click)="employeesReport()"
+  >
+    <div class="card" type="button">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h6 class="card-title mb-0">
+            {{ "REPORTING.ACTIVE_EMPLOYEES" | translate }}
+          </h6>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6 col-md-12 col-xl-12">
+            <div class="d-flex align-items-baseline">
+              <p class="text-muted tx-13 mb-3 mb-md-0">
+                {{ "REPORTING.ACTIVE_EMPLOYEES_TEXT" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 grid-margin stretch-card" (click)="clientsReport()">
+    <div class="card" type="button">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-baseline">
+          <h6 class="card-title mb-0">
+            {{ "REPORTING.ACTIVE_CLIENTS" | translate }}
+          </h6>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6 col-md-12 col-xl-12">
+            <div class="d-flex align-items-baseline">
+              <p class="text-muted tx-13 mb-3 mb-md-0">
+                {{ "REPORTING.ACTIVE_CLIENTS_TEXT" | translate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

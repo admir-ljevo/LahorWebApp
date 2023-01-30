@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lahor.Services", "Lahor.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lahor.Shared", "Lahor.Shared\Lahor.Shared.csproj", "{377B0270-A0BF-4AB9-99DB-A3EB87A8FFAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lahor.Reporting", "Lahor.Reporting\Lahor.Reporting.csproj", "{70C5217F-60C4-4682-B222-4ECD8EED3363}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{377B0270-A0BF-4AB9-99DB-A3EB87A8FFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{377B0270-A0BF-4AB9-99DB-A3EB87A8FFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{377B0270-A0BF-4AB9-99DB-A3EB87A8FFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C5217F-60C4-4682-B222-4ECD8EED3363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C5217F-60C4-4682-B222-4ECD8EED3363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C5217F-60C4-4682-B222-4ECD8EED3363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C5217F-60C4-4682-B222-4ECD8EED3363}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
