@@ -1,0 +1,175 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/reporting">{{ "REPORTING.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "REPORTING.ACTIVE_EMPLOYEES" | translate }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="createReport(form.value)">
+          <div class="row">
+            <h6 class="card-title col-sm-10">
+              {{ "REPORTING.ACTIVE_EMPLOYEES" | translate }}
+            </h6>
+            <p class="text-muted tx-13 mb-3 mb-md-0">
+              {{ "REPORTING.ACTIVE_EMPLOYEES_TEXT" | translate }}
+            </p>
+            <p class="text-muted tx-13 mb-3 mb-md-3">
+              {{ "REPORTING.ACTIVE_EMPLOYEES_RULE" | translate }}
+            </p>
+            <div
+              class="d-flex align-items-center flex-wrap text-nowrap mt-4 mb-5"
+            >
+              <div class="input-group wd-350" style="margin-right: 10%">
+                <label style="margin-top: 8px; margin-right: 20px">{{
+                  "REPORTING.DATE_FROM_EMPLOYEE" | translate
+                }}</label>
+                <button
+                  class="btn btn-outline-primary btn-icon"
+                  type="button"
+                  (click)="d.toggle()"
+                >
+                  <i
+                    class="feather icon-calendar btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                </button>
+                <input
+                  class="form-control border-primary bg-transparent"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  ngbDatepicker
+                  formControlName="dateFrom"
+                  #d="ngbDatepicker"
+                  [ngClass]="{
+                    'is-invalid':
+                      dateFrom?.invalid &&
+                      (dateFrom?.dirty || dateFrom?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="
+                    dateFrom?.invalid && (dateFrom?.dirty || dateFrom?.touched)
+                  "
+                  class="invalid-feedback"
+                  style="margin-left: 82px"
+                >
+                  <div *ngIf="dateFrom?.errors?.['required']">
+                    {{ "REPORTING.VALIDATORS.DATE" | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="input-group wd-350">
+                <label style="margin-top: 8px; margin-right: 20px">{{
+                  "REPORTING.DATE_TO_EMPLOYEE" | translate
+                }}</label>
+                <button
+                  class="btn btn-outline-primary btn-icon"
+                  type="button"
+                  (click)="d2.toggle()"
+                >
+                  <i
+                    class="feather icon-calendar btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                </button>
+                <input
+                  class="form-control border-primary bg-transparent"
+                  placeholder="yyyy-mm-dd"
+                  name="dp2"
+                  formControlName="dateTo"
+                  ngbDatepicker
+                  #d2="ngbDatepicker"
+                  [ngClass]="{
+                    'is-invalid':
+                      dateTo?.invalid && (dateTo?.dirty || dateTo?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="dateTo?.invalid && (dateTo?.dirty || dateTo?.touched)"
+                  class="invalid-feedback"
+                  style="margin-left: 82px"
+                >
+                  <div *ngIf="dateTo?.errors?.['required']">
+                    {{ "REPORTING.VALIDATORS.DATE" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 mb-6 height d-flex justify-content-left">
+              <div class="col-md-2">
+                <button
+                  type="submit"
+                  [disabled]="form.invalid"
+                  class="btn btn-primary btn-icon-text"
+                >
+                  <i class="feather icon-plus btn-icon-prepend"></i>
+                  {{ "SHARED.CREATE_REPORT" | translate }}
+                </button>
+              </div>
+              <div class="col-md-1">
+                <button
+                  type="button"
+                  (click)="printReport(form.value)"
+                  [disabled]="form.invalid"
+                  class="btn btn-outline-primary btn-icon-text"
+                >
+                  <i
+                    class="feather icon-printer btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                  {{ "SHARED.PRINT" | translate }}
+                </button>
+              </div>
+              <div class="col-md-2">
+                <button
+                  type="button"
+                  (click)="downloadReport(form.value)"
+                  [disabled]="form.invalid"
+                  class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0"
+                >
+                  <i
+                    class="feather icon-download-cloud btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                  {{ "SHARED.DOWNLOAD_REPORT" | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive" *ngIf="employees != null">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ "SHARED.COLUMNS.FIRST_NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.LAST_NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_OF_EMPLOYMENT" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.POSITION" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.ADDRESS" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PAY" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of employees">
+                <td>{{ employee.firstName }}</td>
+                <td>{{ employee.lastName }}</td>
+                <td>{{ employee.dateOfEmployment }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.address }}</td>
+                <td>{{ employee.pay }} KM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

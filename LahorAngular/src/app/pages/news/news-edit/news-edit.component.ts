@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../../../services/NewsService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyConfig } from '../../../shared/MyConfig';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TranslationService } from 'src/app/shared/i18n';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 
@@ -20,7 +15,7 @@ export class NewsEditComponent implements OnInit {
   private id: Number;
   sub: any;
   new: any;
-  imgUrl: any;
+  imgUrl: any = '../../../assets/images/others/default_new.webp';
   form: FormGroup;
   message: any;
 
@@ -28,7 +23,6 @@ export class NewsEditComponent implements OnInit {
     private newsService: NewsService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
     private t: TranslationService,
     private toastr: ToastrService
   ) {}
@@ -99,8 +93,10 @@ export class NewsEditComponent implements OnInit {
     );
   }
 
-  public createImageUrl = (serverPath: string) => {
-    this.imgUrl = MyConfig.address_server + serverPath;
+  public createImageUrl = (imgSrc: string) => {
+    if (imgSrc != null) {
+      this.imgUrl = MyConfig.address_server_base + imgSrc;
+    }
   };
 
   onFileSelected(event: any) {

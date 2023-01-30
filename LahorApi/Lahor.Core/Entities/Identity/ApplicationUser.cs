@@ -10,8 +10,13 @@ namespace Lahor.Core.Entities.Identity
         public bool IsDeleted { get; set; }
         public bool Active { get; set; }
         public Person Person { get; set; }
-        public string CompanyName { get; set; }
-        public string IdentificationNumberCompany { get; set; }
+        public string? CompanyName { get; set; }
+        public string? IdentificationNumberCompany { get; set; }
+        public bool IsAdministrator { get; set; }
+        public bool IsEmployee { get; set; }
+        public bool IsClient { get; set; }
+        public bool IsCompanyOwner { get; set; }
+
         public ICollection<ApplicationUserRole> Roles { get; set; }
     }
 }

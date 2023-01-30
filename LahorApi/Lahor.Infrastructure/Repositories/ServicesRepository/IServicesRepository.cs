@@ -8,9 +8,11 @@ namespace Lahor.Infrastructure.Repositories.ServicesRepository
     public interface IServicesRepository : IBaseRepository<Service, int>
     {
         new Task<List<ServiceDto>> GetAllAsync();
+        new Task<List<ServiceDto>> GetReportData(ReportSearchObject search);
         Task<List<ServiceDto>> GetByName(string name);
         Task<ServiceDto> GetByIdAsync(int id);
         Task<List<ServiceDto>> GetForPaginationAsync(BaseSearchObject searchObject, int pageSize, int offeset)
             => throw new NotImplementedException();
+        Task<List<int>> GetServicesCountByMonth();
     }
 }

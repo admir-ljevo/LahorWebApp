@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Lahor.Core.SearchObjects;
 using Lahor.Services.BaseService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lahor.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class BaseController<dtoEntity, dtoInsertEntity, dtoUpdateEntity,dtoSearchObject> : ControllerBase where dtoEntity : class
     {
@@ -40,6 +42,7 @@ namespace Lahor.API.Controllers
         [HttpPost]
         public virtual async Task<dtoEntity> Post(dtoInsertEntity insertEntity)
         {
+
             return await BaseService.AddAsync(Mapper.Map<dtoEntity>(insertEntity));
         }
 

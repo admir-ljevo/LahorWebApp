@@ -1,10 +1,13 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { NewsService } from '../../../services/NewsService';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { TranslationService } from 'src/app/shared/i18n';
+import { PaginationService } from 'src/app/shared/services/PaginationService';
+import { BaseSearchObject } from 'src/app/searchObject/BaseSearchObject';
+import { AuthAdminGuard } from 'src/app/core/guard/authAdmin.guard';
+import { AuthCompanyOwnerGuard } from 'src/app/core/guard/authCompanyOwner.guard';
 
 @Component({
   selector: 'app-news',
@@ -12,19 +15,28 @@ import { TranslationService } from 'src/app/shared/i18n';
   styleUrls: ['./news-lists.component.scss'],
 })
 export class NewsListsComponent implements OnInit {
-  news$!: Observable<any[]>;
+  news: any;
   selectedNew: any = null;
   basicModalCloseResult: string = '';
   message: string;
+  currentPage: any = 1;
+  pageSize: any = 5;
+  collectionSize: any = 20;
+  search = new BaseSearchObject();
+  itemsPerPage: any;
+
   constructor(
     private newsService: NewsService,
     private router: Router,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private t: TranslationService
+    private t: TranslationService,
+    private paginationService: PaginationService
   ) {}
 
   ngOnInit() {
+    this.itemsPerPage = this.paginationService.getItemsPerPage();
+    this.pageSize = this.itemsPerPage[0];
     this.getAll();
   }
 
@@ -39,15 +51,37 @@ export class NewsListsComponent implements OnInit {
   }
 
   getAll() {
-    this.news$ = this.newsService.getAll();
+    this.newsService
+      .getForPagination(this.search, this.pageSize, this.currentPage)
+      .subscribe((data: any) => {
+        this.news = data;
+        if (data != null) {
+          this.collectionSize = this.paginationService.getCollectionSize(
+            this.pageSize,
+            data[0]?.totalRecordsCount
+          );
+        }
+      });
   }
 
   addNew() {
-    this.router.navigateByUrl('/news/services-add');
+    this.router.navigateByUrl('/news/news-add');
   }
 
   editNew(x: any) {
-    this.router.navigate(['/news/services-edit', x.id]);
+    this.router.navigate(['/news/news-edit', x.id]);
+  }
+
+  previewNew(x: any) {
+    this.router.navigate(['/news/news-preview', x.id]);
+  }
+
+  get isAdmin() {
+    return AuthAdminGuard.isActive();
+  }
+
+  get isCompanyOwner() {
+    return AuthCompanyOwnerGuard.isActive();
   }
 
   async deleteNew(modal: any) {
@@ -72,5 +106,9 @@ export class NewsListsComponent implements OnInit {
     );
 
     modal.close('by: save button');
+  }
+
+  changePage() {
+    this.getAll();
   }
 }

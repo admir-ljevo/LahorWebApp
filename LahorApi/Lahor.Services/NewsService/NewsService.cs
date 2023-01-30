@@ -1,4 +1,5 @@
 ﻿using Lahor.Core.Dto.New;
+using Lahor.Core.SearchObjects;
 using Lahor.Infrastructure.UnitOfWork;
 
 namespace Lahor.Services.NewsService
@@ -29,13 +30,18 @@ namespace Lahor.Services.NewsService
             return _unitOfWork.NewsRepository.GetAllAsync();
         }
 
+        public Task<List<NewDto>> GetLastFiveNews(bool isPublic)
+        {
+            return _unitOfWork.NewsRepository.GetLastFiveNews(isPublic);
+        }
+
         public Task<List<NewDto>> GetByNameAsync(string name)
         {
             return _unitOfWork.NewsRepository.GetByName(name);
         }
-        public Task<List<NewDto>> GetForPaginationAsync(string searchFilter, int pageSize, int offeset)
+        public async Task<List<NewDto>> GetForPaginationAsync(BaseSearchObject searchFilter, int pageSize, int offeset)
         {
-            return _unitOfWork.NewsRepository.GetForPaginationAsync(searchFilter, pageSize, offeset);
+            return await _unitOfWork.NewsRepository.GetForPaginationAsync(searchFilter, pageSize, offeset);
         }
 
         public async Task RemoveByIdAsync(int id, bool isSoft = true)

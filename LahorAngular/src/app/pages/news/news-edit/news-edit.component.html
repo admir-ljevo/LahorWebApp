@@ -1,7 +1,11 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/news">News</a></li>
-    <li class="breadcrumb-item active" aria-current="page">News Edit</li>
+    <li class="breadcrumb-item">
+      <a routerLink="/news">{{ "NEW.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "NEW.EDIT.NEW_TITLE" | translate }}
+    </li>
   </ol>
 </nav>
 <div class="row" *ngIf="form != null">
@@ -42,14 +46,17 @@
                   type="text"
                   placeholder="{{ 'NEW.ENTER_NAME' | translate }}"
                   formControlName="name"
-                  required
+                  [ngClass]="{
+                    'is-invalid':
+                      name?.invalid && (name?.dirty || name?.touched)
+                  }"
                 />
                 <div
                   *ngIf="name?.invalid && (name?.dirty || name?.touched)"
-                  class="alert alert-danger"
+                  class="invalid-feedback"
                 >
                   <div *ngIf="name?.errors?.['required']">
-                    Naziv je obavezan.
+                    {{ "NEW.VALIDATORS.NAME" | translate }}
                   </div>
                 </div>
               </div>
@@ -59,20 +66,25 @@
                 }}</label>
                 <span class="warning">*</span>
                 <textarea
+                  class="form-control"
                   name="text"
                   id="newText"
                   placeholder="{{ 'NEW.ENTER_TEXT' | translate }}"
-                  style="width: 100%; border-radius: 5px"
-                  rows="15"
+                  style="width: 100%"
+                  rows="12"
                   formControlName="text"
+                  [ngClass]="{
+                    'is-invalid':
+                      text?.invalid && (text?.dirty || text?.touched)
+                  }"
                 >
                 </textarea>
                 <div
                   *ngIf="text?.invalid && (text?.dirty || text?.touched)"
-                  class="alert alert-danger"
+                  class="invalid-feedback"
                 >
                   <div *ngIf="text?.errors?.['required']">
-                    Tekst je obavezan.
+                    {{ "NEW.VALIDATORS.NAME" | translate }}
                   </div>
                 </div>
               </div>
@@ -95,7 +107,6 @@
                 <img
                   [src]="imgUrl"
                   style="
-                    border: 1px solid black;
                     border-radius: 5px;
                     width: 100%;
                     height: 390px;
@@ -108,20 +119,10 @@
                   (click)="file.click()"
                   style="margin-top: 10px; width: 100%"
                 >
-                  {{ "NEW.ADD_IMAGE" | translate }}
+                  {{ "SHARED.CHANGE_IMAGE" | translate }}
                 </button>
               </div>
             </div>
-            <!-- Col -->
-          </div>
-          <!-- Row -->
-          <div class="row">
-            <div class="col-sm-12"></div>
-            <!-- Col -->
-          </div>
-          <!-- Row -->
-          <div class="row">
-            <div class="col-sm-12"></div>
           </div>
         </form>
         <button
@@ -130,7 +131,7 @@
           class="btn btn-primary submit"
           [disabled]="form.invalid"
         >
-          Spasi promjene
+          {{ "NEW.EDIT.EDIT_NEW" | translate }}
         </button>
       </div>
     </div>

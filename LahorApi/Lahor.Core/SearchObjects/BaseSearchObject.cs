@@ -2,6 +2,6 @@
 {
     public class BaseSearchObject
     {
-        public string? SearchFilter {get; set; }
+        public string? SearchFilter { get; set; } = "";
     }
 }

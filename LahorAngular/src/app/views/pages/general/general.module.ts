@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { FeahterIconModule } from '../../../core/feather-icon/feather-icon.module';
 
-import { NgbAccordionModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbAccordionModule,
+  NgbDropdownModule,
+  NgbTooltipModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { GeneralComponent } from './general.component';
 import { BlankComponent } from './blank/blank.component';
@@ -22,45 +26,49 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'blank-page',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'blank-page',
-        component: BlankComponent
+        component: BlankComponent,
       },
       {
         path: 'faq',
-        component: FaqComponent
+        component: FaqComponent,
       },
       {
         path: 'invoice',
-        component: InvoiceComponent
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent
+        component: InvoiceComponent,
       },
       {
         path: 'pricing',
-        component: PricingComponent
+        component: PricingComponent,
       },
       {
         path: 'timeline',
-        component: TimelineComponent
-      }
-    ]
-  }
-]
+        component: TimelineComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
-  declarations: [GeneralComponent, BlankComponent, FaqComponent, InvoiceComponent, ProfileComponent, PricingComponent, TimelineComponent],
+  declarations: [
+    GeneralComponent,
+    BlankComponent,
+    FaqComponent,
+    InvoiceComponent,
+    ProfileComponent,
+    PricingComponent,
+    TimelineComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FeahterIconModule,
     NgbAccordionModule,
     NgbDropdownModule,
-    NgbTooltipModule
-  ]
+    NgbTooltipModule,
+  ],
 })
-export class GeneralModule { }
+export class GeneralModule {}

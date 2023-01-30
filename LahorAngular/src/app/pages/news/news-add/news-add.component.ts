@@ -14,15 +14,14 @@ export class NewsAddComponent implements OnInit {
   new: NewModel = new NewModel();
   message: string;
   user: any;
+  fileData: any;
   imgSrc: any = '../../../assets/images/others/default_new.webp';
   form = new FormGroup({
     name: new FormControl('', Validators.required),
     text: new FormControl('', Validators.required),
     file: new FormControl(null),
     public: new FormControl(false),
-    userId: new FormControl(1),
     image: new FormControl(null),
-    user: new FormControl('Amir Karaga'),
   });
 
   constructor(
@@ -32,20 +31,13 @@ export class NewsAddComponent implements OnInit {
     private t: TranslationService
   ) {}
 
-  ngOnInit(): void {
-    this.user = 'Amir Karaga';
-    // localStorage.getItem('user-firstName') +
-    // ' ' +
-    // localStorage.getItem('user-lastName');
-  }
+  ngOnInit(): void {}
 
   addNew() {
     if (!this.form.invalid) {
-      this.form.controls['userId'].setValue(1);
       const formData: FormData = new FormData();
       formData.append('name', this.form.controls['name'].value);
       formData.append('text', this.form.controls['text'].value);
-      formData.append('userId', this.form.controls['userId'].value);
       formData.append('file', this.form.controls['file'].value);
       formData.append('public', this.form.controls['public'].value);
       formData.append('image', '');

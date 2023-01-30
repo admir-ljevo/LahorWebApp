@@ -287,7 +287,7 @@
     height: 100%;
     -webkit-box-shadow: 0 8px 10px 0 rgba(183,192,206,.2);
             box-shadow: 0 8px 10px 0 rgba(183,192,206,.2); 
-    background: $card-bg;   
+    background: $sidebar-dark-bg;  
     .sidebar-nav {
       list-style: none;
       padding: 25px 25px 50px 25px;
@@ -299,13 +299,13 @@
           padding: 0;
           height: 32px;
           white-space: nowrap;
-          color: $body-color;
+          color: white;
           .link-icon {
             width: 16px;
             // height: 16px;
-            fill: rgba(233, 236, 239, 0.21);
+            fill: none;
             position: absolute;
-            color: inherit;
+            color: white;
           }
           .link-title {
             margin-left: 30px;
@@ -352,7 +352,7 @@
             }
             .link-icon {
               color: $primary;
-              fill: rgba(239, 243, 255, .5);
+              fill: none;
             }
           }
         }
@@ -372,7 +372,7 @@
               left: -25px;
             }
             .link-icon {
-              fill: rgba(239, 243, 255, .5);
+              fill: none;
               color: $primary;
             }
           }
@@ -384,7 +384,7 @@
           position: relative;
           .nav-link {
             height: 25px;
-            color: $body-color;
+            color: white;
             font-size: 13px;
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;

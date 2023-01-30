@@ -1,0 +1,818 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/employees">{{ "EMPLOYEE.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "EMPLOYEE.CREATE.ADD_NEW_EMPLOYEE" | translate }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <aw-wizard #wizardForm>
+          <aw-wizard-step stepTitle="{{ 'SHARED.PERSONAL_DATA' | translate }}">
+            <form (ngSubmit)="formUserDataSubmit()" [formGroup]="formUserData">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="mb-3">
+                    <label class="form-label font-bold" for="file">{{
+                      "EMPLOYEE.IMAGE" | translate
+                    }}</label>
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="file"
+                      #file
+                      (change)="onFileSelected($event)"
+                      formControlName="file"
+                      style="display: none"
+                    />
+                    <img
+                      [src]="imgSrc"
+                      style="
+                        border-radius: 5px;
+                        width: 100%;
+                        height: 390px;
+                        aspect-ratio: 1/1;
+                      "
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      style="margin-top: 10px; width: 100%"
+                      (click)="file.click()"
+                    >
+                      {{ "SHARED.ADD_IMAGE" | translate }}
+                    </button>
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label
+                        for="firstName"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.FIRST_NAME" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="firstName"
+                        formControlName="firstName"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.firstName?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_FIRST_NAME' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.firstName.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.FIRST_NAME" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label
+                        for="lastName"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.LAST_NAME" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="lastName"
+                        formControlName="lastName"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.lastName?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_LAST_NAME' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.lastName.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.LAST_NAME" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label
+                        for="userName"
+                        class="col-sm-12 col-form-label font-bold"
+                        >{{ "EMPLOYEE.USER_NAME" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="userName"
+                        formControlName="userName"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.userName?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_USER_NAME' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.userName.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.USER_NAME" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label
+                        for="email"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.EMAIL" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        formControlName="email"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.email?.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.ENTER_EMAIL' | translate }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.email.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.EMAIL" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label
+                        for="birthDate"
+                        class="col-sm-12 col-form-label font-bold"
+                        >{{ "EMPLOYEE.BIRTH_DATE" | translate }}</label
+                      >
+                      <div class="input-group">
+                        <button
+                          class="btn btn-outline-light btn-icon"
+                          type="button"
+                          (click)="d.toggle()"
+                        >
+                          <i
+                            class="feather icon-calendar btn-icon-prepend"
+                            appFeatherIcon
+                          ></i>
+                        </button>
+                        <input
+                          class="form-control border-light bg-transparent"
+                          placeholder="yyyy-mm-dd"
+                          name="dp"
+                          ngbDatepicker
+                          formControlName="birthDate"
+                          #d="ngbDatepicker"
+                          [ngClass]="{
+                            'is-invalid':
+                              isFormUserDataSubmited &&
+                              formUserDataControls.birthDate?.errors
+                          }"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.birthDate.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.BIRTH_DATE" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label
+                        for="gender"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.GENDER" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="genders"
+                        bindLabel="label"
+                        bindValue="id"
+                        [multiple]="false"
+                        [ngClass]="{
+                          'is-invalid': formJobDataControls.gender?.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.ENTER_GENDER' | translate }}"
+                        formControlName="gender"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.gender.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.GENDER" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label
+                        for="country"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.COUNTRY" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="countries"
+                        bindLabel="name"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{ 'EMPLOYEE.ENTER_COUNTRY' | translate }}"
+                        formControlName="countryId"
+                        (ngModelChange)="changeCountry()"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.countryId?.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.COUNTRY" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label
+                        for="birthPlace"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.BIRTH_PLACE" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="citiesFilterList"
+                        bindLabel="name"
+                        bindValue="id"
+                        [multiple]="false"
+                        [ngClass]="{
+                          'is-invalid': formJobDataControls.gender?.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.ENTER_CITY' | translate }}"
+                        formControlName="birthPlaceId"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.birthPlaceId.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.BIRTH_PLACE" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label
+                        for="nationality"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.NATIONALITY" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nationality"
+                        formControlName="nationality"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.nationality?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_NATIONALITY' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.nationality.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.NATIONALITY" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label
+                        for="citizenship"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.CITIZENSHIP" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="citizenship"
+                        formControlName="citizenship"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormUserDataSubmited &&
+                            formUserDataControls.citizenship?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_CITIZENSHIP' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formUserDataControls.citizenship.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.CITIZENSHIP" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-2">
+                <button class="btn btn-secondary me-2" type="button">
+                  {{ "SHARED.BACK" | translate }}
+                </button>
+                <button class="btn btn-primary" type="submit">
+                  {{ "SHARED.NEXT" | translate }}
+                </button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="{{ 'SHARED.BUSSINES_DATA' | translate }}">
+            <form (ngSubmit)="formJobDataSubmit()" [formGroup]="formJobData">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <label
+                        for="jmbg"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.JMBG" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="jmbg"
+                        formControlName="jmbg"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.jmbg?.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.ENTER_JMBG' | translate }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.jmbg.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.JMBG" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="marriageStatus"
+                        class="col-sm-12 col-form-label font-bold"
+                        >{{ "EMPLOYEE.MARRIAGE_STATUS" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="marriageStatuses"
+                        bindLabel="label"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_MARRIAGE_STATUS' | translate
+                        }}"
+                        formControlName="marriageStatus"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormUserDataSubmited &&
+                          formJobDataControls.marriageStatus.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.MARRIAGE_STATUS" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="qualifications"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.QUALIFICATION" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="qualifications"
+                        formControlName="qualifications"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.qualifications?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_QUALIFICATION' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.qualifications.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.QUALIFICATION" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <label
+                        for="drivingLicence"
+                        class="col-sm-12 col-form-label font-bold"
+                        >{{ "EMPLOYEE.DRIVING_LICENCE" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="drivingLicences"
+                        bindLabel="label"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_DRIVING_LICENCE' | translate
+                        }}"
+                        formControlName="drivingLicence"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.drivingLicence.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.DRIVING_LICENCE" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <label
+                        for="countryId"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.COUNTRY" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="countries"
+                        bindLabel="name"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{ 'EMPLOYEE.ENTER_COUNTRY' | translate }}"
+                      >
+                      </ng-select>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="userName"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.PLACE_OF_RECIDENCE" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="cities"
+                        bindLabel="name"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_PLACE_OF_RECIDENCE' | translate
+                        }}"
+                        formControlName="placeOfRecidenceId"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.placeOfRecidenceId?.errors
+                            ?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{
+                          "EMPLOYEE.VALIDATORS.PLACE_OF_RECIDENCE" | translate
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="address"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.ADDRESS" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        formControlName="address"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.address?.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.ENTER_ADDRESS' | translate }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.address.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.ADDRESS" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="postCode"
+                        class="col-sm-12 col-form-label font-bold"
+                        >{{ "EMPLOYEE.POST_CODE" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="postCode"
+                        formControlName="postCode"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.postCode?.errors
+                        }"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_POST_CODE' | translate
+                        }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.postCode.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.POST_CODE" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <label
+                        for="position"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.PHONE_NUMBER" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="pay"
+                        formControlName="phoneNumber"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.phoneNumber.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.PHONE_NUMBER' | translate }}"
+                        prefix="+387 "
+                        mask="(000) 000 000"
+                        [showMaskTyped]="true"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.phoneNumber.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.PHONE_NUMBER" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="dateOfEmployment"
+                        class="col-sm-6 col-form-label font-bold"
+                        >{{ "EMPLOYEE.DATE_OF_EMPLOYMENT" | translate }}</label
+                      >
+                      <div class="input-group">
+                        <button
+                          class="btn btn-outline-light btn-icon"
+                          type="button"
+                          (click)="d2.toggle()"
+                        >
+                          <i
+                            class="feather icon-calendar btn-icon-prepend"
+                            appFeatherIcon
+                          ></i>
+                        </button>
+                        <input
+                          class="form-control border-light bg-transparent"
+                          placeholder="yyyy-mm-dd"
+                          name="dp"
+                          ngbDatepicker
+                          formControlName="dateOfEmployment"
+                          #d2="ngbDatepicker"
+                          [ngClass]="{
+                            'is-invalid':
+                              isFormJobDataSubmited &&
+                              formJobDataControls.dateOfEmployment?.errors
+                          }"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.dateOfEmployment.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{
+                          "EMPLOYEE.VALIDATORS.DATE_OF_EMPLOYMENT" | translate
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="position"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.POSITION" | translate }}</label
+                      >
+                      <ng-select
+                        [items]="positions"
+                        bindLabel="label"
+                        bindValue="id"
+                        [multiple]="false"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_POSITION' | translate
+                        }}"
+                        formControlName="position"
+                      >
+                      </ng-select>
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.position.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.POSITION" | translate }}
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <label
+                        for="pay"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.PAY" | translate }}</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="pay"
+                        formControlName="pay"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.pay.errors
+                        }"
+                        placeholder="{{ 'EMPLOYEE.PAY' | translate }}"
+                      />
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.pay?.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.PAY" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label
+                        for="biography"
+                        class="col-sm-3 col-form-label font-bold"
+                        >{{ "EMPLOYEE.BIOGRAPHY" | translate }}</label
+                      >
+                      <textarea
+                        class="form-control"
+                        name="text"
+                        id="biography"
+                        placeholder="{{
+                          'EMPLOYEE.ENTER_BIOGRAPHY' | translate
+                        }}"
+                        style="width: 100%"
+                        rows="12"
+                        [ngClass]="{
+                          'is-invalid':
+                            isFormJobDataSubmited &&
+                            formJobDataControls.biography?.errors
+                        }"
+                        formControlName="biography"
+                      >
+                      </textarea>
+                      <div
+                        *ngIf="
+                          isFormJobDataSubmited &&
+                          formJobDataControls.biography.errors?.required
+                        "
+                        class="invalid-feedback"
+                      >
+                        {{ "EMPLOYEE.VALIDATORS.BIOGRAPHY" | translate }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-2">
+                <button
+                  class="btn btn-secondary me-2"
+                  type="button"
+                  awPreviousStep
+                >
+                  {{ "SHARED.BACK" | translate }}
+                </button>
+                <button class="btn btn-primary" type="submit">
+                  {{ "SHARED.NEXT" | translate }}
+                </button>
+              </div>
+            </form>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="{{ 'SHARED.FINISH' | translate }}">
+            <div class="text-center">
+              <i
+                data-feather="check-circle"
+                appFeatherIcon
+                class="text-success mt-4 mb-2 icon-xxl"
+              ></i>
+              <h3 class="text-muted mb-3">{{ "SHARED.THANKS" | translate }}</h3>
+              <p class="w-75 mx-auto mb-4 text-muted">
+                {{ "SHARED.SUCCESS_CREATE_EMPLOYEE_MESS" | translate }}
+              </p>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button
+                class="btn btn-secondary me-2"
+                type="button"
+                awPreviousStep
+              >
+                {{ "SHARED.BACK" | translate }}
+              </button>
+              <button
+                class="btn btn-success"
+                type="button"
+                (click)="finishFunction()"
+              >
+                {{ "EMPLOYEE.CREATE.ADD_EMPLOYEE" | translate }}
+              </button>
+            </div>
+          </aw-wizard-step>
+        </aw-wizard>
+      </div>
+    </div>
+  </div>
+  <!-- col -->
+</div>
