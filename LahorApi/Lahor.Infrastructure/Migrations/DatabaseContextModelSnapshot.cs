@@ -50,7 +50,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Country", b =>
@@ -76,7 +76,105 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Device", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DeviceBrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DeviceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceBrandId");
+
+                    b.HasIndex("DeviceTypeId");
+
+                    b.ToTable("Device");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.DeviceBrand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceBrand");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.DeviceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceType");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Identity.ApplicationRole", b =>
@@ -394,7 +492,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LevelOfServiceExecution", (string)null);
+                    b.ToTable("LevelOfServiceExecution");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Log", b =>
@@ -457,7 +555,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logs", (string)null);
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.MarriageStatus", b =>
@@ -483,7 +581,77 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MarriageStatus", (string)null);
+                    b.ToTable("MarriageStatus");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Material", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Material");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.MaterialRequests", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PurchaseRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("UnitPrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("PurchaseRequestId");
+
+                    b.ToTable("MaterialRequests");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.New", b =>
@@ -525,7 +693,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("News", (string)null);
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Note", b =>
@@ -567,7 +735,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notes", (string)null);
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Order", b =>
@@ -626,7 +794,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.OrdersServicesLevels", b =>
@@ -655,11 +823,14 @@ namespace Lahor.Infrastructure.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
-
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
+
+                    b.Property<float>("TotalPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("UnitPrice")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -669,7 +840,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("OrdersServicesLevels", (string)null);
+                    b.ToTable("OrdersServicesLevels");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Person", b =>
@@ -773,7 +944,51 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("PlaceOfResidenceId");
 
-                    b.ToTable("Persons", (string)null);
+                    b.ToTable("Persons");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.PurchaseRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DatePurchased")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("PurchaseRequest");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
@@ -804,7 +1019,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("TypeOfServiceId");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.ServicesLevelsPrice", b =>
@@ -839,7 +1054,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("ServicesLevelsPrice", (string)null);
+                    b.ToTable("ServicesLevelsPrice");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.TypeOfService", b =>
@@ -865,7 +1080,7 @@ namespace Lahor.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeOfServices", (string)null);
+                    b.ToTable("TypeOfServices");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.City", b =>
@@ -875,6 +1090,25 @@ namespace Lahor.Infrastructure.Migrations
                         .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Device", b =>
+                {
+                    b.HasOne("Lahor.Core.Entities.DeviceBrand", "DeviceBrand")
+                        .WithMany("Devices")
+                        .HasForeignKey("DeviceBrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lahor.Core.Entities.DeviceType", "DeviceType")
+                        .WithMany("Devices")
+                        .HasForeignKey("DeviceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeviceBrand");
+
+                    b.Navigation("DeviceType");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Identity.ApplicationRoleClaim", b =>
@@ -930,6 +1164,25 @@ namespace Lahor.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.MaterialRequests", b =>
+                {
+                    b.HasOne("Lahor.Core.Entities.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Lahor.Core.Entities.PurchaseRequest", "PurchaseRequest")
+                        .WithMany()
+                        .HasForeignKey("PurchaseRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("PurchaseRequest");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.New", b =>
@@ -1027,10 +1280,21 @@ namespace Lahor.Infrastructure.Migrations
                     b.Navigation("PlaceOfResidence");
                 });
 
+            modelBuilder.Entity("Lahor.Core.Entities.PurchaseRequest", b =>
+                {
+                    b.HasOne("Lahor.Core.Entities.Identity.ApplicationUser", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
             modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
                 {
                     b.HasOne("Lahor.Core.Entities.TypeOfService", "TypeOfService")
-                        .WithMany()
+                        .WithMany("Services")
                         .HasForeignKey("TypeOfServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1041,13 +1305,13 @@ namespace Lahor.Infrastructure.Migrations
             modelBuilder.Entity("Lahor.Core.Entities.ServicesLevelsPrice", b =>
                 {
                     b.HasOne("Lahor.Core.Entities.LevelOfServiceExecution", "LevelOfServiceExecution")
-                        .WithMany()
+                        .WithMany("LevelsPrices")
                         .HasForeignKey("LevelOfServiceExecutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Lahor.Core.Entities.Service", "Service")
-                        .WithMany()
+                        .WithMany("LevelsPrices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1055,6 +1319,16 @@ namespace Lahor.Infrastructure.Migrations
                     b.Navigation("LevelOfServiceExecution");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.DeviceBrand", b =>
+                {
+                    b.Navigation("Devices");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.DeviceType", b =>
+                {
+                    b.Navigation("Devices");
                 });
 
             modelBuilder.Entity("Lahor.Core.Entities.Identity.ApplicationRole", b =>
@@ -1068,6 +1342,21 @@ namespace Lahor.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.LevelOfServiceExecution", b =>
+                {
+                    b.Navigation("LevelsPrices");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.Service", b =>
+                {
+                    b.Navigation("LevelsPrices");
+                });
+
+            modelBuilder.Entity("Lahor.Core.Entities.TypeOfService", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

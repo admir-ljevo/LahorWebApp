@@ -26,6 +26,26 @@ export const MENU: MenuItem[] = [
     link:'/price-list-preview'
   },
   {
+    label: 'Orders',
+    icon: 'file-text',
+    link:'/orders'
+  },
+  {
+    label: 'Devices',
+    icon: 'smartphone',
+    link: '/device',
+  },
+  {
+    label: 'Purchase requests',
+    icon: 'shopping-cart',
+    link: '/purchase-requests'
+  },
+  {
+    label: 'Materials',
+    icon: 'folder-minus',
+    link: 'materials'
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

@@ -1,0 +1,54 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Orders</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h6 class="card-title col-sm-10">Narudžbe</h6>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addNewOrder()">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj narudžbu
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DATE CREATED</th>
+              <th>USER</th>
+              <th>ONLINE</th>
+              <th>PRICE</th>
+              <th>ACTIONS</th>
+              <th>SERVICES</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of orders$|async">
+              <th>{{new.name}}</th>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{new.employee.person.firstName}} {{new.employee.person.lastName}}</td>
+              <td *ngIf="new.online">DA</td>
+              <td *ngIf="!new.online">NE</td>
+              <td>{{new.price}} KM </td>
+              <td>
+                <i type="button" class="feather icon-edit"></i>
+                <i type="button" class="feather icon-delete"></i>
+              </td>
+              <td><button type="button" class="btn btn-primary" (click)="addOrderServiceLevel(new)"><i type="button" class="feather icon-edit" style="margin-right: 10px;"></i> Usluge </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

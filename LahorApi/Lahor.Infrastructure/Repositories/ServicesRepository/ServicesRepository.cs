@@ -60,7 +60,7 @@ namespace Lahor.Infrastructure.Repositories.ServicesRepository
 
         public async new Task<List<ServiceDto>> GetAllAsync()
         {
-            var servicesList = await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false).Skip(5).Take(5));
+            var servicesList = await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false));
 
             //var servicesLevelsList= await ProjectToListAsync<ServicesLevelsPriceDto>(DatabaseContext.ServicesLevelsPrice.Include(x=>x.LevelOfServiceExecution).Where(x => x.IsDeleted == false));
 

@@ -10,7 +10,8 @@ namespace Lahor.Core.Entities
         public int ServiceId { get; set; }
         public LevelOfServiceExecution LevelOfServiceExecution { get; set; }
         public int LevelOfServiceExecutionId { get; set; }
-        public float Price { get; set; }
+        public float UnitPrice { get; set; }
+        public float TotalPrice { get; set; }
         public float Amount { get; set; }
     }
 }

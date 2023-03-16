@@ -21,6 +21,13 @@ namespace Lahor.Infrastructure
         public DbSet<ServicesLevelsPrice> ServicesLevelsPrice { get; set; }
         public DbSet<LevelOfServiceExecution> LevelOfServiceExecution { get; set; }
 
+        public DbSet<DeviceBrand> DeviceBrand { get; set; }
+        public DbSet<DeviceType> DeviceType { get; set; }
+        public DbSet<Device> Device { get; set; }
+        public DbSet<Material> Material { get; set; }
+        public DbSet<PurchaseRequest> PurchaseRequest { get; set; }
+        public DbSet<MaterialRequests> MaterialRequests { get; set; }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
             

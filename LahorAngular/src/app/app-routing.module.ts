@@ -57,6 +57,30 @@ const routes: Routes = [
         loadChildren: () => import('./pages/priceList/priceList.module').then(m => m.PriceListModule)
       },
       {
+        path: 'level-of-service-execution',
+        loadChildren: () => import('./pages/levelOfServiceExecution/level-of-service-execution.module').then(m=>m.LevelOfServiceExecutionModule)
+      },
+      {
+        path: 'orders',
+        loadChildren: () => import('./pages/orders/orders.module').then(m=>m.OrdersModule),
+      },
+      {
+        path: 'device',
+        loadChildren: () => import('./pages/device/device.module').then(m => m.DeviceModule),
+      },
+      {
+        path: 'purchase-requests',
+        loadChildren: () => import('./pages/purchaseRequests/purchase-requests.module').then(m => m.PurchaseRequestsModule)
+      },
+      {
+        path:'materials',
+        loadChildren: () => import('./pages/materials/materials.module').then(m=>m.MaterialsModule)
+      },
+      {
+        path: 'material-requests',
+        loadChildren: () => import('./pages/materialRequests/material-requests.module').then(m=>m.MaterialRequestsModule)
+      },
+      {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
       },

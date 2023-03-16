@@ -6,20 +6,36 @@ using Lahor.Infrastructure;
 using Lahor.Infrastructure.Mapper;
 using Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository;
 using Lahor.Infrastructure.Repositories.ApplicationUsersRepository;
+using Lahor.Infrastructure.Repositories.DeviceBrandRepository;
+using Lahor.Infrastructure.Repositories.DeviceRepository;
+using Lahor.Infrastructure.Repositories.DeviceTypeRepository;
 using Lahor.Infrastructure.Repositories.LevelOfServiceExecutionsRepository;
 using Lahor.Infrastructure.Repositories.LogsRepository;
+using Lahor.Infrastructure.Repositories.MaterialRepository;
+using Lahor.Infrastructure.Repositories.MaterialRequestsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
 using Lahor.Infrastructure.Repositories.NotesRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
+using Lahor.Infrastructure.Repositories.OrdersServicesLevelsRepository;
+using Lahor.Infrastructure.Repositories.PurchaseRequestRepository;
 using Lahor.Infrastructure.Repositories.ServicesLevelsPriceRepository;
 using Lahor.Infrastructure.Repositories.ServicesRepository;
 using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Lahor.Infrastructure.UnitOfWork;
 using Lahor.Services.ApplicationUserRolesService;
 using Lahor.Services.ApplicationUsersService;
+using Lahor.Services.DeviceBrandService;
+using Lahor.Services.DeviceService;
+using Lahor.Services.DeviceTypeService;
+using Lahor.Services.LdevelOfServiceExecutionsService;
+using Lahor.Services.LevelOfServiceExecutionsService;
+using Lahor.Services.MaterialRequestsService;
+using Lahor.Services.MaterialService;
 using Lahor.Services.NewsService;
 using Lahor.Services.NotesServices;
 using Lahor.Services.OrdersService;
+using Lahor.Services.OrdersServicesLevelsService;
+using Lahor.Services.PurchaseRequestService;
 using Lahor.Services.ServicesService;
 using Lahor.Services.TypeOfServicesService;
 using Lahor.Shared.LoggedUserData;
@@ -86,6 +102,13 @@ builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
 builder.Services.AddScoped<ITypeOfServicesRepository, TypeOfServicesRepository>();
 builder.Services.AddTransient<IServicesLevelsPriceRepository, ServicesLevelsPriceRepository>();
 builder.Services.AddTransient<ILevelOfServiceExecutionsRepository, LevelOfServiceExecutionsRepository>();
+builder.Services.AddScoped<IOrdersServicesLevelsRepository, OrdersServicesLevelsRepository>();
+builder.Services.AddScoped<IDeviceRepository, DeviceRepository>();
+builder.Services.AddScoped<IDeviceBrandRepository, DeviceBrandRepository>();
+builder.Services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
+builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
+builder.Services.AddScoped<IPurchaseRequestRepository, PurchaseRequestRepository>();
+builder.Services.AddScoped<IMaterialRequestsRepository, MaterialRequestsRepository>();
 
 #endregion
 
@@ -98,6 +121,14 @@ builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IServicesService, ServicesService>();
 builder.Services.AddScoped<ITypeOfServicesService, TypeOfServicesServices>();
+builder.Services.AddScoped<ILevelOfServiceExecutionsService, LevelOfServiceExecutionsService>();
+builder.Services.AddScoped<IOrdersServicesLevelsService, OrdersServicesLevelsService>();
+builder.Services.AddScoped<IDeviceService, DeviceService>();
+builder.Services.AddScoped<IDeviceBrandService, DeviceBrandService>();
+builder.Services.AddScoped<IDeviceTypeService, DeviceTypeService>();
+builder.Services.AddScoped<IMaterialRequestsService, MaterialRequestsService>();
+builder.Services.AddScoped<IMaterialService,MaterialService>();
+builder.Services.AddScoped<IPurchaseRequestService, PurchaseRequestService>();
 
 #endregion
 

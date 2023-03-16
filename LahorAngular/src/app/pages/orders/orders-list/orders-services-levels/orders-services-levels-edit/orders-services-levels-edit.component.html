@@ -1,0 +1,79 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/orders">Orders</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add Order service level</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{orderServiceLevel.order.name}}</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="exampleInputReadonly" class="form-label">Narudžba</label>
+                <input type="text" class="form-control" id="exampleInputReadonly" disabled value="{{orderServiceLevel.order.name}}">
+              </div><
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label class="form-label">Usluga</label>
+                <ng-select [items]="services"
+                           bindLabel="name"
+                           bindValue="id"
+                           [multiple]="false"
+                           placeholder="type to search"
+                           [(ngModel)]="selectedSearchServiceId"
+                           (change)="changeService($event)"
+                           name="service">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label class="form-label">Nivo izvršenja usluge</label>
+                <ng-select [items]="levelsOfServiceExecutions"
+                           bindLabel="name"
+                           bindValue="id"
+                           [multiple]="false"
+                           placeholder="type to search"
+                           [(ngModel)]="selectedSearchLevelOfServiceExecutionId"
+                           (change)="changeLevelOfServiceExecution($event)"
+                           name="levelOfServiceExecution">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice1" class="form-label" >Cijena usluge KM</label>
+                <input id="inputPrice1" class="form-control" type="number"  [(ngModel)]="orderServiceLevel.unitPrice" name="inputPrice1" placeholder="KM" readonly />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputAmount" class="form-label">Količina</label>
+                <input type="number" [(ngModel)]="orderServiceLevel.amount" (change)="changeAmount(orderServiceLevel.amount)" class="form-control" id="inputAmount"  name="inputAmount" min="1">
+                <p class="text-danger mt1" *ngIf="orderServiceLevel.amount <= 0">Količina ne smije biti negativna</p>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice2" class="form-label" >Ukupna cijena KM</label>
+                <input id="inputPrice2" class="form-control" type="number"  [(ngModel)]="orderServiceLevel.totalPrice" name="inputPrice2" placeholder="KM" readonly />
+              </div>
+            </div>
+
+          </div>
+          <!-- Col -->
+        </form>
+        <button type="submit" class="btn btn-primary submit" (click)="editOrderServiceLevel()">Izmijeni uslugu</button>
+      </div>
+    </div>
+  </div>
+</div>

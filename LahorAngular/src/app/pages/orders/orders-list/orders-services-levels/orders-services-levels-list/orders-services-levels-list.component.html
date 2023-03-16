@@ -1,0 +1,75 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Orders</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h6 class="card-title col-sm-10">Order: {{selectedOrder.name}}</h6>
+
+          <div class="row-sm-2">
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="print()">
+              <i class="feather icon-file-text btn-icon-prepend"></i>
+              <span>Printaj narudžbu</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addOrderServiceLevel(selectedOrder)">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              <span>Dodaj uslugu</span>
+            </button>
+          </div>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>SERVICE</th>
+              <th>DATE CREATED</th>
+              <th>LEVEL OF EXECUTION</th>
+              <th>UNIT PRICE</th>
+              <th>AMOUNT</th>
+              <th>TOTAL PRICE</th>
+              <th class="actions">ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let orderServiceLevel of ordersServicesLevels$|async">
+              <th>{{orderServiceLevel.service.name}}</th>
+              <td>{{orderServiceLevel.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{orderServiceLevel.levelOfServiceExecution.name}}</td>
+              <td>{{orderServiceLevel.unitPrice}} KM</td>
+              <td>{{orderServiceLevel.amount}}</td>
+              <td>{{orderServiceLevel.totalPrice}} KM</td>
+              <td class="actions">
+                <i type="button" class="feather icon-edit" (click)="editOrderServiceLevel(orderServiceLevel)" ngbTooltip="Edit"></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal, orderServiceLevel)"  ngbTooltip="Delete"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="mb-3">
+            <label for="exampleInputReadonly" class="form-label">Order total price (KM) </label>
+            <input type="text" class="form-control" id="exampleInputReadonly" readonly [(ngModel)]="selectedOrder.price">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Brisanje usluge</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Da li ste sigurni da želite obrisati uslugu?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="deleteOrderServiceLevel(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Successfully deleted', icon: 'success'}">Da</button>
+  </div>
+</ng-template>

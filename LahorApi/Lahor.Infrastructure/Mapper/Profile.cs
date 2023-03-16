@@ -1,9 +1,16 @@
 ﻿using AutoMapper;
 using Lahor.Core.Dto;
+using Lahor.Core.Dto.Device;
+using Lahor.Core.Dto.DeviceBrand;
+using Lahor.Core.Dto.DeviceType;
 using Lahor.Core.Dto.LevelOfServiceExecution;
+using Lahor.Core.Dto.Material;
+using Lahor.Core.Dto.MaterialRequests;
 using Lahor.Core.Dto.New;
 using Lahor.Core.Dto.Note;
-using Lahor.Core.Dto.OrderDto;
+using Lahor.Core.Dto.Order;
+using Lahor.Core.Dto.OrdersServicesLevels;
+using Lahor.Core.Dto.PurchaseRequest;
 using Lahor.Core.Dto.Service;
 using Lahor.Core.Dto.ServicesLevelsPrices;
 using Lahor.Core.Dto.TypeOfService;
@@ -32,6 +39,8 @@ namespace Lahor.Infrastructure.Mapper
             CreateMap<ApplicationUserDto, ApplicationUser>()
                     .ForMember(au => au.Roles, auDto => auDto.MapFrom(x => x.UserRoles))
                     .ReverseMap();
+
+            CreateMap<Person, ApplicationUserDto>().ForMember(au => au.PersonId, p => p.MapFrom(p => p.Id));
 
 
             #endregion
@@ -68,6 +77,28 @@ namespace Lahor.Infrastructure.Mapper
 
             #endregion
 
+            #region PurchaseRequest
+
+            CreateMap<PurchaseRequest, PurchaseRequestDto>().ReverseMap();  
+            CreateMap<PurchaseRequestDto, PurchaseRequestUpsertDto>().ReverseMap();
+
+            #endregion
+
+            #region MaterialRequests
+
+            CreateMap<MaterialRequests, MaterialRequestsDto>().ReverseMap();
+            CreateMap<MaterialRequestsDto, MaterialRequestsUpsertDto>().ReverseMap(); 
+
+            #endregion
+
+
+            #region Material
+
+            CreateMap<Material, MaterialDto>().ReverseMap();
+            CreateMap<MaterialDto, MaterialUpsertDto>().ReverseMap();
+
+            #endregion
+
             #region New
 
             CreateMap<New, NewDto>().ReverseMap();
@@ -79,6 +110,27 @@ namespace Lahor.Infrastructure.Mapper
             #region Person
 
             CreateMap<Person, PersonDto>().ReverseMap();
+
+            #endregion
+
+            #region Device
+
+            CreateMap<Device, DeviceDto>().ReverseMap();
+            CreateMap<DeviceDto, DeviceUpsertDto>().ReverseMap();
+
+            #endregion
+
+            #region DeviceBrand
+
+            CreateMap<DeviceBrand, DeviceBrandDto>().ReverseMap();
+            CreateMap<DeviceBrandDto, DeviceBrandUpsertDto>().ReverseMap();
+
+            #endregion
+            
+            #region DeviceType
+
+            CreateMap<DeviceType, DeviceTypeDto>().ReverseMap();
+            CreateMap<DeviceTypeDto, DeviceTypeUpsertDto>().ReverseMap();
 
             #endregion
 
@@ -106,6 +158,13 @@ namespace Lahor.Infrastructure.Mapper
             #region ServicesLevelsPrice
 
             CreateMap<LevelOfServiceExecution, LevelOfServiceExecutionDto>().ReverseMap();
+
+            #endregion
+
+            #region OrdersServicesLevels
+
+            CreateMap<OrdersServicesLevels, OrdersServicesLevelsDto>().ReverseMap();
+            CreateMap<OrdersServicesLevelsDto, OrdersServiceLevelsUpsertDto>().ReverseMap();
 
             #endregion
 

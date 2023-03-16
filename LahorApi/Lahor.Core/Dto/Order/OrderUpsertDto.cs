@@ -1,7 +1,7 @@
 ﻿
-namespace Lahor.Core.Dto.OrderDto
+namespace Lahor.Core.Dto.Order
 {
-    public class OrderDto:BaseDto
+    public class OrderUpsertDto:BaseDto
     {
         public string Name { get; set; }
         public DateTime DeliveryDate { get; set; }
@@ -11,9 +11,7 @@ namespace Lahor.Core.Dto.OrderDto
         public string Description { get; set; }
         public string ClientName { get; set; }
         public bool Online { get; set; }
-        public ApplicationUserDto Employee { get; set; }
         public int EmployeeId { get; set; }
-        public ApplicationUserDto Client { get; set; }
         public int ClientId { get; set; }
     }
 }

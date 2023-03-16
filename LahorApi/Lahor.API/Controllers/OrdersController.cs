@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Lahor.Core.Dto.OrderDto;
+using Lahor.Core.Dto.Order;
 using Lahor.Core.SearchObjects;
 using Lahor.Services.OrdersService;
 

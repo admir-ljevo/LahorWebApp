@@ -1,4 +1,4 @@
-﻿using Lahor.Core.Dto.OrderDto;
+﻿using Lahor.Core.Dto.Order;
 using Lahor.Infrastructure.UnitOfWork;
 
 namespace Lahor.Services.OrdersService
@@ -46,7 +46,14 @@ namespace Lahor.Services.OrdersService
 
         public void Update(OrderDto entity)
         {
-            throw new NotImplementedException();
+            _unitOfWork.OrdersRepository.Update<OrderDto>(entity);
+            _unitOfWork.SaveChanges();
+        }
+        public async Task<OrderDto> UpdateAsync(OrderDto orderDto)
+        {
+            _unitOfWork.OrdersRepository.Update(orderDto);
+            await _unitOfWork.SaveChangesAsync();
+            return orderDto;
         }
     }
 }

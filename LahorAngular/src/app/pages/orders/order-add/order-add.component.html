@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Naruždba</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Naziv</label>
+                <input type="text" id="inputName" name="inputName" [(ngModel)]="order.name" clas  s="form-control"  placeholder="Unesite naziv narudžbe">
+              </div>
+
+            </div><!-- Col -->
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Naziv</label>
+                <input type="number" id="inputUser" [(ngModel)]="order.clientId"  name="inputUser" class="form-control"  placeholder="Unesite naziv narudžbe">
+              </div>
+
+            </div>
+          </div><!-- Row -->
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Opis</label>
+                <input type="text" id="inputDescription" [(ngModel)]="order.description" name="inputDescription" class="form-control"  placeholder="Unesite opis">
+              </div>
+
+            </div><!-- Col -->
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Naziv</label>
+                <input type="number" id="inputUserName" [(ngModel)]="order.price" name="inputUserName" class="form-control"  placeholder="Unesite naziv narudžbe">
+              </div>
+
+            </div>
+            <div class="col-sm-6">
+              <div class="form-check form-switch mb-4 col-sm-12">
+                <input type="checkbox" class="form-check-input" id="publicNewSwitch" [(ngModel)]="order.online" formControlName="online">
+                <label class="form-check-label" for="publicNewSwitch">Online narudžba</label>
+              </div>
+
+            </div>
+          </div><!-- Row -->
+        </form>
+        <button type="button" class="btn btn-primary submit" (click)="addOrder()">Dodaj narudžbu</button>
+      </div>
+    </div>
+  </div>
+</div>

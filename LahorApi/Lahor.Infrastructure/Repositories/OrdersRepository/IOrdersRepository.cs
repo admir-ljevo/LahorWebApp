@@ -1,4 +1,4 @@
-﻿using Lahor.Core.Dto.OrderDto;
+﻿using Lahor.Core.Dto.Order;
 using Lahor.Core.Entities;
 using Lahor.Infrastructure.Repositories.BaseRepository;
 
