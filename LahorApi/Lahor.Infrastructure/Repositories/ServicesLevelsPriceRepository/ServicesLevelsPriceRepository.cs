@@ -29,7 +29,7 @@ namespace Lahor.Infrastructure.Repositories.ServicesLevelsPriceRepository
             return await ProjectToListAsync<ServicesLevelsPriceDto>(DatabaseContext.ServicesLevelsPrice.Include(x=>x.LevelOfServiceExecution).Where(x=>x.IsDeleted==false));
         }
 
-        public async new Task<List<ServicesLevelsPriceDto>> GetServicesLevelsByServiceId(int serviceId)
+        public async Task<List<ServicesLevelsPriceDto>> GetServicesLevelsByServiceId(int serviceId)
         {
             return await ProjectToListAsync<ServicesLevelsPriceDto>(DatabaseContext.ServicesLevelsPrice.Include(x => x.LevelOfServiceExecution).Where(x => x.IsDeleted == false && x.ServiceId==serviceId));
         }

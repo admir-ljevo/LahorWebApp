@@ -1,18 +1,39 @@
 ﻿using Lahor.Core.Dto;
+using Lahor.Core.Dto.Service;
+using Lahor.Core.Entities;
+using Lahor.Core.Entities.Identity;
+using Lahor.Core.Enumerations;
+using Lahor.Core.Model;
+using Lahor.Core.SearchObjects;
+using Lahor.Infrastructure.Repositories.ApplicationRolesRepository;
+using Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository;
 using Lahor.Infrastructure.UnitOfWork;
-using Lahor.Services.ApplicationUserRolesService;
+using Lahor.Reporting.Models;
+using Lahor.Shared.Constants;
+using Lahor.Shared.Services.Crypto;
+using Lahor.Shared.Services.Email;
+using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 namespace Lahor.Services.ApplicationUsersService
 {
     public class ApplicationUsersService:IApplicationUsersService
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly IApplicationUserRolesService _applicationUserRolesService;
+        private readonly IApplicationUserRolesRepository _applicationUserRolesRepository;
+        private readonly IApplicationRolesRepository _applicationRolesRepository;
+        private readonly ICrypto _crypto;
+        private readonly IEmail _email;
+        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
-        public ApplicationUsersService(IUnitOfWork unitOfWork, IApplicationUserRolesService applicationUserRolesService)
+        public ApplicationUsersService(IUnitOfWork unitOfWork, IApplicationUserRolesRepository applicationUserRolesRepository, IApplicationRolesRepository applicationRolesRepository, ICrypto crypto,IPasswordHasher<ApplicationUser> passwordHasher,IEmail email)
         {
             _unitOfWork = (UnitOfWork)unitOfWork;
-            _applicationUserRolesService = applicationUserRolesService;
+            _applicationUserRolesRepository = applicationUserRolesRepository;
+            _applicationRolesRepository = applicationRolesRepository;
+            _crypto= crypto;
+            _email = email;
+            _passwordHasher = passwordHasher;
         }
 
 
@@ -23,15 +44,226 @@ namespace Lahor.Services.ApplicationUsersService
             return user;
         }
 
+        public async Task<ApplicationUserDto> AddEmployeeAsync(EmployeeInsertDto user)
+        {
+            var newUser = new ApplicationUserDto();
+            newUser.Person = new PersonDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MarriageStatus = user.MarriageStatus,
+                Citizenship = user.Citizenship,
+                Biography = user.Biography,
+                MembershipCard = false,
+                BirthDate = user.BirthDate,
+                Address = user.Address,
+                PostCode = user.PostCode,
+                BirthPlaceId = user.BirthPlaceId,
+                DateOfEmployment = user.DateOfEmployment,
+                DrivingLicence = user.DrivingLicence,
+                Gender = user.Gender,
+                JMBG = user.Jmbg,
+                Nationality = user.Nationality,
+                Pay = user.Pay,
+                PlaceOfResidenceId = user.PlaceOfResidenceId,
+                Position = user.Position,
+                ProfilePhoto = user.ProfilePhoto,
+                ProfilePhotoThumbnail = user.ProfilePhoto,
+                Qualifications = user.Qualifications,
+                WorkExperience = user.WorkExperience
+            };
+
+            var passwd = _crypto.GeneratePassword();
+            newUser.Active = true;
+            newUser.Email = user.Email;
+            newUser.NormalizedEmail = user.Email.ToUpper();
+            newUser.UserName = user.UserName;
+            newUser.NormalizedUserName = user.UserName.ToUpper();
+            newUser.EmailConfirmed = true;
+            newUser.PhoneNumber = user.PhoneNumber;
+            newUser.ConcurrencyStamp = Guid.NewGuid().ToString();
+            newUser.PasswordHash = _passwordHasher.HashPassword(new ApplicationUser(), passwd);
+            newUser.IsEmployee = true;
+            newUser = await _unitOfWork.ApplicationUsersRepository.AddAsync(newUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            var role = await _applicationRolesRepository.GetByRoleLevelOrName((int)Role.Employee, Role.Employee.ToString());
+            await _applicationUserRolesRepository.AddAsync(new ApplicationUserRoleDto
+            {
+                UserId=newUser.Id,
+                RoleId=role.Id
+            });
+            await _unitOfWork.SaveChangesAsync();
+
+            var message = EmailMessages.GeneratePasswordEmail($"{user.FirstName} {user.LastName}", passwd);
+            await _email.Send("Login kredencijali", message, newUser.Email);
+            return newUser;
+        }
+
+        public async Task<ApplicationUserDto> AddClientAsync(ClientInsertDto user)
+        {
+            var newUser = new ApplicationUserDto();
+            newUser.Person = new PersonDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MarriageStatus = user.MarriageStatus,
+                BirthDate = user.BirthDate,
+                Address = user.Address,
+                PostCode = user.PostCode,
+                Gender = user.Gender,
+                Biography=""
+            };
+
+            newUser.Active = true;
+            newUser.Email = user.Email;
+            newUser.NormalizedEmail = user.Email.ToUpper();
+            newUser.UserName = user.UserName;
+            newUser.NormalizedUserName = user.UserName.ToUpper();
+            newUser.PhoneNumber = user.PhoneNumber;
+            newUser.EmailConfirmed = true;
+            newUser.ConcurrencyStamp = Guid.NewGuid().ToString();
+            newUser.PasswordHash = _passwordHasher.HashPassword(new ApplicationUser(), user.Password);
+            newUser.IsClient = true;
+            newUser.CompanyName = user.CompanyName;
+            newUser.IdentificationNumberCompany = user.IdentificationNumberCompany;
+            newUser = await _unitOfWork.ApplicationUsersRepository.AddAsync(newUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            var role = await _applicationRolesRepository.GetByRoleLevelOrName((int)Role.Employee, Role.Employee.ToString());
+            await _applicationUserRolesRepository.AddAsync(new ApplicationUserRoleDto
+            {
+                UserId = newUser.Id,
+                RoleId = role.Id
+            });
+            await _unitOfWork.SaveChangesAsync();
+
+            var message = EmailMessages.GeneratePasswordEmail($"{user.FirstName} {user.LastName}", user.Password);
+            await _email.Send("Login kredencijali", message, newUser.Email);
+            return newUser;
+        }
+
+        public async Task<ApplicationUserDto> EditEmployee(EmployeeInsertDto user)
+        {
+            try
+            {
+                var editUser = await _unitOfWork.ApplicationUsersRepository.GetByIdAsync(user.Id);
+                editUser.Person.FirstName = user.FirstName;
+                editUser.Person.LastName = user.LastName;
+                editUser.Person.MarriageStatus = user.MarriageStatus;
+                editUser.Person.Citizenship = user.Citizenship;
+                editUser.Person.Biography = user.Biography;
+                editUser.Person.MembershipCard = false;
+                editUser.Person.BirthDate = user.BirthDate;
+                editUser.Person.Address = user.Address;
+                editUser.Person.PostCode = user.PostCode;
+                editUser.Person.BirthPlaceId = user.BirthPlaceId;
+                editUser.Person.DateOfEmployment = user.DateOfEmployment;
+                editUser.Person.DrivingLicence = user.DrivingLicence;
+                editUser.Person.Gender = user.Gender;
+                editUser.Person.JMBG = user.Jmbg;
+                editUser.Person.Nationality = user.Nationality;
+                editUser.Person.Pay = user.Pay;
+                editUser.Person.PlaceOfResidenceId = user.PlaceOfResidenceId;
+                editUser.Person.Position = user.Position;
+                editUser.Person.ProfilePhoto = user.ProfilePhoto;
+                editUser.Person.ProfilePhotoThumbnail = user.ProfilePhoto;
+                editUser.Person.Qualifications = user.Qualifications;
+                editUser.Person.WorkExperience = user.WorkExperience;
+
+            editUser.Person.PlaceOfResidence = null;
+            editUser.Person.BirthPlace = null;
+            if(editUser.Person.PlaceOfResidenceId==0)
+            {
+                    editUser.Person.PlaceOfResidenceId = null;
+            }
+            if (editUser.Person.BirthPlaceId == 0)
+            {
+                    editUser.Person.BirthPlaceId= null;
+            }
+            _unitOfWork.PersonsRepository.Update(editUser.Person);
+
+                editUser.Email = user.Email;
+                editUser.NormalizedEmail = user.Email.ToUpper();
+                editUser.UserName = user.UserName;
+                editUser.NormalizedUserName = user.UserName.ToUpper();
+                editUser.IsEmployee = true;
+                editUser.PhoneNumber=user.PhoneNumber;
+                editUser.UserRoles = null;
+                editUser.Person = null;
+            _unitOfWork.ApplicationUsersRepository.Update(editUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            return editUser;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+        public async Task<List<ApplicationUserDto>> GetEmployees()
+        {
+            return await _unitOfWork.ApplicationUsersRepository.GetEmployees();
+        }
+
+        public async Task<List<ApplicationUserDto>> GetClients()
+        {
+            return await _unitOfWork.ApplicationUsersRepository.GetClients();
+        }
+
+        public async Task<EmployeesDashboard> GetEmployeesDashboard()
+        {
+            var employeesDashboard = new EmployeesDashboard();
+
+            employeesDashboard.EmployeesCountByMonth = await _unitOfWork.ApplicationUsersRepository.GetEmployeesClientsCountByMonth(true, false);
+            employeesDashboard.Count = (await _unitOfWork.ApplicationUsersRepository.GetEmployees()).Count();
+            NumberFormatInfo setPrecision = new NumberFormatInfo();
+            setPrecision.NumberDecimalDigits = 2;
+            if (employeesDashboard.Count == 0)
+            {
+                employeesDashboard.AverageEmployees = "0";
+            }
+            else
+            {
+                employeesDashboard.AverageEmployees = (employeesDashboard.EmployeesCountByMonth.Last() / (employeesDashboard.Count*1.00)).ToString("N",setPrecision);
+            }
+
+            return employeesDashboard;
+        }
+
+        public async Task<ClientsDashboard> GetClientsDashboard()
+        {
+            var clientsDashboard = new ClientsDashboard();
+
+            clientsDashboard.ClientsCountByMonth = await _unitOfWork.ApplicationUsersRepository.GetEmployeesClientsCountByMonth(false, true);
+            clientsDashboard.Count = (await _unitOfWork.ApplicationUsersRepository.GetClients()).Count();
+            NumberFormatInfo setPrecision = new NumberFormatInfo();
+            setPrecision.NumberDecimalDigits = 2;
+            if (clientsDashboard.Count == 0)
+            {
+                clientsDashboard.AverageClients = "0";
+            }
+            else
+            {
+                clientsDashboard.AverageClients = (clientsDashboard.ClientsCountByMonth.Last() / (clientsDashboard.Count*1.00)).ToString("N",setPrecision);
+            }
+
+            return clientsDashboard;
+        }
+
+        public async Task ChangePhoto(ApplicationUserDto entityDto)
+        {
+
+            _unitOfWork.PersonsRepository.Update(entityDto.Person);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+
         public async Task<ApplicationUserDto> UpdateAsync(ApplicationUserDto entityDto)
         {
             var result = await _unitOfWork.ExecuteAsync(async () =>
             {
-                //await _unitOfWork.ApplicationUserRolesRepository.SetTrackedValues(entityDto.UserRoles);
-                //_unitOfWork.PersonRepository.Update(entityDto.Person);
-
-                //entityDto.UserRoles = null;
-                //entityDto.Person = null;
 
                 _unitOfWork.ApplicationUsersRepository.Update(entityDto);
 
@@ -40,9 +272,9 @@ namespace Lahor.Services.ApplicationUsersService
             return entityDto;
         }
 
-        public Task<ApplicationUserDto> FindByUserNameAsync(string pUserName)
+        public Task<ApplicationUserDto> FindByUserNameOrEmailAsync(string pUserName)
         {
-            return _unitOfWork.ApplicationUsersRepository.FindByUserNameAsync(pUserName);
+            return _unitOfWork.ApplicationUsersRepository.FindByUserNameOrEmailAsync(pUserName);
         }
 
         public Task<List<ApplicationUserDto>> GetAllAsync()
@@ -50,9 +282,9 @@ namespace Lahor.Services.ApplicationUsersService
             throw new NotImplementedException();
         }
 
-        public Task<ApplicationUserDto> GetByIdAsync(int id)
+        public async Task<ApplicationUserDto> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.ApplicationUsersRepository.GetByIdAsync(id);
         }
 
         public Task RemoveByIdAsync(int id, bool isSoft = true)
@@ -63,6 +295,16 @@ namespace Lahor.Services.ApplicationUsersService
         public void Update(ApplicationUserDto entity)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<EmployeeReportModel>> GetEmployeesReportData(ReportSearchObject reportSearchObject)
+        {
+            return await _unitOfWork.ApplicationUsersRepository.GetEmployeesReportData(reportSearchObject);
+        }
+
+        public async Task<List<ClientReportModel>> GetClientsReportData(ReportSearchObject reportSearchObject)
+        {
+            return await _unitOfWork.ApplicationUsersRepository.GetClientsReportData(reportSearchObject);
         }
 
     }

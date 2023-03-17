@@ -1,59 +1,161 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/news">News</a></li>
-    <li class="breadcrumb-item active" aria-current="page">News Add</li>
+    <li class="breadcrumb-item">
+      <a routerLink="/news">{{ "NEW.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "NEW.ADD_NEWS" | translate }}
+    </li>
   </ol>
 </nav>
-
 <div class="row">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Dodavanje nove obavijesti</h6>
-        <form [formGroup]="myForm">
-          <div class="row">
-          <div class="form-check form-switch mb-4 col-sm-12">
-            <input type="checkbox" class="form-check-input" id="publicNewSwitch" (change)="onChanged($event)" formControlName="public">
-            <label class="form-check-label" for="publicNewSwitch">Javna obavijest</label>
-          </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
+        <h6 class="card-title">{{ "NEW.CREATE.TITLE" | translate }}</h6>
+        <form [formGroup]="form">
+          <div class="row" style="justify-content: space-between">
+            <div class="col-sm-8">
               <div class="mb-3">
-                <label for="inputForNewName" class="form-label">Naziv obavijesti</label>
-                <div style="display: flex; flex-direction: row;">
-                  <p class="text-danger mt-1" style="margin-right: 5px;">*</p>
-                  <input id="inputForNewName" class="form-control" type="text" placeholder="Unesite naziv obavijesti" formControlName="name"/>
+                <div class="form-check form-switch">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="publicNewSwitch"
+                    (change)="onChanged($event)"
+                    formControlName="public"
+                  />
+                  <label
+                    class="form-check-label font-bold"
+                    for="publicNewSwitch"
+                    >{{ "NEW.PUBLIC" | translate }}</label
+                  >
                 </div>
               </div>
-            </div><!-- Col -->
-            <div class="col-sm-6">
               <div class="mb-3">
-                <label class="form-label">Korisnik</label>
-                <input type="text" class="form-control" disabled>
+                <label for="inputForNewName" class="form-label font-bold">{{
+                  "NEW.NAME" | translate
+                }}</label>
+                <span class="warning">*</span>
+                <input
+                  id="inputForNewName"
+                  class="form-control"
+                  type="text"
+                  placeholder="{{ 'NEW.ENTER_NAME' | translate }}"
+                  [ngClass]="{
+                    'is-invalid':
+                      name?.invalid && (name?.dirty || name?.touched)
+                  }"
+                  formControlName="name"
+                  style="margin-bottom: 5px"
+                  required
+                />
+                <div
+                  *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="name?.errors?.['required']">
+                    {{ "NEW.VALIDATORS.NAME" | translate }}
+                  </div>
+                </div>
               </div>
-            </div><!-- Col -->
-          </div><!-- Row -->
-          <div class="row">
-            <div class="col-sm-12">
               <div class="mb-3">
-                <label class="form-label" for="file">Dodaj sliku</label>
-                <input class="form-control" type="file" id="file" (change)="onFileSelected($event)" formControlName="file">
-              </div>
-            </div><!-- Col -->
-          </div><!-- Row -->
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="mb-3">
-                <p><label class="form-label" for="newText">Tekst</label></p>
-                <textarea name="newText" id="newText" placeholder="Unesite tekst obavijesti" style="width: 100%;" rows="10"
-                          formControlName="text">
+                <label class="form-label font-bold" for="text">{{
+                  "NEW.TEXT" | translate
+                }}</label>
+                <span class="warning">*</span>
+                <textarea
+                  class="form-control"
+                  name="text"
+                  id="newText"
+                  placeholder="{{ 'NEW.ENTER_TEXT' | translate }}"
+                  style="width: 100%"
+                  rows="12"
+                  [ngClass]="{
+                    'is-invalid':
+                      text?.invalid && (text?.dirty || text?.touched)
+                  }"
+                  formControlName="text"
+                >
                 </textarea>
+                <div
+                  *ngIf="text?.invalid && (text?.dirty || text?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="text?.errors?.['required']">
+                    {{ "NEW.VALIDATORS.TEXT" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
+            <!-- Col -->
+            <div class="col-sm-4" style="margin-right: 0px">
+              <div class="mb-3">
+                <label class="form-label font-bold" for="file">{{
+                  "NEW.IMAGE" | translate
+                }}</label>
+                <input
+                  class="form-control"
+                  type="file"
+                  id="file"
+                  #file
+                  (change)="onFileSelected($event)"
+                  formControlName="file"
+                  style="display: none"
+                />
+                <img
+                  [src]="imgSrc"
+                  style="
+                    border-radius: 5px;
+                    width: 100%;
+                    height: 390px;
+                    aspect-ratio: 1/1;
+                  "
+                />
+                <button
+                  *ngIf="
+                    imgSrc == '../../../assets/images/others/default_new.webp'
+                  "
+                  type="button"
+                  class="btn btn-success"
+                  (click)="file.click()"
+                  style="margin-top: 10px; width: 100%"
+                >
+                  {{ "SHARED.ADD_IMAGE" | translate }}
+                </button>
+                <button
+                  *ngIf="
+                    imgSrc != '../../../assets/images/others/default_new.webp'
+                  "
+                  type="button"
+                  class="btn btn-success"
+                  (click)="file.click()"
+                  style="margin-top: 10px; width: 100%"
+                >
+                  {{ "SHARED.CHANGE_IMAGE" | translate }}
+                </button>
+              </div>
+            </div>
+            <!-- Col -->
+          </div>
+          <!-- Row -->
+          <div class="row">
+            <div class="col-sm-12"></div>
+            <!-- Col -->
+          </div>
+          <!-- Row -->
+          <div class="row">
+            <div class="col-sm-12"></div>
           </div>
         </form>
-        <button type="submit" class="btn btn-primary submit" (click)="addNew()">Dodaj obavijest</button>
+        <button
+          type="submit"
+          (click)="addNew()"
+          class="btn btn-primary submit"
+          [disabled]="form.invalid"
+        >
+          {{ "NEW.CREATE.ADD_NEW" | translate }}
+        </button>
       </div>
     </div>
   </div>

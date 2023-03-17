@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Lahor.API.Services.ActivityLogger;
-using Lahor.API.Services.UserManager;
+using Lahor.API.Services.AccessManager;
 using Lahor.API.ViewModel;
 using Lahor.Core.Enumerations;
 using Lahor.Shared.Messages;
@@ -12,11 +12,11 @@ namespace Lahor.API.Controllers
     [Route("[controller]/[action]")]
     public class AccessController : ControllerBase
     {
-        private readonly IUserManager _userManager;
+        private readonly IAccessManager _accessManager;
         private readonly IActivityLogger ActivityLogger;
-        public AccessController(IActivityLogger logger, IMapper mapper,IUserManager userManager)  /*:base(logger, mapper)*/
+        public AccessController(IActivityLogger logger, IMapper mapper,IAccessManager accessManager)  /*:base(logger, mapper)*/
         {
-            _userManager = userManager;
+            _accessManager = accessManager;
             ActivityLogger = logger;
         }
 
@@ -28,9 +28,11 @@ namespace Lahor.API.Controllers
 
             try
             {
-                var loginInformation = await _userManager.SignInAsync(viewModel.Email, viewModel.Password, viewModel.RememberMe);
+                var loginInformation = await _accessManager.SignInAsync(viewModel.UserName, viewModel.Password, viewModel.RememberMe);
                 if (loginInformation != null)
+                {
                     return Ok(loginInformation);
+                }
             }
             catch (Exception exception)
             {

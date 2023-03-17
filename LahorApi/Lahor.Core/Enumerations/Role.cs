@@ -6,6 +6,6 @@ namespace Lahor.Core.Enumerations
         Administrator,
         CompanyOwner,
         Client,
-        Worker
+        Employee
     }
 }

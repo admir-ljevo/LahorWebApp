@@ -1,0 +1,206 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/reporting">{{ "REPORTING.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "REPORTING.ACTIVE_SERVICES" | translate }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="createReport(form.value)">
+          <div class="row">
+            <h6 class="card-title col-sm-10">
+              {{ "REPORTING.ACTIVE_SERVICES" | translate }}
+            </h6>
+            <p class="text-muted tx-13 mb-3 mb-md-0">
+              {{ "REPORTING.ACTIVE_SERVICES_TEXT" | translate }}
+            </p>
+            <p class="text-muted tx-13 mb-3 mb-md-3">
+              {{ "REPORTING.ACTIVE_SERVICES_RULE" | translate }}
+            </p>
+            <div
+              class="d-flex align-items-center flex-wrap text-nowrap mt-4 mb-5"
+            >
+              <div class="input-group wd-350" style="margin-right: 10%">
+                <label style="margin-top: 8px; margin-right: 20px">{{
+                  "SHARED.DATE_FROM" | translate
+                }}</label>
+                <button
+                  class="btn btn-outline-primary btn-icon"
+                  type="button"
+                  (click)="d.toggle()"
+                >
+                  <i
+                    class="feather icon-calendar btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                </button>
+                <input
+                  class="form-control border-primary bg-transparent"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  ngbDatepicker
+                  formControlName="dateFrom"
+                  #d="ngbDatepicker"
+                  [ngClass]="{
+                    'is-invalid':
+                      dateFrom?.invalid &&
+                      (dateFrom?.dirty || dateFrom?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="
+                    dateFrom?.invalid && (dateFrom?.dirty || dateFrom?.touched)
+                  "
+                  class="invalid-feedback"
+                  style="margin-left: 82px"
+                >
+                  <div *ngIf="dateFrom?.errors?.['required']">
+                    {{ "REPORTING.VALIDATORS.DATE" | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="input-group wd-350">
+                <label style="margin-top: 8px; margin-right: 20px">{{
+                  "SHARED.DATE_TO" | translate
+                }}</label>
+                <button
+                  class="btn btn-outline-primary btn-icon"
+                  type="button"
+                  (click)="d2.toggle()"
+                >
+                  <i
+                    class="feather icon-calendar btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                </button>
+                <input
+                  class="form-control border-primary bg-transparent"
+                  placeholder="yyyy-mm-dd"
+                  name="dp2"
+                  formControlName="dateTo"
+                  ngbDatepicker
+                  #d2="ngbDatepicker"
+                  [ngClass]="{
+                    'is-invalid':
+                      dateTo?.invalid && (dateTo?.dirty || dateTo?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="dateTo?.invalid && (dateTo?.dirty || dateTo?.touched)"
+                  class="invalid-feedback"
+                  style="margin-left: 82px"
+                >
+                  <div *ngIf="dateTo?.errors?.['required']">
+                    {{ "REPORTING.VALIDATORS.DATE" | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 mb-6 height d-flex justify-content-left">
+              <div class="col-md-2">
+                <button
+                  type="submit"
+                  [disabled]="form.invalid"
+                  class="btn btn-primary btn-icon-text"
+                >
+                  <i class="feather icon-plus btn-icon-prepend"></i>
+                  {{ "SHARED.CREATE_REPORT" | translate }}
+                </button>
+              </div>
+              <div class="col-md-1">
+                <button
+                  type="button"
+                  (click)="printReport(form.value)"
+                  [disabled]="form.invalid"
+                  class="btn btn-outline-primary btn-icon-text"
+                >
+                  <i
+                    class="feather icon-printer btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                  {{ "SHARED.PRINT" | translate }}
+                </button>
+              </div>
+              <div class="col-md-2">
+                <button
+                  type="button"
+                  (click)="downloadReport(form.value)"
+                  [disabled]="form.invalid"
+                  class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0"
+                >
+                  <i
+                    class="feather icon-download-cloud btn-icon-prepend"
+                    appFeatherIcon
+                  ></i>
+                  {{ "SHARED.DOWNLOAD_REPORT" | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="table-responsive" *ngIf="services != null">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ "SHARED.COLUMNS.NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.TYPE_OF_SERVICE" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE1" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE2" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE3" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE4" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE5" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.PRICE6" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let service of services">
+                <td>{{ service.name }}</td>
+                <td>{{ service.typeOfService.name }}</td>
+                <td>{{ service.levelsPrices[0].price }} KM</td>
+                <td>{{ service.levelsPrices[1].price }} KM</td>
+                <td>{{ service.levelsPrices[2].price }} KM</td>
+                <td>{{ service.levelsPrices[3].price }} KM</td>
+                <td>{{ service.levelsPrices[4].price }} KM</td>
+                <td>{{ service.levelsPrices[5].price }} KM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <div class="row" *ngIf="services != null">
+          <div class="col-sm-8 pagination">
+            <ngb-pagination
+              class="pagination-rounded"
+              [collectionSize]="collectionSize"
+              [(page)]="currentPage"
+              [boundaryLinks]="true"
+              [maxSize]="3"
+              [rotate]="true"
+              (pageChange)="getAll()"
+              aria-label="Default pagination"
+            ></ngb-pagination>
+            <ng-select
+              class="col-sm-1"
+              style="margin-left: 30px"
+              [items]="itemsPerPage"
+              [searchable]="false"
+              [(ngModel)]="pageSize"
+              [clearable]="false"
+              (change)="getAll()"
+            >
+            </ng-select>
+            <span style="margin-top: 5px; margin-left: 10px"
+              >Items per page</span
+            >
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

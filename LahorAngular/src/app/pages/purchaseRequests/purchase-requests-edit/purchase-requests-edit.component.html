@@ -1,0 +1,67 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Edit purchase requests</li>
+  </ol>
+</nav>
+
+
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Edit</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputName" class="form-label">Naziv</label>
+                <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Name" [(ngModel)]="purchaseRequest.name">
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputDescription" class="form-label">Opis</label>
+                <input type="text" name="inputDescription" id="inputDescription" class="form-control" placeholder="Description" [(ngModel)]="purchaseRequest.description">
+              </div>
+            </div><!-- Col -->
+          </div><!-- Row -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputDate"class="form-label">Datum kupovine</label>
+                <input type="text" name="inputDate" id="inputDate" class="form-control" placeholder="Nije izvršena nabavka" disabled value="{{purchaseRequest.datePurchased | date:'dd.MM.yyyy hh:mm'}}">
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label  for="inputUser" class="form-label">Korisnik</label>
+                <input type="text" name="inputUser" id="inputUser" class="form-control" placeholder="User" disabled value="{{purchaseRequest.employee.person.firstName}} {{purchaseRequest.employee.person.lastName}}">
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice" class="form-label">Ukupna cijena</label>
+                <input type="number" name="inputPrice" id="inputPrice" class="form-control" placeholder="Enter zip code" disabled [(ngModel)]="purchaseRequest.price" >
+              </div>
+            </div><!-- Col -->
+          </div><!-- Row -->
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-check mb-2">
+                <input type="checkbox" class="form-check-input" id="checkDefault" name="checkDefault"
+                       (change)="onChanged($event)"
+                       [(ngModel)]="purchaseRequest.isCompleted"
+                       [checked]="purchaseRequest.isCompleted">
+                <label class="form-check-label" for="checkDefault">Kompletirana</label>
+              </div>
+
+            </div>
+
+          </div><!-- Row -->
+        </form>
+        <button type="button" class="btn btn-primary submit" (click)="editPurchaseRequest()" >Izmijeni zahtjev</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Materials</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h6 class="card-title col-sm-10">Materijali</h6>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addMaterial()">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj materijal
+            </button>
+          </div>
+          <div class="col-sm-4">
+            <div class="mb-3">
+              <label class="form-label">Pretraga</label>
+              <input type="text" class="form-control" placeholder="Pretraga po imenu" [(ngModel)]="nameFilter" (input)="getMaterials()" >
+            </div>
+          </div>
+
+
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th id="name" [ngStyle]="{'color': tableHeadingColor}" (click)="sortData($event)" >NAME</th>
+              <th id="createdAt" (click)="sortData($event)">DATE CREATED</th>
+              <th id="modifiedAt" (click)="sortData($event)" >DATE MODIFIED</th>
+              <th id="price" (click)="sortData($event)" >PRICE</th>
+              <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of materials$|async">
+              <th>{{new.name}}</th>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{new.modifiedAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{new.price}} KM </td>
+              <td>
+                <i type="button" class="feather icon-edit" (click)="editMaterial(new)"  ></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal, new)"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #basicModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Brisanje materijala</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <p>Da li ste sigurni da želite obrisati materijal?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="deleteMaterial(modal)"  [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Successfully deleted', icon: 'success'}">Da</button>
+    </div>
+  </ng-template>

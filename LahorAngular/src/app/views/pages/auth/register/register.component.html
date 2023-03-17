@@ -1,43 +1,470 @@
 <div class="row w-100 mx-0 auth-page">
-  <div class="col-md-8 col-xl-6 mx-auto">
-    <div class="card">
-      <div class="row">
-        <div class="col-md-4 pe-md-0">
-          <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(https://via.placeholder.com/219x452)' }">
-
-          </div>
-        </div>
-        <div class="col-md-8 ps-md-0">
+  <div class="row">
+    <div class="col-md-10 col-xl-8 mx-auto">
+      <div class="card">
+        <div class="row">
           <div class="auth-form-wrapper px-4 py-5">
-            <a routerLink="." class="nobleui-logo d-block mb-2">Noble<span>UI</span></a>
-            <h5 class="text-muted fw-normal mb-4">Create a free account.</h5>
-            <form class="forms-sample">
-              <div class="mb-3">
-                <label for="exampleInputUsername1" class="form-label">Username</label>
-                <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="Username" placeholder="Username">
+            <a routerLink="." class="nobleui-logo d-block mb-2"
+              >Lahor<span>App</span></a
+            >
+            <h5 class="text-muted fw-normal mb-4">Registracija</h5>
+            <form
+              class="forms-sample"
+              [formGroup]="form"
+              (ngSubmit)="registerClient(form.value)"
+            >
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label">Ime</label>
+                    <input
+                      id="firstName"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite ime"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.firstName?.invalid &&
+                          (formControls.firstName?.dirty ||
+                            formControls.firstName?.touched)
+                      }"
+                      formControlName="firstName"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.firstName?.invalid &&
+                        (formControls.firstName?.dirty ||
+                          formControls.firstName?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.firstName?.errors?.['required']">
+                        Ime je obavezno
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="lastName" class="form-label">Prezime</label>
+                    <input
+                      id="lastName"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite prezime"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.lastName?.invalid &&
+                          (formControls.lastName?.dirty ||
+                            formControls.lastName?.touched)
+                      }"
+                      formControlName="lastName"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.lastName?.invalid &&
+                        (formControls.lastName?.dirty ||
+                          formControls.lastName?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.lastName?.errors?.['required']">
+                        Prezime je obavezno
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                      id="email"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite email"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.email?.invalid &&
+                          (formControls.email?.dirty ||
+                            formControls.email?.touched)
+                      }"
+                      formControlName="email"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.email?.invalid &&
+                        (formControls.email?.dirty ||
+                          formControls.email?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.email?.errors?.['required']">
+                        Email je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="userName" class="form-label"
+                      >Korisničko ime</label
+                    >
+                    <input
+                      id="userName"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite korisničko ime"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.userName?.invalid &&
+                          (formControls.userName?.dirty ||
+                            formControls.userName?.touched)
+                      }"
+                      formControlName="userName"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.userName?.invalid &&
+                        (formControls.userName?.dirty ||
+                          formControls.userName?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.userName?.errors?.['required']">
+                        Korisničko ime je obavezno
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Password">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="password" class="form-label">Šifra</label>
+                    <input
+                      id="password"
+                      class="form-control"
+                      type="password"
+                      placeholder="Unesite šifru"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.password?.invalid &&
+                          (formControls.password?.dirty ||
+                            formControls.password?.touched)
+                      }"
+                      formControlName="password"
+                      (ngModelChange)="checkPasswords()"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.password?.invalid &&
+                        (formControls.password?.dirty ||
+                          formControls.password?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.password?.errors?.['required']">
+                        Šifra je obavezna
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="userName" class="form-label"
+                      >Potvrdi šifru</label
+                    >
+                    <input
+                      id="confirmPassword"
+                      class="form-control"
+                      type="password"
+                      placeholder="Unesite potvrdu šifre"
+                      [ngClass]="{
+                        'is-invalid':
+                          (formControls.confirmPassword?.invalid &&
+                            (formControls.confirmPassword?.dirty ||
+                              formControls.confirmPassword?.touched)) ||
+                          differentPass === true
+                      }"
+                      formControlName="confirmPassword"
+                      (ngModelChange)="checkPasswords()"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.confirmPassword?.invalid &&
+                        (formControls.confirmPassword?.dirty ||
+                          formControls.confirmPassword?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="formControls.confirmPassword?.errors?.['required']"
+                      >
+                        Potvrda šifre je obavezna
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="differentPass == true"
+                      style="
+                        color: rgba(255, 51, 102, 0.9);
+                        font-size: smaller;
+                        margin-top: 5px;
+                      "
+                    >
+                      Šifre se ne podudaraju
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="authCheck">
-                <label class="form-check-label" for="authCheck">
-                  Remember me
-                </label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label"
+                      >Broj telefona</label
+                    >
+                    <input
+                      id="phoneNumber"
+                      class="form-control"
+                      placeholder="Unesite broj telefona"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.phoneNumber?.invalid &&
+                          (formControls.phoneNumber?.dirty ||
+                            formControls.phoneNumber?.touched)
+                      }"
+                      formControlName="phoneNumber"
+                      prefix="+387 "
+                      mask="(000) 000 000"
+                      [showMaskTyped]="true"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.phoneNumber?.invalid &&
+                        (formControls.phoneNumber?.dirty ||
+                          formControls.phoneNumber?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="formControls.phoneNumber?.errors?.['required']"
+                      >
+                        Broj telefona je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="birthDate" class="form-label"
+                      >Datum rođenja</label
+                    >
+                    <div class="input-group">
+                      <button
+                        class="btn btn-outline-light btn-icon"
+                        type="button"
+                        (click)="d.toggle()"
+                      >
+                        <i
+                          class="feather icon-calendar btn-icon-prepend"
+                          appFeatherIcon
+                        ></i>
+                      </button>
+                      <input
+                        class="form-control border-light bg-transparent"
+                        placeholder="yyyy-mm-dd"
+                        name="dp"
+                        ngbDatepicker
+                        formControlName="birthDate"
+                        #d="ngbDatepicker"
+                        [ngClass]="{
+                          'is-invalid':
+                            formControls.birthDate?.invalid &&
+                            (formControls.birthDate?.dirty ||
+                              formControls.birthDate?.touched)
+                        }"
+                      />
+                    </div>
+                    <div
+                      *ngIf="
+                        formControls.birthDate?.invalid &&
+                        (formControls.birthDate?.dirty ||
+                          formControls.birthDate?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.birthDate?.errors?.['required']">
+                        Datum rođenja je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="gender" class="form-label">Spol</label>
+                    <ng-select
+                      [items]="genders"
+                      bindLabel="label"
+                      bindValue="id"
+                      [multiple]="false"
+                      placeholder="Odaberite spol"
+                      formControlName="gender"
+                    >
+                    </ng-select>
+                    <div
+                      *ngIf="
+                        formControls.gender?.invalid &&
+                        (formControls.gender?.dirty ||
+                          formControls.gender?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.gender?.errors?.['required']">
+                        Spol je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="marriageStatus" class="form-label"
+                      >Bračni status</label
+                    >
+                    <ng-select
+                      [items]="marriageStatuses"
+                      bindLabel="label"
+                      bindValue="id"
+                      [multiple]="false"
+                      placeholder="Odaberite bračni status"
+                      formControlName="marriageStatus"
+                    >
+                    </ng-select>
+                    <div
+                      *ngIf="
+                        formControls.marriageStatus?.invalid &&
+                        (formControls.marriageStatus?.dirty ||
+                          formControls.marriageStatus?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="formControls.marriageStatus?.errors?.['required']"
+                      >
+                        Bračni status je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="address" class="form-label">Adresa</label>
+                    <input
+                      id="address"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite adresu"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.address?.invalid &&
+                          (formControls.address?.dirty ||
+                            formControls.address?.touched)
+                      }"
+                      formControlName="address"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.address?.invalid &&
+                        (formControls.address?.dirty ||
+                          formControls.address?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.address?.errors?.['required']">
+                        Adresa je obavezna
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="postCode" class="form-label"
+                      >Poštanski broj</label
+                    >
+                    <input
+                      id="postCode"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite poštanski broj"
+                      [ngClass]="{
+                        'is-invalid':
+                          formControls.postCode?.invalid &&
+                          (formControls.postCode?.dirty ||
+                            formControls.postCode?.touched)
+                      }"
+                      formControlName="postCode"
+                    />
+                    <div
+                      *ngIf="
+                        formControls.postCode?.invalid &&
+                        (formControls.postCode?.dirty ||
+                          formControls.postCode?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="formControls.postCode?.errors?.['required']">
+                        Poštanski broj je obavezan
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="Company name" class="form-label"
+                      >Poslovna jedinica</label
+                    >
+                    <input
+                      id="companyName"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite naziv poslovne jedinice"
+                      formControlName="companyName"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="mb-3">
+                    <label for="identificationNumberCompany" class="form-label"
+                      >Identifikacioni broj
+                    </label>
+                    <input
+                      id="identificationNumberCompany"
+                      class="form-control"
+                      type="text"
+                      placeholder="Unesite identifikacioni broj poslovne jedinice"
+                      formControlName="identificationNumberCompany"
+                    />
+                  </div>
+                </div>
               </div>
               <div>
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button>
-                <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
-                  <i class="feather icon-twitter btn-icon-prepend"></i>
-                  Sign up with twitter
+                <button
+                  type="submit"
+                  [disabled]="!form.valid"
+                  class="btn btn-primary me-2 mb-2 mb-md-0"
+                >
+                  Registriraj se
                 </button>
               </div>
-              <a routerLink="/auth/login" class="d-block mt-3 text-muted">Already a user? Sign in</a>
+              <a routerLink="/auth/login" class="d-block mt-3 text-muted"
+                >Imate račun? Prijavi se</a
+              >
             </form>
           </div>
         </div>

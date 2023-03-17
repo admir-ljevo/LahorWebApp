@@ -55,5 +55,10 @@ namespace Lahor.API.Services.FileManager
         {
             return "/" + path.Replace(Path.DirectorySeparatorChar, '/');
         }
+
+        public string GeneratePathForReport(string path)
+        {
+            return "https://api.p2100.app.fit.ba//uploads/" + path;
+        }
     }
 }

@@ -1,0 +1,35 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/purchase-requests">Materials</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add Materials</li>
+  </ol>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Novi materijal</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputName" class="form-label" >Naziv materjala</label>
+                <input type="text" name="inputName" id="inputName" [(ngModel)]="material.name" class="form-control" placeholder="Material name">
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputPrice" class="form-label">Cijena KM</label>
+                <input type="number" id="inputPrice" name="inputPrice" [(ngModel)]="material.price" class="form-control" placeholder="Cijena KM">
+              </div>
+            </div>
+          </div>
+
+        </form>
+        <button type="button" class="btn btn-primary submit" (click)="addMaterial()">Dodaj nabavku</button>
+      </div>
+    </div>
+  </div>
+</div>

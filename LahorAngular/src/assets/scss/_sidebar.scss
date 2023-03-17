@@ -25,7 +25,7 @@
     .sidebar-open & {
       border-bottom: 1px solid $border-color;;
     }
-  
+
     .sidebar-brand {
       opacity: 1;
       visibility: visible;
@@ -48,41 +48,41 @@
         transition: all .3s;
         position: relative;
       }
-      
+
       span + span {
         margin-top: 4px;
       }
-      
+
       &.active span:nth-child(1) {
         -webkit-animation: ease .6s top forwards;
                 animation: ease .6s top forwards;
       }
-      
+
       &.not-active span:nth-child(1) {
         -webkit-animation: ease .6s top-2 forwards;
                 animation: ease .6s top-2 forwards;
       }
-      
+
       &.active span:nth-child(2) {
         -webkit-animation: ease .6s scaled forwards;
                 animation: ease .6s scaled forwards;
       }
-      
+
       &.not-active span:nth-child(2) {
         -webkit-animation: ease .6s scaled-2 forwards;
                 animation: ease .6s scaled-2 forwards;
       }
-      
+
       &.active span:nth-child(3) {
         -webkit-animation: ease .6s bottom forwards;
                 animation: ease .6s bottom forwards;
       }
-      
+
       &.not-active span:nth-child(3) {
         -webkit-animation: ease .6s bottom-2 forwards;
                 animation: ease .6s bottom-2 forwards;
       }
-      
+
       @-webkit-keyframes top {
         0% {
           top: 0;
@@ -100,7 +100,7 @@
                   transform: rotate(45deg);
         }
       }
-      
+
       @keyframes top {
         0% {
           top: 0;
@@ -118,7 +118,7 @@
                   transform: rotate(45deg);
         }
       }
-      
+
       @-webkit-keyframes top-2 {
         0% {
           top: 6px;
@@ -136,7 +136,7 @@
                   transform: rotate(0deg);
         }
       }
-      
+
       @keyframes top-2 {
         0% {
           top: 6px;
@@ -154,7 +154,7 @@
                   transform: rotate(0deg);
         }
       }
-      
+
       @-webkit-keyframes bottom {
         0% {
           bottom: 0;
@@ -172,7 +172,7 @@
                   transform: rotate(135deg);
         }
       }
-      
+
       @keyframes bottom {
         0% {
           bottom: 0;
@@ -190,7 +190,7 @@
                   transform: rotate(135deg);
         }
       }
-      
+
       @-webkit-keyframes bottom-2 {
         0% {
           bottom: 6px;
@@ -208,7 +208,7 @@
                   transform: rotate(0);
         }
       }
-      
+
       @keyframes bottom-2 {
         0% {
           bottom: 6px;
@@ -226,7 +226,7 @@
                   transform: rotate(0);
         }
       }
-      
+
       @-webkit-keyframes scaled {
         50% {
           -webkit-transform: scale(0);
@@ -237,7 +237,7 @@
                   transform: scale(0);
         }
       }
-      
+
       @keyframes scaled {
         50% {
           -webkit-transform: scale(0);
@@ -248,7 +248,7 @@
                   transform: scale(0);
         }
       }
-      
+
       @-webkit-keyframes scaled-2 {
         0% {
           -webkit-transform: scale(0);
@@ -263,7 +263,7 @@
                   transform: scale(1);
         }
       }
-      
+
       @keyframes scaled-2 {
         0% {
           -webkit-transform: scale(0);
@@ -286,8 +286,8 @@
     border-right: 1px solid $border-color;
     height: 100%;
     -webkit-box-shadow: 0 8px 10px 0 rgba(183,192,206,.2);
-            box-shadow: 0 8px 10px 0 rgba(183,192,206,.2); 
-    background: $card-bg;   
+            box-shadow: 0 8px 10px 0 rgba(183,192,206,.2);
+    background: $sidebar-dark-bg;
     .sidebar-nav {
       list-style: none;
       padding: 25px 25px 50px 25px;
@@ -299,13 +299,13 @@
           padding: 0;
           height: 32px;
           white-space: nowrap;
-          color: $body-color;
+          color: white;
           .link-icon {
             width: 16px;
             // height: 16px;
-            fill: rgba(233, 236, 239, 0.21);
+            fill: none;
             position: absolute;
-            color: inherit;
+            color: white;
           }
           .link-title {
             margin-left: 30px;
@@ -352,7 +352,7 @@
             }
             .link-icon {
               color: $primary;
-              fill: rgba(239, 243, 255, .5);
+              fill: none;
             }
           }
         }
@@ -372,7 +372,7 @@
               left: -25px;
             }
             .link-icon {
-              fill: rgba(239, 243, 255, .5);
+              fill: none;
               color: $primary;
             }
           }
@@ -384,7 +384,7 @@
           position: relative;
           .nav-link {
             height: 25px;
-            color: $body-color;
+            color: white;
             font-size: 13px;
             -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
@@ -406,7 +406,7 @@
               color: $primary;
               &::before {
               border: 1px solid $primary;
-              background: $primary;       
+              background: $primary;
               }
             }
             .link-title {
@@ -417,7 +417,7 @@
               margin-left: 3px;
               &::before {
                 border: 1px solid $primary;
-                background: $primary;       
+                background: $primary;
               }
             }
           }

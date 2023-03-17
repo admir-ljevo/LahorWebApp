@@ -1,20 +1,24 @@
+using Lahor.API.Services.AccessManager;
 using Lahor.API.Services.ActivityLogger;
+using Lahor.API.Services.EnumManager;
 using Lahor.API.Services.FileManager;
-using Lahor.API.Services.UserManager;
 using Lahor.Core.Entities.Identity;
 using Lahor.Infrastructure;
 using Lahor.Infrastructure.Mapper;
+using Lahor.Infrastructure.Repositories.ApplicationRolesRepository;
 using Lahor.Infrastructure.Repositories.ApplicationUserRolesRepository;
 using Lahor.Infrastructure.Repositories.ApplicationUsersRepository;
 using Lahor.Infrastructure.Repositories.DeviceBrandRepository;
 using Lahor.Infrastructure.Repositories.DeviceRepository;
 using Lahor.Infrastructure.Repositories.DeviceTypeRepository;
+using Lahor.Infrastructure.Repositories.CitiesRepository;
+using Lahor.Infrastructure.Repositories.CountriesRepository;
 using Lahor.Infrastructure.Repositories.LevelOfServiceExecutionsRepository;
 using Lahor.Infrastructure.Repositories.LogsRepository;
 using Lahor.Infrastructure.Repositories.MaterialRepository;
 using Lahor.Infrastructure.Repositories.MaterialRequestsRepository;
 using Lahor.Infrastructure.Repositories.NewsRepository;
-using Lahor.Infrastructure.Repositories.NotesRepository;
+using Lahor.Infrastructure.Repositories.NotificationsRepository;
 using Lahor.Infrastructure.Repositories.OrdersRepository;
 using Lahor.Infrastructure.Repositories.OrdersServicesLevelsRepository;
 using Lahor.Infrastructure.Repositories.PurchaseRequestRepository;
@@ -22,6 +26,7 @@ using Lahor.Infrastructure.Repositories.ServicesLevelsPriceRepository;
 using Lahor.Infrastructure.Repositories.ServicesRepository;
 using Lahor.Infrastructure.Repositories.TypeOfServicesRepository;
 using Lahor.Infrastructure.UnitOfWork;
+using Lahor.Services.ApplicationRolesService;
 using Lahor.Services.ApplicationUserRolesService;
 using Lahor.Services.ApplicationUsersService;
 using Lahor.Services.DeviceBrandService;
@@ -31,23 +36,36 @@ using Lahor.Services.LdevelOfServiceExecutionsService;
 using Lahor.Services.LevelOfServiceExecutionsService;
 using Lahor.Services.MaterialRequestsService;
 using Lahor.Services.MaterialService;
+using Lahor.Services.CitiesService;
+using Lahor.Services.CountriesService;
 using Lahor.Services.NewsService;
-using Lahor.Services.NotesServices;
+using Lahor.Services.NotificationsService;
 using Lahor.Services.OrdersService;
 using Lahor.Services.OrdersServicesLevelsService;
 using Lahor.Services.PurchaseRequestService;
+using Lahor.Services.ReportService;
 using Lahor.Services.ServicesService;
 using Lahor.Services.TypeOfServicesService;
+using Lahor.Shared.Constants;
 using Lahor.Shared.LoggedUserData;
 using Lahor.Shared.Models;
 using Lahor.Shared.Services.Crypto;
+using Lahor.Shared.Services.Email;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using Lahor.Infrastructure.Repositories.PersonsRepository;
+using Microsoft.ReportingServices.Interfaces;
+using Lahor.API;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,18 +91,27 @@ builder.Services.AddAutoMapper(typeof(Program), typeof(Profiles));
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
 
 #endregion
 
 #region CustomServices
 
-builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddScoped<IAccessManager, AccessManager>();
 builder.Services.AddScoped<IActivityLogger, ActivityLogger>();
 builder.Services.AddSingleton<ICrypto, Crypto>();
+builder.Services.AddSingleton<IEmail, Email>();
 builder.Services.AddScoped<IFileManager, FileManager>();
+builder.Services.AddScoped<IEnumManager, EnumManager>();
 
 
 #endregion
@@ -94,8 +121,9 @@ builder.Services.AddScoped<IFileManager, FileManager>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ILogsRepository, LogsRepository>();
 builder.Services.AddScoped<IApplicationUsersRepository, ApplicationUsersRepository>();
+builder.Services.AddScoped<IApplicationRolesRepository, ApplicationRolesRepository>();
 builder.Services.AddScoped<IApplicationUserRolesRepository, ApplicationUserRolesRepository>();
-builder.Services.AddScoped<INotesRepository, NotesRepository>();
+builder.Services.AddScoped<INotificationsRepository, NotificationsRepository>();
 builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
 builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
@@ -109,6 +137,11 @@ builder.Services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
 builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
 builder.Services.AddScoped<IPurchaseRequestRepository, PurchaseRequestRepository>();
 builder.Services.AddScoped<IMaterialRequestsRepository, MaterialRequestsRepository>();
+builder.Services.AddScoped<IServicesLevelsPriceRepository, ServicesLevelsPriceRepository>();
+builder.Services.AddScoped<ILevelOfServiceExecutionsRepository, LevelOfServiceExecutionsRepository>();
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
+builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
+builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
 
 #endregion
 
@@ -116,7 +149,8 @@ builder.Services.AddScoped<IMaterialRequestsRepository, MaterialRequestsReposito
 
 builder.Services.AddScoped<IApplicationUsersService, ApplicationUsersService>();
 builder.Services.AddScoped<IApplicationUserRolesService, ApplicationUserRolesService>();
-builder.Services.AddScoped<INotesService, NotesService>();
+builder.Services.AddScoped<IApplicationRolesService, ApplicationRolesService>();
+builder.Services.AddScoped<INotificationsService, NotificationsService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IServicesService, ServicesService>();
@@ -129,6 +163,9 @@ builder.Services.AddScoped<IDeviceTypeService, DeviceTypeService>();
 builder.Services.AddScoped<IMaterialRequestsService, MaterialRequestsService>();
 builder.Services.AddScoped<IMaterialService,MaterialService>();
 builder.Services.AddScoped<IPurchaseRequestService, PurchaseRequestService>();
+builder.Services.AddScoped<ICitiesService, CitiesService>();
+builder.Services.AddScoped<ICountriesService, CountriesService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 #endregion
 
@@ -160,22 +197,15 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 .AddDefaultTokenProviders();
 
 
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromMinutes(30));
+builder.Services.AddSwaggerGen(options => {
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
-        {
-            options.LoginPath = new PathString("/access/sigin");
-            options.LogoutPath = new PathString("/access/signOut");
-            options.AccessDeniedPath = new PathString("/error/403");
-        });
-
-builder.Services.Configure<AuthenticationOptions>(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
 
 builder.Services.AddAuthentication(x =>
@@ -185,18 +215,13 @@ builder.Services.AddAuthentication(x =>
 }).AddJwtBearer(
               options =>
               {
-                  var key = Encoding.ASCII.GetBytes(builder.Configuration["JWTConfig:Key"]);
-                  var issuer = builder.Configuration["JWTConfig:Issuer"];
-                  var audience = builder.Configuration["JWTConfig:Audience"];
                   options.TokenValidationParameters = new TokenValidationParameters()
                   {
                       ValidateIssuerSigningKey = true,
-                      IssuerSigningKey = new SymmetricSecurityKey(key),
-                      ValidateIssuer = true,
-                      ValidateAudience = true,
-                      RequireExpirationTime = true,
-                      ValidIssuer = issuer,
-                      ValidAudience = audience
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection(ConfigurationValues.TokenKey).Value)),
+                      ValidateIssuer = false,
+                      ValidateAudience = false,
+                      ValidateLifetime = true
                   };
               });
 
@@ -207,15 +232,20 @@ var app = builder.Build();
 #region App
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+});
+app.UseDeveloperExceptionPage();
+//}
 
 app.UseHttpsRedirection();
 app.UseSession();
 app.UseAuthentication();
+app.UseStaticFiles();
 
 // global cors policy
 app.UseCors(x => x
@@ -227,6 +257,7 @@ app.UseCors(x => x
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<NotificationsHub>("/hubs/notifications");
 
 await app.RunAsync();
 #endregion

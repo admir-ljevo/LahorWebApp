@@ -1,0 +1,60 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Servisne radnje</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h6 class="card-title col-sm-10">Servisne radnje</h6>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-icon-text">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj radnju
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DATE CREATED</th>
+              <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of levelsOfServiceExecution$|async">
+              <th>{{new.name}}</th>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>
+                <i type="button" class="feather icon-edit" style="margin-right: 10px;"></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal,new)"></i>
+                <button type="button" class="btn btn-primary"><i type="button" class="feather icon-edit" style="margin-right: 10px;"></i> Dodaj uslugu</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Brisanje obavijesti</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Da li ste sigurni da želite obrisati obavijest?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="deleteLevel(modal)"  [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Deleted is succesfully', icon: 'success'}">Da</button>
+  </div>
+</ng-template>

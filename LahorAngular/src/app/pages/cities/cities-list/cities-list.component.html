@@ -1,0 +1,292 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "CITY.TITLE" | translate }}
+    </li>
+  </ol>
+</nav>
+
+<div class="row" *ngIf="cities != null">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" style="margin-bottom: 40px">
+          <h6 class="card-title col-sm-10">{{ "CITY.TITLE" | translate }}</h6>
+          <div class="col-sm-10 height d-flex justify-content-left">
+            <div class="col-md-3">
+              <div class="search">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="search.searchFilter"
+                  placeholder="{{ 'SHARED.SEARCH' | translate }}"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <ng-select
+                class="searchDropdown"
+                [items]="countries"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="false"
+                placeholder="{{ 'CITY.ENTER_COUNTRY' | translate }}"
+                [(ngModel)]="selectedCountryId"
+              >
+              </ng-select>
+            </div>
+            <button class="btn btn-primary" (click)="getAll()">
+              {{ "SHARED.SEARCH" | translate }}
+              <i class="mdi mdi-magnify"></i>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button
+              type="button"
+              class="btn btn-primary btn-icon-text"
+              (click)="openAddEditModal(modalAddEditCity, null)"
+            >
+              <i class="feather icon-plus btn-icon-prepend"></i>
+              {{ "CITY.CREATE.ADD_CITY" | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ "SHARED.COLUMNS.NAME" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.ABRV" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.COUNTRY" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.FAVORITE" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_CREATED" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.DATE_MODIFIED" | translate }}</th>
+                <th>{{ "SHARED.COLUMNS.ACTIONS" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let city of cities">
+                <th>{{ city.name }}</th>
+                <th>{{ city.abrv }}</th>
+                <th>{{ city.country.name }}</th>
+                <th>
+                  <input type="checkbox" [(ngModel)]="city.favorite" disabled />
+                </th>
+                <td>{{ city.createdAt | date : "dd.MM.yyyy" }}</td>
+                <td>{{ city.modifiedAt | date : "dd.MM.yyyy" }}</td>
+                <td>
+                  <i
+                    type="button"
+                    class="feather icon-edit"
+                    (click)="openAddEditModal(modalAddEditCity, city)"
+                    style="margin-right: 10px"
+                    placement="top"
+                    ngbTooltip="Edit"
+                  ></i>
+                  <i
+                    type="button"
+                    class="feather icon-trash"
+                    (click)="openDeleteModal(modalDeleteCity, city)"
+                    placement="top"
+                    ngbTooltip="Delete"
+                  ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-8 pagination">
+            <ngb-pagination
+              class="pagination-rounded"
+              [collectionSize]="collectionSize"
+              [(page)]="currentPage"
+              [boundaryLinks]="true"
+              [maxSize]="3"
+              [rotate]="true"
+              (pageChange)="getAll()"
+              aria-label="Default pagination"
+            ></ngb-pagination>
+            <ng-select
+              class="col-sm-1"
+              style="margin-left: 30px"
+              [items]="itemsPerPage"
+              [searchable]="false"
+              [(ngModel)]="pageSize"
+              [clearable]="false"
+              (change)="getAll()"
+            >
+            </ng-select>
+            <span style="margin-top: 5px; margin-left: 10px">{{
+              "SHARED.ITEMS_PER_PAGE" | translate
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 1 -->
+<ng-template #modalDeleteCity let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      {{ "CITY.DELETE.DELETE_CITY" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>{{ "CITY.DELETE.QUESTION" | translate }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteService(modal)">
+      <th>{{ "SHARED.YES" | translate }}</th>
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modal.close('by: close button')"
+    >
+      <th>{{ "SHARED.NO" | translate }}</th>
+    </button>
+  </div>
+</ng-template>
+
+<!-- Modal 2 -->
+<ng-template #modalAddEditCity let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" *ngIf="city != null">
+      {{ "CITY.EDIT.TITLE" | translate }}
+    </h5>
+    <h5 class="modal-title" *ngIf="city == null">
+      {{ "CITY.CREATE.TITLE" | translate }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modal.close('by: close icon')"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row" *ngIf="form != null">
+      <form [formGroup]="form" (ngSubmit)="addEditCity(modal, form.value)">
+        <div class="col-sm-12">
+          <div class="mb-3">
+            <label for="name" class="form-label font-bold">{{
+              "CITY.NAME" | translate
+            }}</label>
+            <span class="warning">*</span>
+            <input
+              id="name"
+              class="form-control"
+              type="text"
+              placeholder="{{ 'CITY.ENTER_NAME' | translate }}"
+              formControlName="name"
+              [ngClass]="{
+                'is-invalid': name?.invalid && (name?.dirty || name?.touched)
+              }"
+            />
+            <div
+              *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="name?.errors?.['required']">
+                {{ "CITY.VALIDATORS.NAME" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label font-bold">{{
+              "CITY.COUNTRY" | translate
+            }}</label>
+            <ng-select
+              [items]="countries"
+              bindLabel="name"
+              bindValue="id"
+              [multiple]="false"
+              placeholder="{{ 'CITY.ENTER_COUNTRY' | translate }}"
+              formControlName="countryId"
+              [ngClass]="{
+                'is-invalid':
+                  countryId?.invalid && (countryId?.dirty || countryId?.touched)
+              }"
+            >
+            </ng-select>
+            <div
+              *ngIf="
+                countryId?.invalid && (countryId?.dirty || countryId?.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div *ngIf="countryId?.errors?.['required']">
+                {{ "CITY.VALIDATORS.COUNTRY" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label font-bold" for="text">{{
+              "CITY.ABRV" | translate
+            }}</label>
+            <span class="warning">*</span>
+            <input
+              id="abrv"
+              class="form-control"
+              name="abrv"
+              type="text"
+              placeholder="{{ 'CITY.ENTER_ABRV' | translate }}"
+              formControlName="abrv"
+              [ngClass]="{
+                'is-invalid': abrv?.invalid && (abrv?.dirty || abrv?.touched)
+              }"
+            />
+            <div
+              *ngIf="abrv?.invalid && (abrv?.dirty || abrv?.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="abrv?.errors?.['required']">
+                {{ "CITY.VALIDATORS.ABRV" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              id="favorite"
+              name="favorite"
+              type="checkbox"
+              value="favorite"
+              formControlName="favorite"
+            />
+            <label class="form-check-label font-bold" for="favorite">
+              {{ "CITY.FAVORITE" | translate }}
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            *ngIf="city != null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "CITY.EDIT.EDIT_CITY" | translate }}
+          </button>
+          <button
+            *ngIf="city == null"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!form.valid"
+          >
+            {{ "CITY.CREATE.ADD_CITY" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

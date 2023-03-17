@@ -1,85 +1,253 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/services">Services</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Service Add</li>
+    <li class="breadcrumb-item">
+      <a routerLink="/services">{{ "SERVICE.TITLE" | translate }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+      {{ "SERVICE.EDIT.TITLE" | translate }}
+    </li>
   </ol>
 </nav>
-<div class="row">
+
+<div class="row" *ngIf="form != null">
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Editovanje usluge</h6>
-        <form>
+        <h6 class="card-title">{{ "SERVICE.EDIT.TITLE" | translate }}</h6>
+        <form [formGroup]="form" (ngSubmit)="updateService(form.value)">
           <div class="row">
             <div class="col-sm-6">
               <div class="mb-3">
-                <label for="inputForServiceName" class="form-label">Naziv usluge</label>
-                <div style="display: flex; flex-direction: row;">
-                  <p class="text-danger mt-1" style="margin-right: 5px;" *ngIf="requried?.errors?.required">*</p>
-                  <input id="inputForServiceName" class="form-control" type="text" [(ngModel)]="service.name" placeholder="Unesite naziv usluge" ngModel name="requried" #requried="ngModel" required/>
+                <label for="inputForServiceName" class="form-label">{{
+                  "SERVICE.NAME" | translate
+                }}</label>
+                <input
+                  id="inputForServiceName"
+                  class="form-control"
+                  type="text"
+                  placeholder="{{ 'SERVICE.ENTER_NAME' | translate }}"
+                  formControlName="name"
+                  [ngClass]="{
+                    'is-invalid':
+                      name?.invalid && (name?.dirty || name?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="name?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.NAME" | translate }}
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="mb-3">
-                <label class="form-label">Tip usluge</label>
-                <ng-select [items]="typeOfServices"
-                           bindLabel="name"
-                           bindValue="id"
-                           placeholder="type to search"
-                           [(ngModel)]="service.typeOfServiceId"
-                           [ngModelOptions]="{standalone:true}"
-                           (change)="changeTypeOfService($event)">
+                <label class="form-label">{{
+                  "SERVICE.TYPE_OF_SERVICE" | translate
+                }}</label>
+                <ng-select
+                  [items]="typeOfServices"
+                  bindLabel="name"
+                  bindValue="id"
+                  [multiple]="false"
+                  placeholder="{{
+                    'SERVICE.ENTER_TYPE_OF_SERVICE' | translate
+                  }}"
+                  formControlName="typeOfServiceId"
+                  [ngClass]="{
+                    'is-invalid':
+                      typeOfServiceId?.invalid &&
+                      (typeOfServiceId?.dirty || typeOfServiceId?.touched)
+                  }"
+                >
                 </ng-select>
+                <div
+                  *ngIf="
+                    typeOfServiceId?.invalid &&
+                    (typeOfServiceId?.dirty || typeOfServiceId?.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="typeOfServiceId?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.TYPE_OF_SERVICE" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <h6 class="card-title">Unos cijena usluge</h6>
+          <h6 class="card-title">{{ "SERVICE.INPUT_PRICES" | translate }}</h6>
           <div class="row">
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice1" class="form-label">Pranje</label>
-                <input id="inputPrice1" class="form-control" type="number" [(ngModel)]="service.price1" name="inputPrice1" />
+                <label for="inputPrice1" class="form-label">{{
+                  "SERVICE.PRICE1" | translate
+                }}</label>
+                <input
+                  id="inputPrice1"
+                  class="form-control"
+                  type="number"
+                  name="inputPrice1"
+                  formControlName="price1"
+                  [ngClass]="{
+                    'is-invalid':
+                      price1?.invalid && (price1?.dirty || price1?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price1?.invalid && (price1?.dirty || price1?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="name?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice2" class="form-label">Sušenje</label>
-                <input type="number" class="form-control" id="inputPrice2" [(ngModel)]="service.price2" name="inputPrice2">
+                <label for="inputPrice2" class="form-label">{{
+                  "SERVICE.PRICE2" | translate
+                }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrice2"
+                  name="inputPrice2"
+                  formControlName="price2"
+                  [ngClass]="{
+                    'is-invalid':
+                      price2?.invalid && (price2?.dirty || price2?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price2?.invalid && (price2?.dirty || price2?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="price2?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE2" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice3" class="form-label">Peglanje</label>
-                <input type="number" class="form-control" id="inputPrice3" [(ngModel)]="service.price3" name="inputPrice3">
+                <label for="inputPrice3" class="form-label">{{
+                  "SERVICE.PRICE3" | translate
+                }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrice3"
+                  name="inputPrice3"
+                  formControlName="price3"
+                  [ngClass]="{
+                    'is-invalid':
+                      price3?.invalid && (price3?.dirty || price3?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price3?.invalid && (price3?.dirty || price3?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="price3?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE3" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice4" class="form-label">Pranje,sušenje</label>
-                <input type="number" class="form-control" id="inputPrice4" [(ngModel)]="service.price4" name="inputPrice4">
+                <label for="inputPrice4" class="form-label">{{
+                  "SERVICE.PRICE4" | translate
+                }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrice4"
+                  name="inputPrice4"
+                  formControlName="price4"
+                  [ngClass]="{
+                    'is-invalid':
+                      price4?.invalid && (price4?.dirty || price4?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price4?.invalid && (price4?.dirty || price4?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="price4?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE4" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice5" class="form-label">Sušenje,peglanje</label>
-                <input type="number" class="form-control" id="inputPrice5" [(ngModel)]="service.price5" name="inputPrice5">
+                <label for="inputPrice5" class="form-label">{{
+                  "SERVICE.PRICE5" | translate
+                }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrice5"
+                  name="inputPrice5"
+                  formControlName="price5"
+                  [ngClass]="{
+                    'is-invalid':
+                      price5?.invalid && (price5?.dirty || price5?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price5?.invalid && (price5?.dirty || price5?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="price5?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE5" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="mb-3">
-                <label for="inputPrice6" class="form-label">Pranje,sušenje,peglanje</label>
-                <input type="number" class="form-control" id="inputPrice6" [(ngModel)]="service.price6" name="inputPrice6">
+                <label for="inputPrice6" class="form-label">{{
+                  "SERVICE.PRICE6" | translate
+                }}</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputPrice6"
+                  name="inputPrice6"
+                  formControlName="price6"
+                  [ngClass]="{
+                    'is-invalid':
+                      price6?.invalid && (price6?.dirty || price6?.touched)
+                  }"
+                />
+                <div
+                  *ngIf="price6?.invalid && (price6?.dirty || price6?.touched)"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="price6?.errors?.['required']">
+                    {{ "SERVICE.VALIDATORS.PRICE6" | translate }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <!-- Col -->
+          <button
+            type="submit"
+            class="btn btn-primary submit"
+            [disabled]="!form.valid"
+          >
+            {{ "SERVICE.EDIT.EDIT_SERVICE" | translate }}
+          </button>
         </form>
-        <button type="submit" class="btn btn-primary submit" (click)="updateService()">Spasi promjene</button>
       </div>
     </div>
   </div>
 </div>
-

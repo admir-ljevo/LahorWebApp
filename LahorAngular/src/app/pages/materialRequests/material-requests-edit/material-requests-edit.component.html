@@ -1,0 +1,66 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/orders">Purchase requests</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add purchase request items</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-19 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{purchaseRequest.name}}</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="exampleInputReadonly" class="form-label">Nabavka</label>
+                <input type="text" class="form-control" id="exampleInputReadonly" disabled value="{{purchaseRequest.name}}">
+              </div><
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Stavka</label>
+                <ng-select [items]="materials"
+                           bindLabel="name"
+                           bindValue="id"
+                           [multiple]="false"
+                           placeholder="type to search"
+                           [(ngModel)]="selectedMaterialId"
+                           (change)="changeMaterial($event)"
+                           name="material">
+                </ng-select>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice1" class="form-label" >Cijena stavke KM</label>
+                <input id="inputPrice1" class="form-control" type="number"  [(ngModel)]="materialRequest.unitPrice" name="inputPrice1" placeholder="KM" readonly />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputAmount" class="form-label">Količina</label>
+                <input type="number" [(ngModel)]="materialRequest.amount" (change)="setPrice()" class="form-control" id="inputAmount"  name="inputAmount" min="1">
+                <p class="text-danger mt1" *ngIf="materialRequest.amount <= 0">Količina ne smije biti negativna</p>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice2" class="form-label" >Ukupna cijena KM</label>
+                <input id="inputPrice2" class="form-control" type="number"  [(ngModel)]="materialRequest.totalPrice" name="inputPrice2" placeholder="KM" readonly />
+              </div>
+            </div>
+
+          </div>
+          <!-- Col -->
+        </form>
+        <button type="submit" class="btn btn-primary submit" (click)="editRequestItem()">Dodaj stavku</button>
+      </div>
+    </div>
+  </div>
+</div>

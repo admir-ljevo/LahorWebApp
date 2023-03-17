@@ -1,7 +1,6 @@
-
-export interface MenuItem {
+export class MenuItem {
   id?: number;
-  label?: string;
+  label: string;
   icon?: string;
   link?: string;
   expanded?: boolean;
@@ -9,4 +8,5 @@ export interface MenuItem {
   isTitle?: boolean;
   badge?: any;
   parentId?: number;
+  display?: boolean = true;
 }

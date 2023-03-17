@@ -1,0 +1,37 @@
+
+#addItemButton{
+  width: 150px;
+  padding-right: 0;
+}
+#btnAdd{
+  margin-right: 0;
+}
+@media print {
+  button {
+    border: none;
+    display: none;
+  }
+  i{
+    display: none;
+  }
+  nav{
+    display: none;
+  }
+  span{
+    display: none;
+  }
+  body{
+    display: none;
+  }
+  input {
+    width: 100%
+  }
+  .actions{
+    display: none;
+  }
+
+}
+
+button{
+  margin-right: 10px;
+}

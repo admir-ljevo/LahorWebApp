@@ -1,0 +1,78 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/device">Devices</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add Device</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Device</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputName" class="form-label">Model</label>
+                <input type="text" class="form-control" id="inputName" name="inputName" [(ngModel)]="device.name">
+              </div><
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label class="form-label">Proizvođač</label>
+                <ng-select [items]="deviceBrands"
+                           bindLabel="name"
+                           bindValue="id"
+                           [multiple]="false"
+                           placeholder="type to search"
+                           [(ngModel)]="selectedDeviceBrandId"
+                           (change)="changeDeviceBrand($event)"
+                           name="service">
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label class="form-label">Vrsta uređaja</label>
+                <ng-select [items]="deviceTypes"
+                           bindLabel="name"
+                           bindValue="id"
+                           [multiple]="false"
+                           placeholder="type to search"
+                           [(ngModel)]="selectedDeviceTypeId"
+                           (change)="changeDeviceType($event)"
+                           name="levelOfServiceExecution">
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice1" class="form-label" >Cijena usluge KM</label>
+                <input id="inputPrice1" class="form-control" type="text"  [(ngModel)]="device.description" name="inputPrice1" placeholder="KM" />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputAmount" class="form-label">Kapacitet (kg)</label>
+                <input type="number" [(ngModel)]="device.capacity" class="form-control" id="inputAmount"  name="inputAmount" min="1">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="mb-3">
+                <label for="inputPrice2" class="form-label" >Ukupna cijena KM</label>
+                <input id="inputPrice2" class="form-control" type="date" [(ngModel)]="device.serviceDate" name="inputPrice2" placeholder="KM"/>
+              </div>
+            </div>
+
+          </div>
+          <!-- Col -->
+        </form>
+        <button type="submit" class="btn btn-primary submit" (click)="editDevice()">Izmijeni uređaj</button>
+      </div>
+    </div>
+  </div>
+</div>

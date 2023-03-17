@@ -13,6 +13,7 @@ namespace Lahor.Infrastructure
         public DbSet<City> Cities { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Note> Notes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrdersServicesLevels> OrdersServicesLevels { get; set; }
         public DbSet<Service> Services { get; set; }

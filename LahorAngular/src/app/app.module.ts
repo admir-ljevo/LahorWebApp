@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './views/layout/layout.module';
@@ -34,17 +33,39 @@ import {MaterialsEditComponent} from "./pages/materials/materials-edit/materials
 import { MaterialRequestsListComponent } from './pages/materialRequests/material-requests-list/material-requests-list.component';
 import { MaterialRequestsAddComponent } from './pages/materialRequests/material-requests-add/material-requests-add.component';
 import { MaterialRequestsEditComponent } from './pages/materialRequests/material-requests-edit/material-requests-edit.component';
+import {LoginComponent} from "./views/pages/auth/login/login.component";
+import {EmployeesAddComponent} from "./pages/employees/employees-add/employees-add.component";
+import {CountriesListComponent} from "./pages/countries/countries-list/countries-list.component";
+import {NgModule} from "@angular/core";
+import {ReportingPreviewComponent} from "./pages/reporting/reporting-preview/reporting-preview.component";
+import {PriceListPreviewComponent} from "./pages/PriceList/price-list-preview/price-list-preview.component";
+import {
+  EmployeesReportingComponent
+} from "./pages/reporting/reporting-type/employees-reporting/employees-reporting.component";
+import {AuthEmployeeGuard} from "./core/guard/authEmployee.guard";
+import {EmployeesEditComponent} from "./pages/employees/employees-edit/employees-edit.component";
+import {ArchwizardModule} from "angular-archwizard";
+import {AuthAdminGuard} from "./core/guard/authAdmin.guard";
+import {AuthCompanyOwnerGuard} from "./core/guard/authCompanyOwner.guard";
+import {AuthClientGuard} from "./core/guard/authClient.guard";
+import {RegisterComponent} from "./views/pages/auth/register/register.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    RegisterComponent,
     ErrorPageComponent,
+    NewsListsComponent,
     NewsAddComponent,
     NewsEditComponent,
+    PriceListPreviewComponent,
     AuthComponent,
+    ServicesListsComponent,
     ServicesEditComponent,
     ServicesAddComponent,
+<<<<<<< HEAD
     OrderAddComponent,
     OrdersServicesLevelsAddComponent,
     OrdersServicesLevelsListComponent,
@@ -72,8 +93,45 @@ import { MaterialRequestsEditComponent } from './pages/materialRequests/material
         SweetAlert2Module,
     ],
   exports:[FormsModule],
+=======
+    CountriesListComponent,
+    CitiesListComponent,
+    ReportingPreviewComponent,
+    ServicesReportingComponent,
+    EmployeesReportingComponent,
+    ClientsReportingComponent,
+    EmployeesListComponent,
+    EmployeesAddComponent,
+    EmployeesEditComponent,
+    ClientsListComponent,
+    ProfileComponent,
+    NewsPreviewComponent,
+    InputMaskComponent,
+  ],
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    NgbModule,
+    RouterModule,
+    AppRoutingModule,
+    NgSelectModule,
+    TranslateModule.forRoot(),
+    NgxMaskModule.forRoot({ validation: true }),
+    ToastrModule.forRoot(),
+    QuillModule.forRoot(), // ngx-quill
+    ArchwizardModule, // angular-archwizard
+  ],
+  exports: [FormsModule],
+>>>>>>> 9a146b8d53f238e6ec64b5441571c2fa11af009b
   providers: [
     AuthGuard,
+    AuthAdminGuard,
+    AuthCompanyOwnerGuard,
+    AuthEmployeeGuard,
+    AuthClientGuard,
     {
       provide: HIGHLIGHT_OPTIONS, // https://www.npmjs.com/package/ngx-highlightjs
       useValue: {

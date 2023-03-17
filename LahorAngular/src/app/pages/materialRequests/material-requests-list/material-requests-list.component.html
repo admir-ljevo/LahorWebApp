@@ -1,0 +1,81 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Purchase request</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title col-sm-11">Nabavka: {{purchaseRequest.name}}</h5>
+        <div class="purchase-request-details">
+          <h5 class="card-title col-sm-11">Datum kreiranja: {{purchaseRequest.createdAt  | date:'dd.MM.yyyy hh:mm'}}</h5>
+          <h5 *ngIf="purchaseRequest.isCompleted" class="card-title col-sm-11">Datum kompletiranja: {{purchaseRequest.datePurchased  | date:'dd.MM.yyyy hh:mm'}}</h5>
+          <h5 *ngIf="!purchaseRequest.isCompleted" class="card-title col-sm-11">Datum kompletiranja: Nabavka nije kompletirana</h5>
+        </div>
+
+        <h6 class="card-title col-sm-10">Request items</h6>
+
+        <div class="row" id="buttonsContainer">
+          <div class="col-sm-2" id="addItemButton">
+            <button type="button" class="btn btn-primary btn-icon-text" id="btnAdd" (click)="addPurchaseRequestItem()" >
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              <span>Dodaj stavku</span>
+            </button>
+          </div>
+          <div class="col-sm-2">
+            <button  type="button" class="btn btn-primary btn-icon-text" (click)="print()" >
+              <i  class="feather icon-printer btn-icon-prepend" data-feather="printer" appFeatherIcon ></i>
+                 <span> Printaj</span>          </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>MATERIAL NAME</th>
+              <th>REQUEST NAME</th>
+              <th>DATE CREATED</th>
+              <th>UNIT PRICE</th>
+              <th>AMOUNT</th>
+              <th>TOTAL PRICE</th>
+             <span><th>ACTIONS</th></span>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of materials$|async">
+              <th>{{new.material.name}}</th>
+              <th>{{new.purchaseRequest.name}}</th>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+               <td>{{new.unitPrice}} KM </td>
+              <td>{{new.amount}} </td>
+              <td>{{new.totalPrice}} KM </td>
+              <td>
+                <i type="button" class="feather icon-edit"  (click)="editRequestItem(new)" ></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal, new)" ></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputReadonly" class="form-label">Purchse price (KM) </label>
+          <input type="text" class="form-control" id="exampleInputReadonly" readonly value="{{purchaseRequest.price}} KM">
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #basicModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Brisanje materijala</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <p>Da li ste sigurni da želite obrisati materijal?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="deleteRequestItem(modal)"   [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Successfully deleted', icon: 'success'}">Da</button>
+    </div>
+  </ng-template>

@@ -1,0 +1,71 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Purchase requests</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h6 class="card-title col-sm-10">Zahtjevi nabavke</h6>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-icon-text" (click)="addPurchaseRequest()">
+              <i class="feather icon-check-square btn-icon-prepend"></i>
+              Dodaj zahtjev
+            </button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>NAME</th>
+              <th>DATE CREATED</th>
+              <th>USER</th>
+              <th>COMPLETED</th>
+              <th>DATE OF COMPLETION</th>
+              <th>PRICE</th>
+              <th>REQUEST ITEMS</th>
+              <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let new of purchaseRequests">
+              <th>{{new.name}}</th>
+              <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
+              <td>{{new.employee.person.firstName}} {{new.employee.person.lastName}}</td>
+              <td *ngIf="new.isCompleted">DA</td>
+              <td *ngIf="!new.isCompleted">NE</td>
+              <td *ngIf="new.isCompleted">{{new.datePurchased | date: 'dd.MM.yyyy'}}</td>
+              <td *ngIf="!new.isCompleted">Nije izvršena nabavka</td>
+              <td>{{new.price}} KM </td>
+              <td><button type="button" class="btn btn-primary" (click)="openMaterialRequests(new.id)"><i type="button" class="feather icon-edit" style="margin-right: 10px;"></i> Stavke </button>
+
+              <td>
+                <i type="button" class="feather icon-edit" (click)="editRequest(new.id)"></i>
+                <i type="button" class="feather icon-delete" (click)="openBasicModal(basicModal, new)"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="currentPage" (pageChange)="changePage()" aria-label="Default pagination"></ngb-pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #basicModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Brisanje zahtjeva nabavke</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <p>Da li ste sigurni da želite obrisati zahtjev?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="deleteRequest(modal)" [swal]="{ toast: true, position: 'top-end', showConfirmButton: false, timer: 50000, timerProgressBar: true, title: 'Successfully deleted', icon: 'success'}">Da</button>
+    </div>
+  </ng-template>

@@ -1,0 +1,35 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/purchase-requests">Purchase requests</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add purchase request</li>
+  </ol>
+</nav>
+
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Novi zahtjev nabavke</h6>
+        <form>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputName" class="form-label" >Ime nabavke</label>
+                <input type="text" name="inputName" id="inputName" [(ngModel)]="purchaseRequest.name" class="form-control" placeholder="Request name">
+              </div>
+            </div><!-- Col -->
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label for="inputDescription" class="form-label">Opis nabavke</label>
+                <input type="text" id="inputDescription" name="inputDescription" [(ngModel)]="purchaseRequest.description" class="form-control" placeholder="Description">
+              </div>
+            </div>
+          </div>
+
+        </form>
+        <button type="button" class="btn btn-primary submit" (click)="addPurchaseRequest()">Dodaj nabavku</button>
+      </div>
+    </div>
+  </div>
+</div>
