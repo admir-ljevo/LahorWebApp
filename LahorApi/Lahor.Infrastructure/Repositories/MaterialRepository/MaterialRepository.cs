@@ -19,13 +19,13 @@ namespace Lahor.Infrastructure.Repositories.MaterialRepository
 
         public async Task<MaterialDto> GetByIdAsync(int id)
         {
-          return await ProjectToFirstOrDefaultAsync<MaterialDto>(DatabaseContext.Material.Where(m=> m.Id == id));   
-                
+            return await ProjectToFirstOrDefaultAsync<MaterialDto>(DatabaseContext.Material.Where(m => m.Id == id));
+
         }
 
         public async Task<List<MaterialDto>> GetByName(string name)
         {
-            return await ProjectToListAsync<MaterialDto>(DatabaseContext.Material.Where(m=>m.Name == name));
+            return await ProjectToListAsync<MaterialDto>(DatabaseContext.Material.Where(m => m.Name == name));
         }
 
         public async Task<List<MaterialDto>> GetAllOrdered(string sortCol, string sortDir, string? nameFilter = null)
@@ -39,21 +39,21 @@ namespace Lahor.Infrastructure.Repositories.MaterialRepository
             {
                 query = query.Where(m => m.Name.Contains(nameFilter));
             }
-           
 
-            _ = sortDir == "asc" ? materialDtos = await ProjectToListAsync<MaterialDto>(query.OrderBy(m => EF.Property<object>(m, sortCol))) :
-                materialDtos = await ProjectToListAsync<MaterialDto>(query.OrderByDescending(m => EF.Property<object>(m, sortCol)));
-            
-            return  materialDtos;
+
+            _ = sortDir == "asc" ? materialDtos = await ProjectToListAsync<MaterialDto>(query.Where(m => !m.IsDeleted).OrderBy(m => EF.Property<object>(m, sortCol))) :
+                materialDtos = await ProjectToListAsync<MaterialDto>(query.Where(m => !m.IsDeleted).OrderByDescending(m => EF.Property<object>(m, sortCol)));
+
+            return materialDtos;
 
         }
 
         public async new Task<List<MaterialDto>> GetAllAsync()
         {
-            return await ProjectToListAsync<MaterialDto>(DatabaseContext.Material.Where(m=>!m.IsDeleted));
+            return await ProjectToListAsync<MaterialDto>(DatabaseContext.Material.Where(m => !m.IsDeleted));
         }
 
 
-        
+
     }
 }

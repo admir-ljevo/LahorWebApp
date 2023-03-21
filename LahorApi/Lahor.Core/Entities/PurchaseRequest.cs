@@ -9,9 +9,7 @@ namespace Lahor.Core.Entities
         public string Description { get; set; }
         public ApplicationUser Employee { get; set; }
         public int EmployeeId { get; set; }
-
         public DateTime? DatePurchased { get; set; }
-
         public float Price { get; set; }
         public bool IsCompleted { get; set; }   
     }

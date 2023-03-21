@@ -11,7 +11,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class MaterialsListComponent implements OnInit {
 
-  materials$: Observable<any[]>;
+  materials$: Observable<any>;
   basicModalCloseResult: string = '';
   selectedMaterial: any;
   changeDirection: boolean = false;

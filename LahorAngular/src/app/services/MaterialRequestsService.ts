@@ -14,6 +14,6 @@ export class MaterialRequestsService extends BaseService{
     super(httpClient, router, ControllerName.MaterialRequests);
   }
   getByRequestId(requestId: number){
-    return this.httpClient.get<any>(MyConfig.address_server+"api/"+ControllerName.MaterialRequests+"/requestId/"+requestId, MyConfig.http_options);
+    return this.httpClient.get<any>(MyConfig.address_server + ControllerName.MaterialRequests+"/requestId/"+requestId, this.config.getHttpHeaderOption());
   }
 }

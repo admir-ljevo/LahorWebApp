@@ -29,4 +29,7 @@ export class OrdersListComponent implements OnInit {
     this.router.navigate(['orders/order-level-service-list', order.id])
   }
 
+  editOrder(id: number) {
+    this.router.navigate(['orders/edit-order/',id]);
+  }
 }

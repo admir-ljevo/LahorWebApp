@@ -22,7 +22,7 @@ export class OrdersServicesLevelsListComponent implements OnInit {
   sub: any;
   selectedOrderServiceLevel: any;
   selectedOrder: any;
-  ordersServicesLevels$!: Observable<any[]>;
+  ordersServicesLevels$!: Observable<any>;
   ordersServicesLevels: any = null;
   basicModalCloseResult: string = '';
   private id: number = 0;
@@ -70,7 +70,9 @@ export class OrdersServicesLevelsListComponent implements OnInit {
 
   deleteOrderServiceLevel(modal: any){
     this.selectedOrder.price-=this.selectedOrderServiceLevel.totalPrice;
-    this.ordersService.update(this.selectedOrder);
+    this.ordersService.update(this.selectedOrder).subscribe(data=>{
+      this.selectedOrder = data;
+    });
     this.ordersServicesLevelsService.delete(this.selectedOrderServiceLevel).subscribe(data=>{
       this.getOrdersServicesLevels()
     });

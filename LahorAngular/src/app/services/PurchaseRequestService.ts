@@ -13,8 +13,8 @@ export class PurchaseRequestService extends BaseService{
   constructor(httpClient: HttpClient, router: Router) {
     super(httpClient, router, ControllerName.PurchaseRequest);
   }
-  getForPagination(search:string,pageSize:any,pageNumber:any):Observable<any[]>
+   getPaginated(search:string,pageSize:any,pageNumber:any):Observable<any[]>
   {
-    return this.httpClient.get<any>(MyConfig.address_server+"api/"+ControllerName.PurchaseRequest+"/"+pageNumber+"/"+pageSize+"?SearchFilter="+search,MyConfig.http_options);
+    return this.httpClient.get<any>(MyConfig.address_server+ControllerName.PurchaseRequest+"/"+pageNumber+"/"+pageSize+"?SearchFilter="+search,this.config.getHttpHeaderOption());
   }
 }

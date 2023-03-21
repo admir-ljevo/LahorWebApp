@@ -14,6 +14,6 @@ constructor(httpClient: HttpClient, router: Router) {
   super(httpClient,router,ControllerName.Material);
 }
 getMaterialsSorted(sortCol: string, sortDir: string, nameFilter: string | null = null){
-  return this.httpClient.get<any>(MyConfig.address_server+"api/"+ControllerName.Material+"/sortCol/" + sortCol+"/sortDir/" + sortDir + "/nameFilter/" + nameFilter, MyConfig.http_options);
+  return this.httpClient.get<any>(MyConfig.address_server+ControllerName.Material+"/sortCol/" + sortCol+"/sortDir/" + sortDir + "/nameFilter/" + nameFilter, this.config.getHttpHeaderOption());
 }
 }

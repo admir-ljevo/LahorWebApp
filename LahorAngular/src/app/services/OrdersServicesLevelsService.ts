@@ -14,7 +14,7 @@ export class OrdersServicesLevelsService extends BaseService {
     super(httpClient, router, ControllerName.OrdersServicesLevels);
   }
 getByOrderId(orderId: Number){
-    return this.httpClient.get<any>(MyConfig.address_server + "api/" + ControllerName.OrdersServicesLevels + "/orderId" + "/"+orderId, MyConfig.http_options);
+    return this.httpClient.get<any>(MyConfig.address_server + ControllerName.OrdersServicesLevels + "/orderId" + "/"+orderId, this.config.getHttpHeaderOption());
 }
 
 }

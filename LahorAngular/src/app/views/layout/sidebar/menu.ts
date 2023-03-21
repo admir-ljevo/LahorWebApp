@@ -5,7 +5,6 @@ import { AuthCompanyOwnerGuard } from 'src/app/core/guard/authCompanyOwner.guard
 import { AuthEmployeeGuard } from 'src/app/core/guard/authEmployee.guard';
 import { MenuItem } from './menu.model';
 
-<<<<<<< HEAD
 export const MENU: MenuItem[] = [
   {
     label: 'Main',
@@ -371,7 +370,6 @@ export const MENU: MenuItem[] = [
     ]
   },
 ];
-=======
 export class getMenu {
   getMenuItems(): any {
     return this.menuItems;
@@ -399,6 +397,49 @@ export class getMenu {
           AuthEmployeeGuard.isActive() ||
           AuthCompanyOwnerGuard.isActive()),
     },
+    {
+      label: 'Uređaji',
+      icon: 'smartphone',
+      link:'/device',
+      display:
+        AuthGuard.isActive() &&
+        (AuthAdminGuard.isActive() ||
+          AuthEmployeeGuard.isActive() ||
+          AuthCompanyOwnerGuard.isActive()),
+    },
+    {
+      label: 'Narudžbe',
+      icon: 'file-text',
+      link: '/orders',
+      display:
+        AuthGuard.isActive() &&
+        (AuthAdminGuard.isActive() ||
+          AuthEmployeeGuard.isActive() ||
+          AuthCompanyOwnerGuard.isActive()),
+
+    },
+    {
+      label: 'Nabavke',
+      icon: 'shopping-cart',
+      link: '/purchase-requests',
+      display:
+        AuthGuard.isActive() &&
+        (AuthAdminGuard.isActive() ||
+          AuthEmployeeGuard.isActive() ||
+          AuthCompanyOwnerGuard.isActive()),
+    },
+
+    {
+      label: 'Materijali',
+      icon: 'folder-minus',
+      link: '/materials',
+      display:
+        AuthGuard.isActive() &&
+        (AuthAdminGuard.isActive() ||
+          AuthEmployeeGuard.isActive() ||
+          AuthCompanyOwnerGuard.isActive()),
+    },
+
     {
       label: 'MENU.SERVICES',
       icon: 'shopping-cart',
@@ -464,4 +505,3 @@ export class getMenu {
     },
   ];
 }
->>>>>>> 9a146b8d53f238e6ec64b5441571c2fa11af009b

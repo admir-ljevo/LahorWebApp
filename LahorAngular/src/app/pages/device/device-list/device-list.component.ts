@@ -12,7 +12,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class DeviceListComponent implements OnInit {
 
   constructor(private deviceService: DeviceService, private router: Router, private modalService: NgbModal) { }
-  devices$: Observable<any[]>
+  devices$: Observable<any>
   changeDirection: boolean = false;
   sortDir: string = "asc";
   sortCol: string = "deviceBrand.Name";

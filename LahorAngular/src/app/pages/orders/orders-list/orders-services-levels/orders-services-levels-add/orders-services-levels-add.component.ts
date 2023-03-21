@@ -102,7 +102,9 @@ export class OrdersServicesLevelsAddComponent implements OnInit {
     this.orderServiceLevel.serviceId = this.selectedSearchServiceId;
     this.orderServiceLevel.levelOfServiceExecutionId = this.selectedSearchLevelOfServiceExecutionId;
     this.selectedOrder.price += this.orderServiceLevel.totalPrice;
-    this.ordersService.update(this.selectedOrder);
+    this.ordersService.update(this.selectedOrder).subscribe(data=>{
+      this.selectedOrder = data;
+    });
     this.ordersServicesLevelsService.post(this.orderServiceLevel).subscribe(data=>{
 
       this.router.navigate(['orders/order-level-service-list', this.selectedOrder.id])

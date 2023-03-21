@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {PurchaseRequestService} from "../../../services/PurchaseRequestService";
 import {Observable} from "rxjs";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {BaseSearchObject} from "../../../searchObject/BaseSearchObject";
 
 @Component({
   selector: 'app-purchase-requests-list',
@@ -30,7 +31,7 @@ export class PurchaseRequestsListComponent implements OnInit {
   }
 
   getAllRequests(): void {
- this.purchaseRequestService.getForPagination(this.searchFilter, this.pageSize, this.currentPage).subscribe(data=>{
+ this.purchaseRequestService.getPaginated(this.searchFilter, this.pageSize, this.currentPage).subscribe(data=>{
   this.purchaseRequests=data;
   if(this.currentPage>(this.collectionSize/10)-1 && this.purchaseRequests.length==this.pageSize)
   {

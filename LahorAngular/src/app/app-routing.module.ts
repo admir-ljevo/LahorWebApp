@@ -89,7 +89,7 @@ const routes: Routes = [
       {
         path: 'price-list-preview',
         loadChildren: () =>
-          import('./pages/priceList/priceList.module').then(
+          import('./pages/PriceList/priceList.module').then(
             (m) => m.PriceListModule
           ),
       },
@@ -134,26 +134,32 @@ const routes: Routes = [
           import('./pages/profile/profile.module').then((m) => m.ProfileModule),
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path: 'level-of-service-execution',
         loadChildren: () => import('./pages/levelOfServiceExecution/level-of-service-execution.module').then(m=>m.LevelOfServiceExecutionModule)
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path: 'orders',
         loadChildren: () => import('./pages/orders/orders.module').then(m=>m.OrdersModule),
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path: 'device',
         loadChildren: () => import('./pages/device/device.module').then(m => m.DeviceModule),
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path: 'purchase-requests',
         loadChildren: () => import('./pages/purchaseRequests/purchase-requests.module').then(m => m.PurchaseRequestsModule)
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path:'materials',
         loadChildren: () => import('./pages/materials/materials.module').then(m=>m.MaterialsModule)
       },
       {
+        canActivate: [AuthEmployeeGuard],
         path: 'material-requests',
         loadChildren: () => import('./pages/materialRequests/material-requests.module').then(m=>m.MaterialRequestsModule)
       },

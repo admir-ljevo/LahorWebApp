@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// @ts-ignore
 import { CropperComponent } from './cropper.component';
 
 describe('CropperComponent', () => {

@@ -38,7 +38,6 @@ import {EmployeesAddComponent} from "./pages/employees/employees-add/employees-a
 import {CountriesListComponent} from "./pages/countries/countries-list/countries-list.component";
 import {NgModule} from "@angular/core";
 import {ReportingPreviewComponent} from "./pages/reporting/reporting-preview/reporting-preview.component";
-import {PriceListPreviewComponent} from "./pages/PriceList/price-list-preview/price-list-preview.component";
 import {
   EmployeesReportingComponent
 } from "./pages/reporting/reporting-type/employees-reporting/employees-reporting.component";
@@ -49,6 +48,27 @@ import {AuthAdminGuard} from "./core/guard/authAdmin.guard";
 import {AuthCompanyOwnerGuard} from "./core/guard/authCompanyOwner.guard";
 import {AuthClientGuard} from "./core/guard/authClient.guard";
 import {RegisterComponent} from "./views/pages/auth/register/register.component";
+import {CitiesListComponent} from "./pages/cities/cities-list/cities-list.component";
+import {NgxMaskModule} from "ngx-mask";
+import {TranslateModule} from "@ngx-translate/core";
+import {ClientsListComponent} from "./pages/clients/client-list/client-list.component";
+import {InputMaskComponent} from "./views/pages/advanced-form-elements/input-mask/input-mask.component";
+import {
+  ClientsReportingComponent
+} from "./pages/reporting/reporting-type/clients-reporting/clients-reporting.component";
+import {ToastrModule} from "ngx-toastr";
+import {
+  ServicesReportingComponent
+} from "./pages/reporting/reporting-type/services-reporting/services-reporting.component";
+import {EmployeesListComponent} from "./pages/employees/employees-list/employees-list.component";
+import {NewsPreviewComponent} from "./pages/news/news-preview/news-preview.component";
+import {QuillModule} from "ngx-quill";
+import {ProfileComponent} from "./pages/profile/profile.component";
+// @ts-ignore
+import {PriceListPreviewComponent} from "./pages/PriceList/price-list-preview/price-list-preview.component";
+import {ServicesListsComponent} from "./pages/services/services-list/services-lists.component";
+import {NewsListsComponent} from "./pages/news/news-list/news-lists.component";
+import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.component";
 
 
 @NgModule({
@@ -62,11 +82,11 @@ import {RegisterComponent} from "./views/pages/auth/register/register.component"
     NewsEditComponent,
     PriceListPreviewComponent,
     AuthComponent,
-    ServicesListsComponent,
     ServicesEditComponent,
     ServicesAddComponent,
-<<<<<<< HEAD
+    ServicesListsComponent,
     OrderAddComponent,
+    OrdersEditComponent,
     OrdersServicesLevelsAddComponent,
     OrdersServicesLevelsListComponent,
     OrdersServicesLevelsEditComponent,
@@ -78,22 +98,6 @@ import {RegisterComponent} from "./views/pages/auth/register/register.component"
     MaterialsEditComponent,
     MaterialRequestsAddComponent,
     MaterialRequestsEditComponent,
-  ],
-    imports: [
-        BrowserAnimationsModule,
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientModule,
-        NgbModule,
-        RouterModule,
-        AppRoutingModule,
-        FormsModule,
-        NgSelectModule,
-        SweetAlert2Module,
-    ],
-  exports:[FormsModule],
-=======
     CountriesListComponent,
     CitiesListComponent,
     ReportingPreviewComponent,
@@ -107,6 +111,7 @@ import {RegisterComponent} from "./views/pages/auth/register/register.component"
     ProfileComponent,
     NewsPreviewComponent,
     InputMaskComponent,
+
   ],
   imports: [
     CommonModule,
@@ -119,13 +124,17 @@ import {RegisterComponent} from "./views/pages/auth/register/register.component"
     AppRoutingModule,
     NgSelectModule,
     TranslateModule.forRoot(),
-    NgxMaskModule.forRoot({ validation: true }),
+    NgxMaskModule.forRoot({validation: true}),
     ToastrModule.forRoot(),
     QuillModule.forRoot(), // ngx-quill
-    ArchwizardModule, // angular-archwizard
+    ArchwizardModule,
+    SweetAlert2Module,
+    // angular-archwizard
   ],
-  exports: [FormsModule],
->>>>>>> 9a146b8d53f238e6ec64b5441571c2fa11af009b
+  exports:[FormsModule,
+
+  ],
+
   providers: [
     AuthGuard,
     AuthAdminGuard,

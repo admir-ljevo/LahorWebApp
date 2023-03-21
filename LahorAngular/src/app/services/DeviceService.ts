@@ -13,6 +13,6 @@ export class DeviceService extends  BaseService {
     super(httpClient, router, ControllerName.Device);
   }
   getDevicesSorted(sortCol: string, sortDir: string){
-    return this.httpClient.get<any>(MyConfig.address_server + "api/" + ControllerName.Device + "/sortCol" + "/"+sortCol + "/sortDir/" + sortDir, MyConfig.http_options);
+    return this.httpClient.get<any>(MyConfig.address_server + ControllerName.Device + "/sortCol" + "/"+sortCol + "/sortDir/" + sortDir, this.config.getHttpHeaderOption());
   }
 }

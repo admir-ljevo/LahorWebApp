@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MaterialRequestsService} from "../../../services/MaterialRequestsService";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PurchaseRequestService} from "../../../services/PurchaseRequestService";
+import {date} from "ngx-custom-validators/src/app/date/validator";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-material-requests-list',
@@ -21,6 +23,8 @@ export class MaterialRequestsListComponent implements OnInit {
   private id: number;
   sub: any;
   materials$: any;
+  materials: any[];
+
   selectedMaterialRequest: any;
   purchaseRequest: any;
   basicModalCloseResult: string = '';
@@ -35,7 +39,9 @@ export class MaterialRequestsListComponent implements OnInit {
   }
 
   getMaterialsByRequestId(){
-    this.materials$ = this.materialRequestsService.getByRequestId(this.id);
+    this.materials$ = this.materialRequestsService.getByRequestId(this.id).subscribe(data=>{
+      this.materials = data;
+    });
   }
 
   getPurchaseRequestById(){
@@ -46,7 +52,6 @@ export class MaterialRequestsListComponent implements OnInit {
 
   addPurchaseRequestItem(){
     this.router.navigateByUrl(`material-requests/${this.id}/material-requests/add`)
-    console.log(`material-requests/${this.id}/material-requests/add`)
   }
 
   openBasicModal(content: TemplateRef<any>,x:any){
@@ -58,7 +63,9 @@ export class MaterialRequestsListComponent implements OnInit {
 
   deleteRequestItem(modal: any){
     this.purchaseRequest.price-=this.selectedMaterialRequest.totalPrice;
-    this.purchaseRequestService.update(this.purchaseRequest);
+    this.purchaseRequestService.update(this.purchaseRequest).subscribe(data=>{
+      this.purchaseRequest = data;
+    });
     this.materialRequestsService.delete(this.selectedMaterialRequest).subscribe(data=>{
       this.getMaterialsByRequestId();
     })

@@ -30,7 +30,9 @@ export class MaterialsEditComponent implements OnInit {
 
 
   editMaterial() {
-    this.materialsService.update(this.material);
+    this.materialsService.update(this.material).subscribe(data =>{
+      this.material = data;
+    });
     this.router.navigateByUrl('materials');
   }
 }

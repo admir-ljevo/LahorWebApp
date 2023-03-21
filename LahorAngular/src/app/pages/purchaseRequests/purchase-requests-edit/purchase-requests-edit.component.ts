@@ -33,15 +33,20 @@ export class PurchaseRequestsEditComponent implements OnInit {
 
   onChanged($event:any) {
     this.purchaseRequest.isCompleted = $event && $event.target && $event.target.checked;
+    this.purchaseRequest.isCompleted? this.purchaseRequest.datePurchased=new Date(Date.now()):
+      this.purchaseRequest.datePurchased=null;
+
   }
 
   editPurchaseRequest() {
 
-    this.purchaseRequest.isCompleted? this.purchaseRequest.datePurchased=new Date(Date.now()):
-      this.purchaseRequest.datePurchased=null;
 
-    this.purchaseRequestService.update(this.purchaseRequest);
-    this.router.navigateByUrl('purchase-requests');
+
+    this.purchaseRequestService.update(this.purchaseRequest).subscribe(data=>{
+      this.purchaseRequest = data;
+      this.router.navigateByUrl('purchase-requests');
+
+    });
   }
 
 }

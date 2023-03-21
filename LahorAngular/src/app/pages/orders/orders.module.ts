@@ -8,6 +8,7 @@ import {NgbAlertModule, NgbPaginationModule, NgbTooltipModule} from "@ng-bootstr
 import {OrdersServicesLevelsAddComponent} from "./orders-list/orders-services-levels/orders-services-levels-add/orders-services-levels-add.component";
 import {OrdersServicesLevelsListComponent} from "./orders-list/orders-services-levels/orders-services-levels-list/orders-services-levels-list.component";
 import { OrdersServicesLevelsEditComponent } from './orders-list/orders-services-levels/orders-services-levels-edit/orders-services-levels-edit.component';
+import { OrdersEditComponent } from './orders-edit/orders-edit.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
     path: 'add-order',
     component: OrderAddComponent,
 
+  },
+  {
+    path: 'edit-order/:id',
+    component: OrdersEditComponent,
   },
   {
     path: 'order-level-service-list/:id',
@@ -34,7 +39,7 @@ const routes: Routes = [
 
 ]
 @NgModule({
-  declarations: [OrdersListComponent ],
+  declarations: [OrdersListComponent],
   imports: [CommonModule,
     RouterModule.forChild(routes),
     SweetAlert2Module.forRoot(),

@@ -13,7 +13,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
 import { FeahterIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { AuthEmployeeGuard } from 'src/app/core/guard/authEmployee.guard';
 import { NewsPreviewComponent } from '../news-preview/news-preview.component';
@@ -52,7 +52,7 @@ const routes: Routes = [
     NgbTooltipModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,
+    NgbModule
   ],
 })
 export class NewsModule {}

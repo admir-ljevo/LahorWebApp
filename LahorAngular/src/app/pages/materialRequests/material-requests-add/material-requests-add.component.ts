@@ -74,7 +74,9 @@ export class MaterialRequestsAddComponent implements OnInit {
    this.materialRequest.materialId=this.material.id;
    this.materialRequest.purchaseRequestId = this.purchaseRequest.id;
    this.purchaseRequest.price += this.materialRequest.totalPrice;
-   this.purchaseRequestService.update(this.purchaseRequest);
+   this.purchaseRequestService.update(this.purchaseRequest).subscribe(data => {
+     this.purchaseRequest = data;
+   });
    this.materialRequestsService.post(this.materialRequest).subscribe(data=>{
      this.router.navigate(['material-requests', this.id]);
    })

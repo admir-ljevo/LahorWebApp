@@ -100,8 +100,12 @@ export class MaterialRequestsEditComponent implements OnInit {
      this.materialRequest.materialId = this.selectedMaterialId;
      this.purchaseRequest.price-=this.oldPrice;
      this.purchaseRequest.price+=this.materialRequest.amount * this.materialRequest.unitPrice;
-     this.purchaseRequestsService.update(this.purchaseRequest);
-     this.materialRequestsService.update(this.materialRequest)
+     this.purchaseRequestsService.update(this.purchaseRequest).subscribe(data=>{
+       this.purchaseRequest = data;
+     });
+     this.materialRequestsService.update(this.materialRequest).subscribe(data=>{
+       this.materialRequest = data;
+     })
      this.router.navigate(['material-requests', this.id]);
   }
 }

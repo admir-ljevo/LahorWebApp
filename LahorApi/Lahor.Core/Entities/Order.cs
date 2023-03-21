@@ -6,7 +6,7 @@ namespace Lahor.Core.Entities
     public class Order:BaseEntity
     {
         public string Name { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public bool Delivered { get; set; }
         public float Price { get; set; }
         public float Amount { get; set; }

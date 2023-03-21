@@ -25,6 +25,7 @@
               <th>DATE CREATED</th>
               <th>USER</th>
               <th>ONLINE</th>
+              <th>DELIVERED</th>
               <th>PRICE</th>
               <th>ACTIONS</th>
               <th>SERVICES</th>
@@ -37,9 +38,11 @@
               <td>{{new.employee.person.firstName}} {{new.employee.person.lastName}}</td>
               <td *ngIf="new.online">DA</td>
               <td *ngIf="!new.online">NE</td>
+              <td *ngIf="new.delivered"> DA </td>
+              <td *ngIf="!new.delivered"> NE </td>
               <td>{{new.price}} KM </td>
               <td>
-                <i type="button" class="feather icon-edit"></i>
+                <i type="button" class="feather icon-edit" (click)="editOrder(new.id)" ></i>
                 <i type="button" class="feather icon-delete"></i>
               </td>
               <td><button type="button" class="btn btn-primary" (click)="addOrderServiceLevel(new)"><i type="button" class="feather icon-edit" style="margin-right: 10px;"></i> Usluge </button>

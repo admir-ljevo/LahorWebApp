@@ -45,10 +45,31 @@
 
             </div>
 
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="mb-3">
+                  <label for="inputDate"class="form-label">Datum kupovine</label>
+                  <input type="text" name="inputDate" id="inputDate" class="form-control" placeholder="Nije isporučena narudžba" disabled value="{{order.deliveryDate | date:'dd.MM.yyyy hh:mm'}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-check mb-2">
+                  <input type="checkbox" class="form-check-input" id="checkDefault" name="checkDefault"
+                         (change)="onChanged($event)"
+                         [(ngModel)]="order.delivered"
+                         [checked]="order.delivered">
+                  <label class="form-check-label" for="checkDefault">Kompletirana</label>
+                </div>
+
+              </div>
+            </div>
 
           </div><!-- Row -->
         </form>
-        <button type="button" class="btn btn-primary submit" (click)="addOrder()">Dodaj narudžbu</button>
+        <button type="button" class="btn btn-primary submit" (click)="editOrder()">Dodaj narudžbu</button>
       </div>
     </div>
   </div>

@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let new of materials$|async">
+            <tr *ngFor="let new of materials">
               <th>{{new.material.name}}</th>
               <th>{{new.purchaseRequest.name}}</th>
               <td>{{new.createdAt | date:'dd.MM.yyyy hh:mm'}}</td>
