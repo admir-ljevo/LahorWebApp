@@ -62,16 +62,13 @@ namespace Lahor.Infrastructure.Repositories.ServicesRepository
         {
             var servicesList = await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false));
             return servicesList;
-
-        public async new Task<List<ServiceDto>> GetReportData(ReportSearchObject search)
-        {
-                return await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false  && x.CreatedAt >= search.DateFrom && x.CreatedAt <= search.DateTo));
         }
 
         public async new Task<List<ServiceDto>> GetReportData(ReportSearchObject search)
         {
                 return await ProjectToListAsync<ServiceDto>(DatabaseContext.Services.Where(x => x.IsDeleted == false  && x.CreatedAt >= search.DateFrom && x.CreatedAt <= search.DateTo));
         }
+
 
         public async Task<List<ServiceDto>> GetForPaginationAsync(BaseSearchObject searchObject, int pageSize, int offeset)
         {
