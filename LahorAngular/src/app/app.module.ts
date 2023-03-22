@@ -80,7 +80,6 @@ import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.compon
     NewsListsComponent,
     NewsAddComponent,
     NewsEditComponent,
-    PriceListPreviewComponent,
     AuthComponent,
     ServicesEditComponent,
     ServicesAddComponent,
@@ -108,9 +107,10 @@ import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.compon
     EmployeesAddComponent,
     EmployeesEditComponent,
     ClientsListComponent,
-    ProfileComponent,
     NewsPreviewComponent,
+    ProfileComponent,
     InputMaskComponent,
+    PriceListPreviewComponent,
 
   ],
   imports: [
@@ -132,7 +132,6 @@ import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.compon
     // angular-archwizard
   ],
   exports:[FormsModule,
-
   ],
 
   providers: [

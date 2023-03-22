@@ -26,7 +26,7 @@ namespace Lahor.Infrastructure.Repositories.OrdersRepository
 
         public async new Task<List<OrderDto>> GetAllAsync()
         {
-            return await ProjectToListAsync<OrderDto>(DatabaseContext.Orders);
+            return await ProjectToListAsync<OrderDto>(DatabaseContext.Orders.Where(o=>!o.IsDeleted));
         }
     }
 }

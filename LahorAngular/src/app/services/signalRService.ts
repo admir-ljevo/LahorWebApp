@@ -25,7 +25,7 @@ export class SignalRService {
   }
 
   public notifications() {
-    this.hubConnection.on('notificationsData', (data) => {
+    this.hubConnection.on('notificationsData', (data: any) => {
       this.notificationsService
         .getUnreadNotifications()
         .subscribe((data: any) => {

@@ -13,7 +13,7 @@ export class MyConfig {
   //static address_server = 'https://localhost:7133/api/';
   //static address_server_base = 'https://localhost:7133/';
   static http_options_multipart_form_data = {
-    headers: new HttpHeaders({
+    headers: new HttpHeaders({ 
       'Content-Type': 'multipart/form-data',
     }),
   };
@@ -36,3 +36,6 @@ export class MyConfig {
     };
   }
 }
+
+
+

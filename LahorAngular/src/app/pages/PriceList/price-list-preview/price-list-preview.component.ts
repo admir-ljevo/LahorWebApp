@@ -9,10 +9,10 @@ import { TypeOfServicesService } from '../../../services/TypeOfServicesService';
   templateUrl: './price-list-preview.component.html',
   styleUrls: ['./price-list-preview.component.scss'],
 })
-export class PriceListPreviewComponent implements OnInit {
+export class PriceListPreviewComponent implements OnInit { 
   services$!: Observable<any[]>;
   typeOfServices: any;
-  services: any;
+  services: any; 
 
   constructor(
     private servicesService: ServicesService,

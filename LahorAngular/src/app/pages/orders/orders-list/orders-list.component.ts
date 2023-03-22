@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {OrdersService} from "../../../services/OrdersService";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
@@ -10,9 +10,11 @@ import {Observable} from "rxjs";
   styleUrls: ['./orders-list.component.scss']
 })
 export class OrdersListComponent implements OnInit {
+  private basicModalCloseResult: string = '';
 
   constructor(private ordersService: OrdersService, private router: Router, private modalService: NgbModal) { }
   orders$: Observable<any[]>;
+  selectedOrder: any;
   ngOnInit(): void {
     this.getAllOrders();
   }
@@ -32,4 +34,19 @@ export class OrdersListComponent implements OnInit {
   editOrder(id: number) {
     this.router.navigate(['orders/edit-order/',id]);
   }
+
+  deleteOrder(modal: any) {
+   this.ordersService.delete(this.selectedOrder).subscribe(data=>{
+     this.getAllOrders();
+   })
+    modal.close('by: save button');
+
+  }
+
+  openBasicModal(content: TemplateRef<any>,x: any) {
+    this.selectedOrder = x;
+    this.modalService.open(content, {}).result.then((result:any) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res:any)=>console.log(res));
+   }
 }
