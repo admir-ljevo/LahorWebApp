@@ -1,4 +1,3 @@
-
 namespace Lahor.Reporting.Models
 {
     public class ClientReportModel

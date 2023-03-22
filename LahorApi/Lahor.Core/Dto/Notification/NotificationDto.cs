@@ -1,4 +1,3 @@
-
 namespace Lahor.Core.Dto.Note
 {
     public class NotificationDto:BaseDto

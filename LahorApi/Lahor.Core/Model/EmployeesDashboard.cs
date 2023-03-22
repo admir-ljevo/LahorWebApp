@@ -1,4 +1,3 @@
-
 namespace Lahor.Core.Model
 {
     public class EmployeesDashboard

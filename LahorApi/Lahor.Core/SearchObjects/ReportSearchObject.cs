@@ -1,4 +1,3 @@
-
 using Lahor.Core.Enumerations;
 
 namespace Lahor.Core.SearchObjects

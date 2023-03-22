@@ -40,7 +40,6 @@ const routes: Routes = [
     NgbPaginationModule,
     NgbAlertModule,
     NgbTooltipModule,
-
   ],
 })
 export class ServicesModule {}

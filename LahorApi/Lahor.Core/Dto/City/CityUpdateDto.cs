@@ -1,4 +1,3 @@
-
 namespace Lahor.Core.Dto.City
 {
     public class CityUpdateDto:BaseDto

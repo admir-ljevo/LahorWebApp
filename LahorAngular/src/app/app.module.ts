@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
@@ -36,7 +37,6 @@ import { MaterialRequestsEditComponent } from './pages/materialRequests/material
 import {LoginComponent} from "./views/pages/auth/login/login.component";
 import {EmployeesAddComponent} from "./pages/employees/employees-add/employees-add.component";
 import {CountriesListComponent} from "./pages/countries/countries-list/countries-list.component";
-import {NgModule} from "@angular/core";
 import {ReportingPreviewComponent} from "./pages/reporting/reporting-preview/reporting-preview.component";
 import {
   EmployeesReportingComponent
@@ -80,7 +80,9 @@ import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.compon
     NewsListsComponent,
     NewsAddComponent,
     NewsEditComponent,
+    PriceListPreviewComponent,
     AuthComponent,
+    ServicesListsComponent,
     ServicesEditComponent,
     ServicesAddComponent,
     ServicesListsComponent,
@@ -148,10 +150,10 @@ import {OrdersEditComponent} from "./pages/orders/orders-edit/orders-edit.compon
           xml: () => import('highlight.js/lib/languages/xml'),
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),
-        }
-      }
-    }
+        },
+      },
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

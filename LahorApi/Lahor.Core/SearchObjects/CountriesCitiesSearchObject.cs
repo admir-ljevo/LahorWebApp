@@ -1,4 +1,3 @@
-
 namespace Lahor.Core.SearchObjects
 {
     public class CountriesCitiesSearchObject : BaseSearchObject

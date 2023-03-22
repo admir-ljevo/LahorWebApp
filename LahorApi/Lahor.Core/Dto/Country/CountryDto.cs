@@ -1,4 +1,3 @@
-
 namespace Lahor.Core.Dto.Country
 {
     public class CountryDto:BaseDto
