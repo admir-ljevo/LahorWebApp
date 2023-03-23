@@ -1,20 +1,17 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+LahorApp is a web application developed using .NET Core, Angular and SQL Server database, which was developed by my colleague and I. 
+The purpose of this app is to improve business of a dry cleanings company. 
+The application consists of functionalities which can be very beneficial for a dry cleanings company, such as creating available services to be visible for the clients, creating orders, creating purchase requests and so on. 
+Apart from CRUD operations, this application also has other functionalities, such as two-factor authentication, role-based authorization/authentication, generating reports, sending notifications to users etc. 
+Also it is worth mentioning that we've used Repository pattern to isolate business logic from controllers to Repositories and Services.
+This application is not finished yet, there are also some functionalities left to be implemented. The deployed version will soon be available.
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+To run the application on your local machine, do the following:
+1.	Rebuild Backend solution
+2.	Run migrations to update the database using 'update-database' command.
+3.	Run 'Npm install' in angular project to install all of the dependencies.
+4.	Run backend project.
+5.  Run angular project via 'ng serve' command.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
